@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
@@ -10,15 +11,35 @@
 	<title>TODO title</title>
 </h:head>
 <h:body>
-	<p:layout fullPage="true">
+	<p:layout fullPage="true" id="a">
 		<p:layoutUnit position="north">
             TODO north
         </p:layoutUnit>
-		<p:layoutUnit collapsible="true" position="west" resizable="true" header="Contacts">
-            TODO west
-        </p:layoutUnit>
+		<p:layoutUnit collapsible="true" header="Contacts" position="west"
+			resizable="true" size="200">
+			<c:forEach begin="1" end="50" var="i">
+				<!-- TODO boite de largeur fixe -->
+                contact #{i}<br />
+			</c:forEach>
+		</p:layoutUnit>
 		<p:layoutUnit position="center">
-			<h1>Hello World!</h1>
+			<p:layout id="z">
+				<p:layoutUnit position="center">
+					<p:scrollPanel>
+						<c:forEach begin="1" end="50" var="i">
+							<p:outputLabel>message #{i}</p:outputLabel>
+							<br />
+						</c:forEach>
+					</p:scrollPanel>
+				</p:layoutUnit>
+				<p:layoutUnit position="south" resizable="true">
+					<p:panelGrid columns="3">
+						<p:inputTextarea />
+						<p:commandButton value="Envoyer" />
+						<p:commandButton value="Annuler" />
+					</p:panelGrid>
+				</p:layoutUnit>
+			</p:layout>
 		</p:layoutUnit>
 		<p:layoutUnit position="south">
             TODO south
