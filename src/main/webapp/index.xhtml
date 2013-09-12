@@ -1,5 +1,28 @@
-<html>
-<body>
-<h2>Hello World!</h2>
-</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<!-- <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css" /> -->
+	<h:outputStylesheet library="css" name="default.css" />
+	<title>TODO title</title>
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north">
+            TODO north
+        </p:layoutUnit>
+		<p:layoutUnit collapsible="true" position="west" resizable="true" header="Contacts">
+            TODO west
+        </p:layoutUnit>
+		<p:layoutUnit position="center">
+			<h1>Hello World!</h1>
+		</p:layoutUnit>
+		<p:layoutUnit position="south">
+            TODO south
+        </p:layoutUnit>
+	</p:layout>
+</h:body>
 </html>
