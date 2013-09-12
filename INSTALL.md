@@ -12,6 +12,11 @@ Create `.project` file, `.classpath` file, `.settings` folder and update `.gitgn
 
 Import into Eclipse :
 
-	`File` > `Import...` > `Existing Projects into Workspace`
+	?? `File` > `Import...` > `Existing Projects into Workspace`
 	`Package Explorer` view > Right click on `Croquette` project > `Configure` > `Convert to Maven project`
 
+Correct bug of Maven updating project :
+
+	`Package Explorer` view > Right click on `Croquette` project > `Maven` > `Disable Nature Project`
+	mvn eclipse:clean
+	`Package Explorer` view > Right click on `Croquette` project > `Configure` > `Convert to Maven project`
