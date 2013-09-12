@@ -29,19 +29,19 @@
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-api</artifactId>
-			<version>2.1.7</version>
+			<version>2.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-impl</artifactId>
-			<version>2.1.7</version>
+			<version>2.2.2</version>
 		</dependency>
 		<!-- PrimeFaces -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 			<version>3.5</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 	<build>
 		<finalName>Croquette</finalName>
