@@ -25,18 +25,24 @@
 		<p:layoutUnit position="center">
 			<p:layout id="z">
 				<p:layoutUnit position="center">
-					<p:scrollPanel>
-						<c:forEach begin="1" end="50" var="i">
-							<p:outputLabel>message #{i}</p:outputLabel>
-							<br />
-						</c:forEach>
-					</p:scrollPanel>
+					<c:forEach begin="1" end="50" var="i">
+						<p:outputLabel>message #{i}</p:outputLabel>
+						<br />
+					</c:forEach>
 				</p:layoutUnit>
 				<p:layoutUnit position="south" resizable="true">
-					<p:panelGrid columns="3">
-						<p:inputTextarea />
-						<p:commandButton value="Envoyer" />
-						<p:commandButton value="Annuler" />
+					<p:panelGrid style="width: 100%">
+						<p:row>
+							<p:column style="width: 100%">
+								<p:inputTextarea autoResize="false" style="width: 100%" />
+							</p:column>
+							<p:column>
+								<p:commandButton value="Envoyer" />
+							</p:column>
+							<p:column>
+								<p:commandButton value="Annuler" />
+							</p:column>
+						</p:row>
 					</p:panelGrid>
 				</p:layoutUnit>
 			</p:layout>
