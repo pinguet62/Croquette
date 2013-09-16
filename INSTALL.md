@@ -74,3 +74,10 @@ Insert into `web.xml` to set theme :
 		<param-name>primefaces.THEME</param-name>
 		<param-value>bootstrap</param-value>
 	</context-param>
+
+
+Run Tomcat Server :
+	"WARNING: Unable to load class ..."
+		Add metadata-complete="true" to <web-app /> tag into web.xml
+	Annotations of Servlet 3.0 not working
+		Remove metadata-complete="true"

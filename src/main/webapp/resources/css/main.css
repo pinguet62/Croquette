@@ -1,0 +1,9 @@
+/*
+Main CSS for Croquette
+*/
+
+/* Hide the column header of a dataTable */
+.no-header table thead tr {
+    display: none;
+}
+
