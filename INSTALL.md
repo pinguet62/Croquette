@@ -6,25 +6,43 @@ This project is a Maven project, initialised with this command :
 	mvn archetype:create -X -DarchetypeArtifactId=maven-archetype-webapp -DartifactId=Croquette -DgroupId=fr.pinguet62.croquette
 
 ## Eclipse
-Create `.project` file, `.classpath` file, `.settings` folder and update `.gitgnore` files for Eclipse :
+Execute Maven command :
 
 	mvn eclipse:eclipse
 
-Import into Eclipse :
+Creates `.project` file, `.classpath` file, `.settings` folder and update `.gitgnore` files for Eclipse.
 
-	?? `File` > `Import...` > `Existing Projects into Workspace`
-	`Package Explorer` view > Right click on `Croquette` project > `Configure` > `Convert to Maven project`
+### Import into Eclipse :
+Go to `File`, `Import...`, `Existing Projects into Workspace`, ...(TODO)
+Go to `Package Explorer` view, do right click on `Croquette` project, `Configure`, `Convert to Maven project`.
 
-Correct bug of Maven updating project :
-
-	`Package Explorer` view > Right click on `Croquette` project > `Maven` > `Disable Nature Project`
-	mvn eclipse:clean
-	`Package Explorer` view > Right click on `Croquette` project > `Configure` > `Convert to Maven project`
-
+### Correct bug of Maven updating project :
+Go to `Package Explorer` view, do right click on `Croquette` project, `Maven`, `Disable Nature Project`.
+Execute `mvn eclipse:clean`
+Go to `Package Explorer` view, fo right click on `Croquette` project, `Configure`, `Convert to Maven project`.
 
 ## Configuration
-### Servlet
-Insert into `web.xml` :
+
+### JavaServer Faces
+
+#### Dependencies
+Insert into `pom.xml` file :
+
+	<dependencies>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+	</dependencies>
+
+#### Configuration
+Insert into `web.xml` file :
 
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
@@ -38,7 +56,9 @@ Insert into `web.xml` :
 	</servlet-mapping>
 
 ### PrimeFaces
-Insert into `pom.xml` to download Primefaces and theme :
+
+#### Dependencies
+Insert into `pom.xml` file to download Primefaces and theme :
 
 	<repositories>
 		<repository>
@@ -50,6 +70,7 @@ Insert into `pom.xml` to download Primefaces and theme :
 		</repository>
 	</repositories>
 	<dependencies>
+		<!-- PrimeFaces -->
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
@@ -68,16 +89,26 @@ Insert into `pom.xml` to download Primefaces and theme :
 		</dependency>
 	<dependencies>
 
-Insert into `web.xml` to set theme :
+#### Theme
+Insert into `web.xml` file to set theme :
 
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>bootstrap</param-value>
 	</context-param>
 
+### Servlet
+This project uses Servlet 3.0 version.
 
-Run Tomcat Server :
-	"WARNING: Unable to load class ..."
-		Add metadata-complete="true" to <web-app /> tag into web.xml
-	Annotations of Servlet 3.0 not working
-		Remove metadata-complete="true"
+#### Maven dependencies
+Add this dependencies into `pom.xml` file :
+
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>javax.servlet-api</artifactId>
+		<version>3.0.1</version>
+		<scope>provided</scope>
+	</dependency>
+
+#### Annotation scan
+Remove `metadata-complete="true"` option from `<web-app />` tag, that Tomcat can scan annotations into classes.
