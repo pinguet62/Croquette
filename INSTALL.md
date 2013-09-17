@@ -10,17 +10,15 @@ Create `.project` file, `.classpath` file, `.settings` folder and update `.gitgn
 
 	mvn eclipse:eclipse
 
-Import into Eclipse :
+### Import into Eclipse :
 
 	?? `File` > `Import...` > `Existing Projects into Workspace`
 	`Package Explorer` view > Right click on `Croquette` project > `Configure` > `Convert to Maven project`
 
-Correct bug of Maven updating project :
-
-	`Package Explorer` view > Right click on `Croquette` project > `Maven` > `Disable Nature Project`
-	mvn eclipse:clean
-	`Package Explorer` view > Right click on `Croquette` project > `Configure` > `Convert to Maven project`
-
+### Correct bug of Maven updating project :
+Go to `Package Explorer` view, do right click on `Croquette` project, `Maven`, `Disable Nature Project`.
+Execute `mvn eclipse:clean`
+Go to `Package Explorer` view, fo right click on `Croquette` project, `Configure`, `Convert to Maven project`.
 
 ## Configuration
 ### Servlet
