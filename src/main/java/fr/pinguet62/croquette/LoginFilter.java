@@ -13,8 +13,6 @@ import javax.servlet.annotation.WebFilter;
 /**
  * Filter offline users. <br />
  * Redirect to "Sign In" Google page if he is not identified.
- * 
- * @author Pinguet62
  */
 @WebFilter(description = "Filter offline users", filterName = "loginFilter", urlPatterns = "/*")
 public final class LoginFilter implements Filter {

@@ -1,12 +1,9 @@
 package fr.pinguet62.croquette.action.sms;
 
+import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
 
-/**
- * Confirm a SMS sent.
- * 
- * @author Pinguet62
- */
+/** Confirm a SMS sent. */
 public class ConfirmSentSMSAction extends SMSAction {
 
     /**
@@ -14,18 +11,23 @@ public class ConfirmSentSMSAction extends SMSAction {
      * 
      * @param jsonMessage
      *            The JSON message.
+     * @throws JSONException
+     *             Invalid JSON message.
      */
-    public ConfirmSentSMSAction(final JSONObject jsonMessage) {
+    public ConfirmSentSMSAction(final JSONObject jsonMessage)
+	    throws JSONException {
+	this.validate(jsonMessage);
 	// TODO Implement ConfirmSentSMSAction.ConfirmSentSMSAction(JSONObject);
-	// Update date
-	// Save ID
-	// Update sending
+
     }
 
     /** {@inheritDoc} */
     @Override
     public void execute() {
 	// TODO Implement ReceivedSMSAction.execute();
+	// Update date
+	// Save ID
+	// Update sending
     }
 
 }

@@ -4,11 +4,7 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 
-/**
- * Used to manage connected user.
- * 
- * @author Pinguet62
- */
+/** Used to manage connected user. */
 @ManagedBean(name = LoginManagedBean.BEAN_NAME)
 public final class LoginManagedBean implements Serializable {
 
@@ -22,7 +18,6 @@ public final class LoginManagedBean implements Serializable {
      * Tests if user is connected.
      * 
      * @return Result.
-     * @author Pinguet62
      */
     public static boolean isConnected() {
 	// TODO Implement : LoginManagedBean.isConnected()

@@ -1,19 +1,12 @@
 package fr.pinguet62.croquette.action;
 
-/**
- * Possible action with smartphone.
- * 
- * @author Pinguet62
- */
+/** Possible action with smartphone. */
 public interface IAction {
 
-    public static final String ACTION = "action";
+    /** Key for {@link ActionType}. */
+    public static final String ACTION_TYPE = "action";
 
-    /**
-     * Execute the action.
-     * 
-     * @author Pinguet62
-     */
+    /** Execute the action. */
     void execute();
 
 }

@@ -1,10 +1,6 @@
 package fr.pinguet62.croquette.model;
 
-/**
- * Contains informations about a contact.
- * 
- * @author Pinguet62
- */
+/** Contains informations about a contact. */
 public final class Contact {
 
     /** The first name. */
@@ -30,7 +26,6 @@ public final class Contact {
      * Gets the first name.
      * 
      * @return The first name.
-     * @author Pinguet62
      */
     public String getFirstName() {
 	return this.firstName;
@@ -40,7 +35,6 @@ public final class Contact {
      * Gets the name.
      * 
      * @return The name.
-     * @author Pinguet62
      */
     public String getName() {
 	return this.name;
@@ -50,7 +44,6 @@ public final class Contact {
      * Gets the phone number.
      * 
      * @return The phone number.
-     * @author Pinguet62
      */
     public String getPhoneNumber() {
 	return this.phoneNumber;
@@ -61,7 +54,6 @@ public final class Contact {
      * 
      * @param firstName
      *            The first name to set.
-     * @author Pinguet62
      */
     public void setFirstName(final String firstName) {
 	this.firstName = firstName;
@@ -72,7 +64,6 @@ public final class Contact {
      * 
      * @param name
      *            The name to set.
-     * @author Pinguet62
      */
     public void setName(final String name) {
 	this.name = name;
@@ -83,7 +74,6 @@ public final class Contact {
      * 
      * @param phoneNumber
      *            The phone number to set.
-     * @author Pinguet62
      */
     public void setPhoneNumber(final String phoneNumber) {
 	this.phoneNumber = phoneNumber;

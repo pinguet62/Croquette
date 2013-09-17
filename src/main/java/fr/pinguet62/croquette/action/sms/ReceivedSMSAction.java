@@ -1,12 +1,9 @@
 package fr.pinguet62.croquette.action.sms;
 
+import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
 
-/**
- * SMS received.
- * 
- * @author Pinguet62
- */
+/** SMS received. */
 public class ReceivedSMSAction extends SMSAction {
 
     /**
@@ -14,8 +11,11 @@ public class ReceivedSMSAction extends SMSAction {
      * 
      * @param jsonMessage
      *            The JSON message.
+     * @throws JSONException
+     *             Invalid JSON message.
      */
-    public ReceivedSMSAction(final JSONObject jsonMessage) {
+    public ReceivedSMSAction(final JSONObject jsonMessage) throws JSONException {
+	this.validate(jsonMessage);
 	// TODO Implement ReceivedSMSAction.ReceivedSMSAction(JSONObject);
     }
 
@@ -23,6 +23,7 @@ public class ReceivedSMSAction extends SMSAction {
     @Override
     public void execute() {
 	// TODO Implement ReceivedSMSAction.execute();
+	// WebSocket
     }
 
 }

@@ -4,11 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 
-/**
- * Contains list of {@link Conversation}.
- * 
- * @author Pinguet62
- */
+/** Contains list of {@link Conversation}. */
 public final class Conversations implements Iterable<Conversation> {
 
     /** List of {@link Conversation}s. */

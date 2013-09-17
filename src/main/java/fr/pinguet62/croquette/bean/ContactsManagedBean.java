@@ -9,11 +9,7 @@ import javax.faces.bean.SessionScoped;
 
 import fr.pinguet62.croquette.model.Contact;
 
-/**
- * Used to manage user's contact.
- * 
- * @author Pinguet62
- */
+/** Used to manage user's contact. */
 @ManagedBean(name = "contactsManagedBean")
 @SessionScoped
 public final class ContactsManagedBean implements Serializable {
@@ -24,8 +20,7 @@ public final class ContactsManagedBean implements Serializable {
     /**
      * Gets the list of contacts of user.
      * 
-     * @return Contacts
-     * @author Pinguet62
+     * @return The list of contacts.
      */
     public Iterable<Contact> getContacts() {
 	// TODO Implement : ContactsManagedBean.getContacts()

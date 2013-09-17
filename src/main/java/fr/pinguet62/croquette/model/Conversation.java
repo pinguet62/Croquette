@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-/**
- * Conversation with a {@link Contact}.
- * 
- * @author Pinguet62
- */
+/** Conversation with a {@link Contact}. */
 public final class Conversation implements Iterable<Message> {
 
     /** The sender or addressee {@link Contact}. */
@@ -21,7 +17,6 @@ public final class Conversation implements Iterable<Message> {
      * Gets the sender or addressee {@link Contact}.
      * 
      * @return The {@link Contact}.
-     * @author Pinguet62
      */
     public Contact getContact() {
 	return this.contact;
@@ -31,7 +26,6 @@ public final class Conversation implements Iterable<Message> {
      * Gets the list of {@link Message}s.
      * 
      * @return The {@link Message}s.
-     * @author Pinguet62
      */
     public Collection<Message> getMessages() {
 	return this.messages;
@@ -52,7 +46,6 @@ public final class Conversation implements Iterable<Message> {
      * 
      * @param contact
      *            The {@link Contact}.
-     * @author Pinguet62
      */
     public void setContact(final Contact contact) {
 	this.contact = contact;

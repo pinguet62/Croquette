@@ -3,12 +3,10 @@ package fr.pinguet62.croquette.action;
 /**
  * Defines possible actions in application. <br />
  * Values are used into JSON message exchanged with smartphone.
- * 
- * @author Pinguet62
  */
 public enum ActionType {
 
-    SMS_RECEIVED("SMS_RECEIVED"), SMS_SENT("SMS_SENT"), SMS_SENT_CONFIRM(
+    SMS_RECEIVED("SMS_RECEIVED"), SMS_SEND("SMS_SEND"), SMS_SENT_CONFIRM(
 	    "SMS_SENT_CONFIRM");
 
     /**

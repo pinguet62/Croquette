@@ -2,12 +2,11 @@ package fr.pinguet62.croquette.model;
 
 import java.util.Date;
 
-/**
- * Message exchanged with a {@link Contact}.
- * 
- * @author Pinguet62
- */
+/** Message exchanged with a {@link Contact}. */
 public final class Message {
+
+    /** The {@link Contact}. */
+    private Contact contact = null;
 
     /** The content. */
     private String content = null;
@@ -22,10 +21,18 @@ public final class Message {
     private Boolean sent = null;
 
     /**
+     * Gets the {@link Contact}.
+     * 
+     * @return The {@link Contact}.
+     */
+    public Contact getContact() {
+	return this.contact;
+    }
+
+    /**
      * Gets the content.
      * 
      * @return The content.
-     * @author Pinguet62
      */
     public String getContent() {
 	return this.content;
@@ -35,7 +42,6 @@ public final class Message {
      * Gets the date of issue or receiving.
      * 
      * @return The date.
-     * @author Pinguet62
      */
     public Date getDate() {
 	return this.date;
@@ -45,7 +51,6 @@ public final class Message {
      * Gets if it is in progress.
      * 
      * @return Result.
-     * @author Pinguet62
      */
     public Boolean getInProgress() {
 	return this.inprogress;
@@ -55,10 +60,19 @@ public final class Message {
      * Gets if it was sent by user.
      * 
      * @return Result.
-     * @author Pinguet62
      */
     public Boolean isSent() {
 	return this.sent;
+    }
+
+    /**
+     * Sets the {@link Contact}.
+     * 
+     * @param contact
+     *            The {@link Contact} to set.
+     */
+    public void setContact(final Contact contact) {
+	this.contact = contact;
     }
 
     /**
@@ -66,7 +80,6 @@ public final class Message {
      * 
      * @param content
      *            The content to set.
-     * @author Pinguet62
      */
     public void setContent(final String content) {
 	this.content = content;
@@ -77,7 +90,6 @@ public final class Message {
      * 
      * @param date
      *            The date to set.
-     * @author Pinguet62
      */
     public void setDate(final Date date) {
 	this.date = date;
@@ -88,7 +100,6 @@ public final class Message {
      * 
      * @param inprogress
      *            Is in progress.
-     * @author Pinguet62
      */
     public void setInProgress(final Boolean inprogress) {
 	this.inprogress = inprogress;
@@ -99,7 +110,6 @@ public final class Message {
      * 
      * @param sent
      *            If sent by user.
-     * @author Pinguet62
      */
     public void setSent(final Boolean sent) {
 	this.sent = sent;
