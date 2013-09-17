@@ -19,31 +19,31 @@ import javax.servlet.annotation.WebFilter;
 @WebFilter(description = "Filter offline users", filterName = "loginFilter", urlPatterns = "/*")
 public final class LoginFilter implements Filter {
 
-	/** {@inheritDoc} */
-	@Override
-	public void destroy() {
-	}
+    /** {@inheritDoc} */
+    @Override
+    public void destroy() {
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	public void doFilter(final ServletRequest request,
-			final ServletResponse response, final FilterChain chain)
-			throws IOException, ServletException {
-		// TODO implement LoginFilter.doFilter()
-		// final LoginManagedBean loginBean = (LoginManagedBean)
-		// ((HttpServletRequest) request)
-		// .getSession().getAttribute("loginManagedBean");
-		// if ((loginBean == null) || !LoginManagedBean.isConnected())
-		// ((HttpServletResponse) response)
-		// .sendRedirect(((HttpServletRequest) request)
-		// .getContextPath() + "/login.xhtml");
+    /** {@inheritDoc} */
+    @Override
+    public void doFilter(final ServletRequest request,
+	    final ServletResponse response, final FilterChain chain)
+	    throws IOException, ServletException {
+	// TODO implement LoginFilter.doFilter()
+	// final LoginManagedBean loginBean = (LoginManagedBean)
+	// ((HttpServletRequest) request)
+	// .getSession().getAttribute("loginManagedBean");
+	// if ((loginBean == null) || !LoginManagedBean.isConnected())
+	// ((HttpServletResponse) response)
+	// .sendRedirect(((HttpServletRequest) request)
+	// .getContextPath() + "/login.xhtml");
 
-		chain.doFilter(request, response);
-	}
+	chain.doFilter(request, response);
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	public void init(final FilterConfig config) throws ServletException {
-	}
+    /** {@inheritDoc} */
+    @Override
+    public void init(final FilterConfig config) throws ServletException {
+    }
 
 }

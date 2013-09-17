@@ -7,62 +7,86 @@ package fr.pinguet62.croquette.model;
  */
 public final class Contact {
 
-	/** The first name. */
-	private String firstName = null;
+    /** The first name. */
+    private String firstName = null;
 
-	/** The name. */
-	private String name = null;
+    /** The name. */
+    private String name = null;
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param name
-	 *            The name.
-	 */
-	public Contact(final String name) {
-		this.name = name;
-	}
+    /** The phone number. */
+    private String phoneNumber = null;
 
-	/**
-	 * Getter first name.
-	 * 
-	 * @return The first name.
-	 * @author Pinguet62
-	 */
-	public String getFirstName() {
-		return this.firstName;
-	}
+    /**
+     * Constructor.
+     * 
+     * @param name
+     *            The name.
+     */
+    public Contact(final String name) {
+	this.name = name;
+    }
 
-	/**
-	 * Getter name.
-	 * 
-	 * @return The name
-	 * @author Pinguet62
-	 */
-	public String getName() {
-		return this.name;
-	}
+    /**
+     * Gets the first name.
+     * 
+     * @return The first name.
+     * @author Pinguet62
+     */
+    public String getFirstName() {
+	return this.firstName;
+    }
 
-	/**
-	 * Setter first name.
-	 * 
-	 * @param firstName
-	 *            The first name.
-	 * @author Pinguet62
-	 */
-	public void setFirstName(final String firstName) {
-		this.firstName = firstName;
-	}
+    /**
+     * Gets the name.
+     * 
+     * @return The name.
+     * @author Pinguet62
+     */
+    public String getName() {
+	return this.name;
+    }
 
-	/**
-	 * Setter name.
-	 * 
-	 * @param name
-	 *            The name.
-	 * @author Pinguet62
-	 */
-	public void setName(final String name) {
-		this.name = name;
-	}
+    /**
+     * Gets the phone number.
+     * 
+     * @return The phone number.
+     * @author Pinguet62
+     */
+    public String getPhoneNumber() {
+	return this.phoneNumber;
+    }
+
+    /**
+     * Sets the first name.
+     * 
+     * @param firstName
+     *            The first name to set.
+     * @author Pinguet62
+     */
+    public void setFirstName(final String firstName) {
+	this.firstName = firstName;
+    }
+
+    /**
+     * Sets the name.
+     * 
+     * @param name
+     *            The name to set.
+     * @author Pinguet62
+     */
+    public void setName(final String name) {
+	this.name = name;
+    }
+
+    /**
+     * Sets the phone number.
+     * 
+     * @param phoneNumber
+     *            The phone number to set.
+     * @author Pinguet62
+     */
+    public void setPhoneNumber(final String phoneNumber) {
+	this.phoneNumber = phoneNumber;
+    }
 
 }
