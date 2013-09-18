@@ -11,6 +11,15 @@ public final class Conversations implements Iterable<Conversation> {
     private final Collection<Conversation> conversations = new HashSet<Conversation>();
 
     /**
+     * Gets list of {@link Conversation}s.
+     * 
+     * @return The {@link Conversation}s.
+     */
+    public Iterable<Conversation> get() {
+	return this.conversations;
+    }
+
+    /**
      * Find {@link Conversation} into list of conversations.
      * 
      * @param phoneNumber
