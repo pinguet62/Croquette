@@ -1,17 +1,24 @@
 package fr.pinguet62.croquette.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.HashSet;
 
-/** Conversation with a {@link Contact}. */
-public final class Conversation implements Iterable<Message> {
+/**
+ * Contains list of {@link Message}s.
+ * <p>
+ * Extends {@link HashSet} to add some methods.
+ */
+public final class Conversation extends HashSet<Message> {
+
+    /** Auto generated serial version UID. */
+    private static final long serialVersionUID = -6466753476994997663L;
 
     /** The sender or addressee {@link Contact}. */
     private Contact contact = null;
 
-    /** The list of {@link Message}s. */
-    private final Collection<Message> messages = new ArrayList<Message>();
+    /**
+     * The input text of the new {@link Message} into this {@link Conversation}.
+     */
+    private String input = null;
 
     /**
      * Gets the sender or addressee {@link Contact}.
@@ -23,22 +30,12 @@ public final class Conversation implements Iterable<Message> {
     }
 
     /**
-     * Gets the list of {@link Message}s.
+     * Gets the input.
      * 
-     * @return The {@link Message}s.
+     * @return The input.
      */
-    public Collection<Message> getMessages() {
-	return this.messages;
-    }
-
-    /**
-     * Gets an iterator over the list of {@link Message}s.
-     * 
-     * @return An {@link Iterator}.
-     */
-    @Override
-    public Iterator<Message> iterator() {
-	return this.messages.iterator();
+    public String getInput() {
+	return this.input;
     }
 
     /**
@@ -49,6 +46,16 @@ public final class Conversation implements Iterable<Message> {
      */
     public void setContact(final Contact contact) {
 	this.contact = contact;
+    }
+
+    /**
+     * Sets the input.
+     * 
+     * @param input
+     *            The input to set.
+     */
+    public void setInput(final String input) {
+	this.input = input;
     }
 
 }

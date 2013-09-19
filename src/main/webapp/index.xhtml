@@ -13,59 +13,68 @@
 	<title>TODO title</title>
 </h:head>
 <h:body>
-	<p:layout fullPage="true" id="a">
-		<p:layoutUnit position="north">
+	<h:form prependId="false">
+		<p:layout fullPage="true">
+			<p:layoutUnit position="north">
             TODO north
         </p:layoutUnit>
-		<p:layoutUnit collapsible="true" header="Contacts" position="west"
-			resizable="true" size="200">
-			<p:dataTable selectionMode="single" rowKey="name"
-				styleClass="no-header" value="#{contactsManagedBean.contacts}"
-				var="contact">
-				<p:column>
-					<h:outputText value="#{contact.name}" />
-				</p:column>
-			</p:dataTable>
-			<!-- <c:forEach begin="1" end="50" var="i">
-				<li>contact #{i}</li>
-			</c:forEach> -->
-		</p:layoutUnit>
-		<p:layoutUnit position="center">
-			<p:layout id="z">
-				<p:layoutUnit position="center" style="display: block">
-					<c:forEach begin="1" end="20" var="i">
-						<c:choose>
-							<c:when test="#{i%2 == 0}">
-								<div class="bubble-sent">message #{i}</div>
-								<br />
-							</c:when>
-							<c:otherwise>
-								<div class="bubble-received">message #{i}</div>
-								<br />
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</p:layoutUnit>
-				<p:layoutUnit position="south" resizable="true">
-					<p:panelGrid style="width: 100%">
-						<p:row>
-							<p:column style="width: 100%">
-								<p:inputTextarea autoResize="false" style="width: 100%" />
-							</p:column>
-							<p:column>
-								<p:commandButton value="Envoyer" />
-							</p:column>
-							<p:column>
-								<p:commandButton value="Annuler" />
-							</p:column>
-						</p:row>
-					</p:panelGrid>
-				</p:layoutUnit>
-			</p:layout>
-		</p:layoutUnit>
-		<p:layoutUnit position="south">
+			<p:layoutUnit collapsible="true" header="Contacts" position="west"
+				resizable="true" size="200">
+				<p:dataTable selectionMode="single" styleClass="no-header"
+					value="#{contactsManagedBean.contacts}" var="contact">
+					<p:ajax event="rowSelect"
+						listener="#{contactsManagedBean.onContactSelected}" />
+					<p:ajax event="rowUnselect"
+						listener="#{contactsManagedBean.onContactUnselected}" />
+					<p:column>
+						<h:outputText value="#{contact.name}" />
+					</p:column>
+				</p:dataTable>
+			</p:layoutUnit>
+			<p:layoutUnit id="conversation" position="center">
+				<p:layout>
+					<p:layoutUnit position="center" style="display: block">
+						<c:forEach items="#{contactsManagedBean.currentConversation}"
+							var="message">
+							<c:choose>
+								<c:when test="#{message.sent}">
+									<div class="bubble-sent">
+										<h:outputText value="#{message.content}" />
+									</div>
+									<br />
+								</c:when>
+								<c:otherwise>
+									<div class="bubble-received">
+										<h:outputText value="#{message.content}" />
+									</div>
+									<br />
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</p:layoutUnit>
+					<p:layoutUnit position="south" resizable="true">
+						<p:panelGrid style="width: 100%">
+							<p:row>
+								<p:column style="width: 100%">
+									<p:inputTextarea autoResize="false"
+										value="#{contactsManagedBean.currentConversation.input}"
+										style="width: 100%" />
+								</p:column>
+								<p:column>
+									<p:commandButton value="Envoyer" />
+								</p:column>
+								<p:column>
+									<p:commandButton value="Annuler" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:layoutUnit>
+				</p:layout>
+			</p:layoutUnit>
+			<p:layoutUnit position="south">
             TODO south
         </p:layoutUnit>
-	</p:layout>
+		</p:layout>
+	</h:form>
 </h:body>
 </html>

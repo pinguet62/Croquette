@@ -1,10 +1,13 @@
 package fr.pinguet62.croquette.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 /** Informations about user. */
 public final class User {
+
+    /** The contacts. */
+    private final List<Contact> contacts = new ArrayList<Contact>();
 
     /** The conversations. */
     private final Conversations conversations = new Conversations();
@@ -14,12 +17,8 @@ public final class User {
      * 
      * @return The list of {@link Contact}.
      */
-    public Iterable<Contact> getContacts() {
-	// TODO Implement User.getContacts()
-	final Collection<Contact> contacts = new ArrayList<Contact>();
-	for (int i = 1; i < 35; ++i)
-	    contacts.add(new Contact("name " + i));
-	return contacts;
+    public List<Contact> getContacts() {
+	return this.contacts;
     }
 
     /**

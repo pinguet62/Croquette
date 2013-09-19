@@ -61,6 +61,15 @@ public final class Message {
      * 
      * @return Result.
      */
+    public Boolean getSent() {
+	return this.sent;
+    }
+
+    /**
+     * Gets if it was sent by user.
+     * 
+     * @return Result.
+     */
     public Boolean isSent() {
 	return this.sent;
     }

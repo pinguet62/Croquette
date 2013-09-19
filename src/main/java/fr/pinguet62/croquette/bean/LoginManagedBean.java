@@ -11,7 +11,7 @@ public final class LoginManagedBean implements Serializable {
     /** The managed bean name. */
     public static final String BEAN_NAME = "loginManagedBean";
 
-    /** Auto generated UID. */
+    /** Auto generated serial version UID. */
     private static final long serialVersionUID = 3287035492567067448L;
 
     /**

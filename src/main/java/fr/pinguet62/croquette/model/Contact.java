@@ -12,14 +12,8 @@ public final class Contact {
     /** The phone number. */
     private String phoneNumber = null;
 
-    /**
-     * Constructor.
-     * 
-     * @param name
-     *            The name.
-     */
-    public Contact(final String name) {
-	this.name = name;
+    /** Default constructor. */
+    public Contact() {
     }
 
     /**
