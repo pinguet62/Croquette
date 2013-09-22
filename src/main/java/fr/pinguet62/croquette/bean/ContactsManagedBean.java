@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
@@ -13,16 +13,13 @@ import fr.pinguet62.croquette.Session;
 import fr.pinguet62.croquette.model.Contact;
 import fr.pinguet62.croquette.model.Conversation;
 
-/** Used to manage user's contact. */
+/** Used to manage the user's contact. */
 @ManagedBean(name = "contactsManagedBean")
-@SessionScoped
+@ViewScoped
 public final class ContactsManagedBean implements Serializable {
 
     /** Auto generated serial version UID. */
     private static final long serialVersionUID = -3264086471471697720L;
-
-    /** The current {@link Conversation}. */
-    private Conversation currentConversation = null;
 
     /** The selected {@link Contact}. */
     private Contact selectedContact = null;
@@ -37,12 +34,14 @@ public final class ContactsManagedBean implements Serializable {
     }
 
     /**
-     * Gets the current {@link Conversation}.
+     * Gets the current {@link Conversation} with the selected {@link Contact}.
      * 
      * @return The current {@link Conversation}.
      */
     public Conversation getCurrentConversation() {
-	return this.currentConversation;
+	if (this.selectedContact == null)
+	    return null;
+	return this.selectedContact.getConversation();
     }
 
     /**
@@ -68,8 +67,8 @@ public final class ContactsManagedBean implements Serializable {
      */
     public void onContactSelected(final SelectEvent event) {
 	this.selectedContact = (Contact) event.getObject();
-	this.currentConversation = Session.getUser().getConversations()
-		.get(this.selectedContact.getPhoneNumber());
+	// this.currentConversation = Session.getUser().getConversations()
+	// .get(this.selectedContact.getPhoneNumber());
     }
 
     /**
@@ -80,7 +79,7 @@ public final class ContactsManagedBean implements Serializable {
      */
     public void onContactUnselected(final UnselectEvent event) {
 	this.selectedContact = null;
-	this.currentConversation = null;
+	// this.currentConversation = null;
     }
 
     /**

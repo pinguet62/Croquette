@@ -1,13 +1,13 @@
 package fr.pinguet62.croquette.model;
 
-import java.util.HashSet;
+import java.util.TreeSet;
 
 /**
  * Contains list of {@link Conversation}s.
  * <p>
- * Extends {@link HashSet} to add some methods.
+ * Extends {@link TreeSet} to sort and add some methods.
  */
-public final class Conversations extends HashSet<Conversation> {
+public final class Conversations extends TreeSet<Conversation> {
 
     /** Auto generated serial version UID. */
     private static final long serialVersionUID = -8126077649445737099L;

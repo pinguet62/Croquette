@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /** Message exchanged with a {@link Contact}. */
-public final class Message implements Serializable {
+public final class Message implements Comparable<Message>, Serializable {
 
     /** Auto generated serial version UID. */
     private static final long serialVersionUID = 5126051315118508362L;
@@ -23,6 +23,20 @@ public final class Message implements Serializable {
 
     /** If it was sent by user. */
     private Boolean sent = null;
+
+    /**
+     * Method used to compare the current {@link Message} to an other.
+     * 
+     * @param other
+     *            The other {@link Message}.
+     * @return A negative integer if this current {@link Message} is oldest then
+     *         the other, zero if there are equals, a positive integer if this
+     *         current {@link Message} is newest then the other.
+     */
+    @Override
+    public int compareTo(final Message other) {
+	return this.date.compareTo(other.date);
+    }
 
     /**
      * Gets the {@link Contact}.

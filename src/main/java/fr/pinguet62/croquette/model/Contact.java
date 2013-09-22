@@ -3,6 +3,9 @@ package fr.pinguet62.croquette.model;
 /** Contains informations about a contact. */
 public final class Contact {
 
+    /** The {@link Conversation}. */
+    private Conversation conversation = new Conversation();
+
     /** The first name. */
     private String firstName = null;
 
@@ -14,6 +17,15 @@ public final class Contact {
 
     /** Default constructor. */
     public Contact() {
+    }
+
+    /**
+     * Gets the {@link Conversation}.
+     * 
+     * @return The {@link Conversation}.
+     */
+    public Conversation getConversation() {
+	return this.conversation;
     }
 
     /**
@@ -41,6 +53,16 @@ public final class Contact {
      */
     public String getPhoneNumber() {
 	return this.phoneNumber;
+    }
+
+    /**
+     * Sets the {@link Conversation}.
+     * 
+     * @param conversation
+     *            The {@link Conversation} to set.
+     */
+    public void setConversation(final Conversation conversation) {
+	this.conversation = conversation;
     }
 
     /**

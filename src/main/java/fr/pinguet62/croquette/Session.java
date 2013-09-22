@@ -43,13 +43,13 @@ public final class Session {
 	Session.getMap().put(Session.USER, user);
 	// -> Contacts
 	for (int con = 1; con < 35; ++con) {
-	    final Contact contact = new Contact();
+	    Contact contact = new Contact();
 	    contact.setName("Contact " + con);
 	    contact.setPhoneNumber("phoneNumber " + con);
 	    user.getContacts().add(contact);
 	    // Conversation
 	    Conversation conversation = new Conversation();
-	    conversation.setContact(contact);
+	    contact.setConversation(conversation);
 	    // -> Messages
 	    for (int mess = 1; mess < 20; mess++) {
 		final Message message = new Message();
@@ -60,7 +60,11 @@ public final class Session {
 		message.setSent(((int) (2 * Math.random()) % 2) == 0);
 		conversation.add(message);
 	    }
-	    user.getConversations().add(conversation);
 	}
+    }
+
+    /** Reset user's data. */
+    public static void reset() {
+	Session.getMap().remove(Session.USER);
     }
 }

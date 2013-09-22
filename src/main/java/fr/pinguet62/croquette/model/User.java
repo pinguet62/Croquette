@@ -6,28 +6,28 @@ import java.util.List;
 /** Informations about user. */
 public final class User {
 
-    /** The contacts. */
+    /** The {@link Contact}s. */
     private final List<Contact> contacts = new ArrayList<Contact>();
 
-    /** The conversations. */
-    private final Conversations conversations = new Conversations();
-
     /**
-     * Gets the list of {@link Contact}.
+     * Gets the list of {@link Contact}s.
      * 
-     * @return The list of {@link Contact}.
+     * @return The list of {@link Contact}s.
      */
     public List<Contact> getContacts() {
 	return this.contacts;
     }
 
-    /**
-     * Gets the {@link Conversations}.
-     * 
-     * @return The {@link Conversations}.
-     */
-    public Conversations getConversations() {
-	return this.conversations;
-    }
+    // /**
+    // * Gets the {@link Conversations}.
+    // *
+    // * @return The {@link Conversations}.
+    // */
+    // public Conversations getConversations() {
+    // Conversations conversations = new Conversations();
+    // for (Contact contact : this.contacts)
+    // conversations.add(contact.getConversation());
+    // return conversations;
+    // }
 
 }

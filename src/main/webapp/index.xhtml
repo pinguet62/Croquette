@@ -11,12 +11,30 @@
 	<h:outputStylesheet library="css" name="main.css" />
 	<h:outputStylesheet library="css" name="chat.css" />
 	<title>TODO title</title>
+	<script type="text/javascript">
+		function scrollTop() {
+			var conversationContent = $(PrimeFaces.escapeClientId('layout'));
+			conversationContent.scrollTop = conversationContent.scrollHeight;
+			//conversationContent.animate({scrollTop: conversationContent.height()}, 5000);
+			//conversationContent.scrollTop(conversationContent.height());
+			//var conversationContent = document.getElementById('layout');
+			//conversationContent.animate({scrollTop: 500000}, 8000);
+			//$('#layout').animate({ scrollTop: $('#currentConversation').height() }, 400)
+		}
+	</script>
 </h:head>
 <h:body>
 	<p:layout fullPage="true">
-		<p:layoutUnit position="north">
-            TODO north
-        </p:layoutUnit>
+		<p:layoutUnit position="north" style="padding:10px;">
+			<p:graphicImage height="50" library="img" name="logo.png" />
+			<h:form>
+				<p:menuButton style="float: right;" value="pinguet62@gmail.com">
+					<p:menuitem icon="ui-icon-person" value="Delete" />
+					<p:separator />
+					<p:menuitem actionListener="#{userManagedBean.logout}" icon="ui-icon-close" url="/SMS.xhtml" value="Déconnexion" />
+				</p:menuButton>
+			</h:form>
+		</p:layoutUnit>
 		<p:layoutUnit collapsible="true" header="Contacts" position="west"
 			resizable="true" size="200">
 			<h:form prependId="false">
@@ -24,10 +42,10 @@
 					value="#{contactsManagedBean.contacts}" var="contact">
 					<p:ajax event="rowSelect"
 						listener="#{contactsManagedBean.onContactSelected}"
-						update=":conversation" />
+						oncomplete="scrollTop()" update=":currentConversation" />
 					<p:ajax event="rowUnselect"
 						listener="#{contactsManagedBean.onContactUnselected}"
-						update=":conversation" />
+						update=":currentConversation" />
 					<p:column>
 						<h:outputText value="#{contact.name}" />
 					</p:column>
@@ -36,8 +54,8 @@
 		</p:layoutUnit>
 		<p:layoutUnit position="center">
 			<p:layout>
-				<p:layoutUnit position="center" style="display: block">
-					<h:form id="conversation" prependId="false">
+				<p:layoutUnit id="layout" position="center" style="display: block">
+					<h:form id="currentConversation" prependId="false">
 						<c:forEach items="#{contactsManagedBean.currentConversation}"
 							var="message">
 							<c:choose>
@@ -58,7 +76,6 @@
 					</h:form>
 				</p:layoutUnit>
 				<p:layoutUnit position="south" resizable="true">
-
 					<p:panelGrid style="width: 100%">
 						<p:row>
 							<p:column style="width: 100%">
@@ -74,7 +91,6 @@
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-
 				</p:layoutUnit>
 			</p:layout>
 		</p:layoutUnit>
