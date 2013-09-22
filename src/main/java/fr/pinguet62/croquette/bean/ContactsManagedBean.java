@@ -50,9 +50,9 @@ public final class ContactsManagedBean implements Serializable {
      * 
      * @return The selected {@link Contact}.
      */
-    public Contact getSelectedContact() {
-	return this.selectedContact;
-    }
+    // public Contact getSelectedContact() {
+    // return this.selectedContact;
+    // }
 
     /** Initialization of this bean. */
     @PostConstruct

@@ -16,13 +16,12 @@ public final class Session {
     /** Key for connected user */
     public static final String USER = "user";
 
-    // TODO Delete this
     /**
      * Gets session map.
      * 
      * @return The session map.
      */
-    public static Map<String, Object> getMap() {
+    private static Map<String, Object> getMap() {
 	return FacesContext.getCurrentInstance().getExternalContext()
 		.getSessionMap();
     }
@@ -45,7 +44,7 @@ public final class Session {
 	// -> Contacts
 	for (int con = 1; con < 35; ++con) {
 	    final Contact contact = new Contact();
-	    contact.setName("name " + con);
+	    contact.setName("Contact " + con);
 	    contact.setPhoneNumber("phoneNumber " + con);
 	    user.getContacts().add(contact);
 	    // Conversation
@@ -55,7 +54,7 @@ public final class Session {
 	    for (int mess = 1; mess < 20; mess++) {
 		final Message message = new Message();
 		message.setContact(contact);
-		message.setContent("content " + mess);
+		message.setContent("Contact " + con + " - Message " + mess);
 		message.setDate(new Date(2013, 9, mess));
 		message.setInProgress(mess == 19);
 		message.setSent(((int) (2 * Math.random()) % 2) == 0);

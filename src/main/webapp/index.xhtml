@@ -13,27 +13,31 @@
 	<title>TODO title</title>
 </h:head>
 <h:body>
-	<h:form prependId="false">
-		<p:layout fullPage="true">
-			<p:layoutUnit position="north">
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north">
             TODO north
         </p:layoutUnit>
-			<p:layoutUnit collapsible="true" header="Contacts" position="west"
-				resizable="true" size="200">
+		<p:layoutUnit collapsible="true" header="Contacts" position="west"
+			resizable="true" size="200">
+			<h:form prependId="false">
 				<p:dataTable selectionMode="single" styleClass="no-header"
 					value="#{contactsManagedBean.contacts}" var="contact">
 					<p:ajax event="rowSelect"
-						listener="#{contactsManagedBean.onContactSelected}" />
+						listener="#{contactsManagedBean.onContactSelected}"
+						update=":conversation" />
 					<p:ajax event="rowUnselect"
-						listener="#{contactsManagedBean.onContactUnselected}" />
+						listener="#{contactsManagedBean.onContactUnselected}"
+						update=":conversation" />
 					<p:column>
 						<h:outputText value="#{contact.name}" />
 					</p:column>
 				</p:dataTable>
-			</p:layoutUnit>
-			<p:layoutUnit id="conversation" position="center">
-				<p:layout>
-					<p:layoutUnit position="center" style="display: block">
+			</h:form>
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+			<p:layout>
+				<p:layoutUnit position="center" style="display: block">
+					<h:form id="conversation" prependId="false">
 						<c:forEach items="#{contactsManagedBean.currentConversation}"
 							var="message">
 							<c:choose>
@@ -51,30 +55,32 @@
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
-					</p:layoutUnit>
-					<p:layoutUnit position="south" resizable="true">
-						<p:panelGrid style="width: 100%">
-							<p:row>
-								<p:column style="width: 100%">
-									<p:inputTextarea autoResize="false"
-										value="#{contactsManagedBean.currentConversation.input}"
-										style="width: 100%" />
-								</p:column>
-								<p:column>
-									<p:commandButton value="Envoyer" />
-								</p:column>
-								<p:column>
-									<p:commandButton value="Annuler" />
-								</p:column>
-							</p:row>
-						</p:panelGrid>
-					</p:layoutUnit>
-				</p:layout>
-			</p:layoutUnit>
-			<p:layoutUnit position="south">
+					</h:form>
+				</p:layoutUnit>
+				<p:layoutUnit position="south" resizable="true">
+
+					<p:panelGrid style="width: 100%">
+						<p:row>
+							<p:column style="width: 100%">
+								<p:inputTextarea autoResize="false"
+									value="#{contactsManagedBean.currentConversation.input}"
+									style="width: 100%" />
+							</p:column>
+							<p:column>
+								<p:commandButton value="Envoyer" />
+							</p:column>
+							<p:column>
+								<p:commandButton value="Annuler" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+
+				</p:layoutUnit>
+			</p:layout>
+		</p:layoutUnit>
+		<p:layoutUnit position="south">
             TODO south
         </p:layoutUnit>
-		</p:layout>
-	</h:form>
+	</p:layout>
 </h:body>
 </html>
