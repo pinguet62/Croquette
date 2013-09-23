@@ -1,7 +1,12 @@
 package fr.pinguet62.croquette.model;
 
+import java.io.Serializable;
+
 /** Contains informations about a contact. */
-public final class Contact {
+public final class Contact implements Serializable {
+
+    /** Auto generated serial version UID. */
+    private static final long serialVersionUID = -594515732428430186L;
 
     /** The {@link Conversation}. */
     private Conversation conversation = new Conversation();

@@ -31,8 +31,21 @@
 				<p:menuButton style="float: right;" value="pinguet62@gmail.com">
 					<p:menuitem icon="ui-icon-person" value="Delete" />
 					<p:separator />
-					<p:menuitem actionListener="#{userManagedBean.logout}" icon="ui-icon-close" url="/SMS.xhtml" value="Déconnexion" />
+					<p:menuitem actionListener="#{userManagedBean.logout}"
+						icon="ui-icon-close" url="/SMS.xhtml" value="Déconnexion" />
 				</p:menuButton>
+				<p:themeSwitcher value="#{themeSwitcherManagedBean.theme}">
+					<f:selectItem itemLabel="Choose Theme" itemValue="" />
+					<f:selectItems itemLabel="#{theme.name}" itemValue="#{theme}"
+						value="#{themeSwitcherManagedBean.themes}" var="theme" />
+					<p:ajax event="change" listener="#{themeSwitcherManagedBean.saveTheme}" />
+					<p:column>
+						<p:graphicImage value="#{theme.image}" />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{theme.name}" />
+					</p:column>
+				</p:themeSwitcher>
 			</h:form>
 		</p:layoutUnit>
 		<p:layoutUnit collapsible="true" header="Contacts" position="west"
