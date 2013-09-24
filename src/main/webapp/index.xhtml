@@ -34,16 +34,18 @@
 					<p:menuitem actionListener="#{userManagedBean.logout}"
 						icon="ui-icon-close" url="/SMS.xhtml" value="Déconnexion" />
 				</p:menuButton>
-				<p:themeSwitcher value="#{themeSwitcherManagedBean.theme}">
+				<p:themeSwitcher style="width:200px"
+					value="#{themeSwitcherManagedBean.theme}" var="t">
 					<f:selectItem itemLabel="Choose Theme" itemValue="" />
 					<f:selectItems itemLabel="#{theme.name}" itemValue="#{theme}"
 						value="#{themeSwitcherManagedBean.themes}" var="theme" />
-					<p:ajax event="change" listener="#{themeSwitcherManagedBean.saveTheme}" />
+					<!-- <p:ajax event="change" listener="#{themeSwitcherManagedBean.saveTheme}" /> -->
 					<p:column>
-						<p:graphicImage value="#{theme.image}" />
+						<p:graphicImage height="30px"
+							value="/resources/img/theme/#{t.image}" />
 					</p:column>
 					<p:column>
-						<h:outputText value="#{theme.name}" />
+						<p:outputLabel value="#{t.name}" />
 					</p:column>
 				</p:themeSwitcher>
 			</h:form>

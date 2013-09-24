@@ -1,4 +1,4 @@
-package fr.pinguet62.croquette.bean;
+package fr.pinguet62.croquette.bean.theme;
 
 /** Used to store informations about a theme. */
 public class Theme {
