@@ -14,7 +14,7 @@ import javax.faces.bean.SessionScoped;
 public class ThemeSwitcherManagedBean {
 
     /** The list of {@link Theme}s. */
-    private static final List<Theme> themes;
+    private static final Iterable<Theme> themes;
     static {
 	List<Theme> tmpThemes = new ArrayList<Theme>();
 	tmpThemes.add(new Theme("afterdark", "Afterdark", "afterdark.png"));

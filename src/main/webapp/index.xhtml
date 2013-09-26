@@ -25,28 +25,30 @@
 </h:head>
 <h:body>
 	<p:layout fullPage="true">
-		<p:layoutUnit position="north" style="padding:10px;">
-			<p:graphicImage height="50" library="img" name="logo.png" />
+		<p:layoutUnit position="north" size="105" style="padding: 10px;">
 			<h:form>
-				<p:menuButton style="float: right;" value="pinguet62@gmail.com">
-					<p:menuitem icon="ui-icon-person" value="Delete" />
-					<p:separator />
-					<p:menuitem actionListener="#{userManagedBean.logout}"
-						icon="ui-icon-close" url="/SMS.xhtml" value="Déconnexion" />
-				</p:menuButton>
-				<p:themeSwitcher style="width:200px"
+				<p:graphicImage height="50" library="img" name="logo.png" />
+				<p:themeSwitcher
+					style="width: 200px; position: absolute; right: 0; top: 0; margin-left: auto; margin-right: 0;"
 					value="#{themeSwitcherManagedBean.theme}" var="t">
 					<f:selectItems itemLabel="#{theme.name}" itemValue="#{theme}"
 						value="#{themeSwitcherManagedBean.themes}" var="theme" />
 					<p:ajax event="change" />
 					<p:column>
-						<p:graphicImage height="30px"
+						<p:graphicImage height="50px"
 							value="/resources/img/theme/#{t.image}" />
 					</p:column>
 					<p:column>
 						<p:outputLabel value="#{t.name}" />
 					</p:column>
 				</p:themeSwitcher>
+				<p:menuButton value="pinguet62@gmail.com"
+					style="position: absolute; right: 0; top: 40px; margin-left: auto; margin-right: 0;">
+					<p:menuitem icon="ui-icon-person" value="Delete" />
+					<p:separator />
+					<p:menuitem actionListener="#{userManagedBean.logout}"
+						icon="ui-icon-close" url="/SMS.xhtml" value="Déconnexion" />
+				</p:menuButton>
 			</h:form>
 		</p:layoutUnit>
 		<p:layoutUnit collapsible="true" header="Contacts" position="west"
@@ -68,7 +70,7 @@
 		</p:layoutUnit>
 		<p:layoutUnit position="center">
 			<p:layout>
-				<p:layoutUnit id="layout" position="center" style="display: block">
+				<p:layoutUnit id="layout" position="center" style="display: block;">
 					<h:form id="currentConversation" prependId="false">
 						<c:forEach items="#{contactsManagedBean.currentConversation}"
 							var="message">
