@@ -85,4 +85,16 @@ public class Theme {
 	this.name = name;
     }
 
+    /**
+     * Return the {@link String} representation of this current {@link Theme}.
+     * <p>
+     * Used by the <code>ThemeSwitcher</code> to get the new key.
+     * 
+     * @return The {@link String} representation.
+     */
+    @Override
+    public String toString() {
+	return this.key;
+    }
+
 }

@@ -11,6 +11,19 @@
 	<title>TODO title</title>
 </h:head>
 <h:body>
-    sms
+	<p:themeSwitcher style="width:165px" effect="fade" var="t"
+		id="themePreview">
+		<f:selectItem itemLabel="Choose Theme" itemValue="" />
+		<f:selectItems value="#{themeSwitcherManagedBean.themes}"
+			var="theme" itemLabel="#{theme.name}" itemValue="#{theme}" />
+
+		<p:column>
+			<p:graphicImage value="/images/themes/#{t.image}" />
+		</p:column>
+
+		<p:column>  
+                #{t.name}  
+        </p:column>
+	</p:themeSwitcher>
 </h:body>
 </html>

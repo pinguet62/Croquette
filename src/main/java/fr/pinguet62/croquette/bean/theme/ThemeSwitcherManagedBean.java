@@ -4,17 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 /** Used to switch of PrimeFaces theme. */
 @ManagedBean(name = "themeSwitcherManagedBean")
 @SessionScoped
 public class ThemeSwitcherManagedBean {
-
-    /** The key used into request map. */
-    private static final String THEME_KEY = "primefaces.THEME";
 
     /** The list of {@link Theme}s. */
     private static final List<Theme> themes;
@@ -22,7 +19,7 @@ public class ThemeSwitcherManagedBean {
 	List<Theme> tmpThemes = new ArrayList<Theme>();
 	tmpThemes.add(new Theme("afterdark", "Afterdark", "afterdark.png"));
 	tmpThemes.add(new Theme("afternoon", "Afternoon", "afternoon.png"));
-	tmpThemes.add(new Theme("afterwork", "afterwork", "afterwork.png"));
+	tmpThemes.add(new Theme("afterwork", "Afterwork", "afterwork.png"));
 	tmpThemes.add(new Theme("aristo", "Aristo", "aristo.png"));
 	tmpThemes.add(new Theme("black-tie", "Black-Tie", "black-tie.png"));
 	tmpThemes.add(new Theme("blitzer", "Blitzer", "blitzer.png"));
@@ -67,21 +64,16 @@ public class ThemeSwitcherManagedBean {
 	themes = Collections.unmodifiableList(tmpThemes);
     }
 
+    /** The current {@link Theme}. */
+    private Theme theme = null;
+
     /**
      * Gets the current {@link Theme}.
      * 
      * @return The current {@link Theme}.
      */
     public Theme getTheme() {
-	String currentKey = FacesContext.getCurrentInstance()
-		.getExternalContext()
-		.getInitParameter(ThemeSwitcherManagedBean.THEME_KEY);
-	if (currentKey == null)
-	    return null;
-	for (Theme theme : ThemeSwitcherManagedBean.themes)
-	    if (theme.getKey().equals(currentKey))
-		return theme;
-	return null;
+	return this.theme;
     }
 
     /**
@@ -93,13 +85,12 @@ public class ThemeSwitcherManagedBean {
 	return ThemeSwitcherManagedBean.themes;
     }
 
-    public void saveTheme() {
-	FacesContext
-		.getCurrentInstance()
-		.getExternalContext()
-		.getInitParameterMap()
-		.put(ThemeSwitcherManagedBean.THEME_KEY,
-			ThemeSwitcherManagedBean.themes.get(0).getKey());
+    /** Initialization of this bean. */
+    @PostConstruct
+    private void init() {
+	for (Theme theme : ThemeSwitcherManagedBean.themes)
+	    if ("bootstrap".equals(theme.getKey()))
+		this.theme = theme;
     }
 
     /**
@@ -109,7 +100,9 @@ public class ThemeSwitcherManagedBean {
      *            The new {@link Theme}.
      */
     public void setTheme(final Theme theme) {
-	FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
-		.put(ThemeSwitcherManagedBean.THEME_KEY, theme.getKey());
+	if (theme == null)
+	    return;
+	this.theme = theme;
     }
+
 }

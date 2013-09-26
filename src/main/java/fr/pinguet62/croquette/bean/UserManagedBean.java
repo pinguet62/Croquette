@@ -29,4 +29,5 @@ public class UserManagedBean implements Serializable {
     public void logout() {
 	Session.reset();
     }
+
 }

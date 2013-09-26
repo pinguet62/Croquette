@@ -36,10 +36,9 @@
 				</p:menuButton>
 				<p:themeSwitcher style="width:200px"
 					value="#{themeSwitcherManagedBean.theme}" var="t">
-					<f:selectItem itemLabel="Choose Theme" itemValue="" />
 					<f:selectItems itemLabel="#{theme.name}" itemValue="#{theme}"
 						value="#{themeSwitcherManagedBean.themes}" var="theme" />
-					<!-- <p:ajax event="change" listener="#{themeSwitcherManagedBean.saveTheme}" /> -->
+					<p:ajax event="change" />
 					<p:column>
 						<p:graphicImage height="30px"
 							value="/resources/img/theme/#{t.image}" />
