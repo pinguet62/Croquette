@@ -5,12 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 
 /** Used to switch of PrimeFaces theme. */
-@ManagedBean(name = "themeSwitcherManagedBean")
-@SessionScoped
+@ManagedBean(eager = true, name = "themeSwitcherManagedBean")
+@ApplicationScoped
 public class ThemeSwitcherManagedBean {
 
     /** The list of {@link Theme}s. */
