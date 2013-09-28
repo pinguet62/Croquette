@@ -37,7 +37,7 @@ public final class Session {
 
     // TODO Delete this
     @SuppressWarnings("deprecation")
-    public static void init() {
+    public static void initTest() {
 	// User
 	final User user = new User();
 	Session.getMap().put(Session.USER, user);
@@ -65,6 +65,17 @@ public final class Session {
 
     /** Reset user's data. */
     public static void reset() {
-	Session.getMap().remove(Session.USER);
+	Session.getMap().clear();
     }
+
+    /**
+     * Set the {@link User}.
+     * 
+     * @param user
+     *            The {@link User} to set.
+     */
+    public static void setUser(final User user) {
+	Session.getMap().put(Session.USER, user);
+    }
+
 }

@@ -1,4 +1,4 @@
-package fr.pinguet62.croquette.model.oauth;
+package oauth;
 
 import java.io.IOException;
 
@@ -19,8 +19,8 @@ public final class LoginOAuth extends HttpServlet {
 	    + "&redirect_uri=http://localhost:8081/Croquette/OAuth/redirect"
 	    + "&client_id=79632324639.apps.googleusercontent.com"
 	    + "&scope=https://www.googleapis.com/auth/userinfo.email"
-	    + "+ https://www.google.com/m8/feeds"
-	    + "+ https://www.googleapis.com/auth/googletalk";
+	    + "+https://www.google.com/m8/feeds"
+	    + "+https://www.googleapis.com/auth/googletalk";
 
     /** The token. */
     private String token = null;
