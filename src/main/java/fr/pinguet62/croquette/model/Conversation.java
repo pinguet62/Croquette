@@ -20,6 +20,12 @@ public final class Conversation extends TreeSet<Message> {
      */
     private String input = null;
 
+    /** Change <code>read</code> flag of all {@link Message}s. */
+    public void allRead() {
+	for (Message message : this)
+	    message.setRead(true);
+    }
+
     /**
      * Gets the sender or addressee {@link Contact}.
      * 
@@ -36,6 +42,19 @@ public final class Conversation extends TreeSet<Message> {
      */
     public String getInput() {
 	return this.input;
+    }
+
+    /**
+     * Gets count of unread {@link Message}s.
+     * 
+     * @return The count.
+     */
+    public int getUnreadCount() {
+	int count = 0;
+	for (Message message : this)
+	    if (!message.isRead())
+		count++;
+	return count;
     }
 
     /**

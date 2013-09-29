@@ -63,9 +63,12 @@
 					selectionMode="single" styleClass="no-header"
 					value="#{smsManagedBean.contacts}" var="contact">
 					<p:ajax event="rowSelect" oncomplete="scrollTop()"
-						update=":currentConversation, :input" />
+						update="@this, :currentConversation, :input" />
 					<p:ajax event="rowUnselect" update=":currentConversation, :input" />
 					<p:column>
+						<h:outputText rendered="#{contact.conversation.unreadCount != 0}"
+							value="#{contact.conversation.unreadCount}" style="float: right;"
+							styleClass="badge" />
 						<h:outputText value="#{contact.name}" />
 					</p:column>
 				</p:dataTable>

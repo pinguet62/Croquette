@@ -25,8 +25,8 @@ public final class User {
 	// User
 	final User user = new User();
 	User.set(user);
-	// -> Contacts
-	for (int con = 1; con < 35; ++con) {
+	// Contacts
+	for (int con = 1; con <= 30; ++con) {
 	    Contact contact = new Contact();
 	    contact.setName("Contact " + con);
 	    contact.setPhoneNumber("phoneNumber " + con);
@@ -34,13 +34,14 @@ public final class User {
 	    // Conversation
 	    Conversation conversation = new Conversation();
 	    contact.setConversation(conversation);
-	    // -> Messages
-	    for (int mess = 1; mess < 20; mess++) {
+	    // Messages
+	    for (int mess = 1; mess <= 20; mess++) {
 		final Message message = new Message();
 		message.setContact(contact);
 		message.setContent("Contact " + con + " - Message " + mess);
 		message.setDate(new Date(2012 - 1900, 9, mess));
 		message.setInProgress(mess == 19);
+		message.setRead((5 < con) || (mess < 18));
 		message.setSent(((int) (2 * Math.random()) % 2) == 0);
 		conversation.add(message);
 	    }

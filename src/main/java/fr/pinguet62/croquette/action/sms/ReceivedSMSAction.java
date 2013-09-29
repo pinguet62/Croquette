@@ -1,5 +1,7 @@
 package fr.pinguet62.croquette.action.sms;
 
+import java.util.Date;
+
 import javax.json.JsonObject;
 
 import fr.pinguet62.croquette.action.Action;
@@ -33,9 +35,11 @@ public class ReceivedSMSAction extends SMSAction {
 	// WebSocket
 
 	Message message = new Message();
+	message.setDate(new Date());
 	message.setContent(this.jsonMessage.getString(SMSAction.CONTENT));
-	User.get().getContact(
-		this.jsonMessage.getString(SMSAction.CONTACT_PHONE_NUMBER));
+	message.setContact(User.get().getContact(
+		this.jsonMessage.getString(SMSAction.CONTACT_PHONE_NUMBER)));
+	message.setSent(false);
     }
 
 }

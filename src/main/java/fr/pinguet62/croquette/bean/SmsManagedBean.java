@@ -36,6 +36,7 @@ public final class SmsManagedBean {
     public Conversation getCurrentConversation() {
 	if (this.selectedContact == null)
 	    return null;
+	this.selectedContact.getConversation().allRead();
 	return this.selectedContact.getConversation();
     }
 

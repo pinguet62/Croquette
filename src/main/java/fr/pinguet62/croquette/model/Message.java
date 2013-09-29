@@ -21,6 +21,9 @@ public final class Message implements Comparable<Message>, Serializable {
     /** If it is in progress. */
     private Boolean inprogress = null;
 
+    /** If if was read. */
+    private boolean read = true;
+
     /** If it was sent by user. */
     private Boolean sent = null;
 
@@ -84,6 +87,15 @@ public final class Message implements Comparable<Message>, Serializable {
     }
 
     /**
+     * Gets if it was read.
+     * 
+     * @return Result.
+     */
+    public boolean isRead() {
+	return this.read;
+    }
+
+    /**
      * Gets if it was sent by user.
      * 
      * @return Result.
@@ -130,6 +142,16 @@ public final class Message implements Comparable<Message>, Serializable {
      */
     public void setInProgress(final Boolean inprogress) {
 	this.inprogress = inprogress;
+    }
+
+    /**
+     * Sets if it was read.
+     * 
+     * @param read
+     *            the read to set
+     */
+    public void setRead(final boolean read) {
+	this.read = read;
     }
 
     /**
