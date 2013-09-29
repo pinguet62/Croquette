@@ -47,6 +47,12 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+        <!-- JSON -->
+		<dependency>
+		    <groupId>org.glassfish</groupId>
+		    <artifactId>javax.json</artifactId>
+		    <version>1.0</version>
+		</dependency>
 		<!-- PrimeFaces -->
 		<dependency>
 			<groupId>org.primefaces</groupId>

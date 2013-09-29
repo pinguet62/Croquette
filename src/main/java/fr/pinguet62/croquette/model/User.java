@@ -1,12 +1,14 @@
 package fr.pinguet62.croquette.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import org.springframework.security.core.context.SecurityContextHolder;
 
 /** Informations about user. */
 public final class User {
+
+    // Delete this
+    private static User user = null;
 
     /**
      * Gets the session user.
@@ -14,12 +16,39 @@ public final class User {
      * @return The session user.
      */
     public static User get() {
-	return (User) SecurityContextHolder.getContext().getAuthentication()
-		.getPrincipal();
+	return User.user;
+    }
+
+    // TODO Delete this
+    @SuppressWarnings("deprecation")
+    public static void initTest() {
+	// User
+	final User user = new User();
+	User.set(user);
+	// -> Contacts
+	for (int con = 1; con < 35; ++con) {
+	    Contact contact = new Contact();
+	    contact.setName("Contact " + con);
+	    contact.setPhoneNumber("phoneNumber " + con);
+	    user.getContacts().add(contact);
+	    // Conversation
+	    Conversation conversation = new Conversation();
+	    contact.setConversation(conversation);
+	    // -> Messages
+	    for (int mess = 1; mess < 20; mess++) {
+		final Message message = new Message();
+		message.setContact(contact);
+		message.setContent("Contact " + con + " - Message " + mess);
+		message.setDate(new Date(2012 - 1900, 9, mess));
+		message.setInProgress(mess == 19);
+		message.setSent(((int) (2 * Math.random()) % 2) == 0);
+		conversation.add(message);
+	    }
+	}
     }
 
     public static void set(final User user) {
-	SecurityContextHolder.getContext().setAuthentication(null);
+	User.user = user;
     }
 
     /** The code. */
@@ -52,6 +81,22 @@ public final class User {
     }
 
     /**
+     * Gets {@link Contact} by phone number.
+     * 
+     * @param phoneNumber
+     *            The phone number
+     * @return The {@link Contact}, <code>null</code> if not find.
+     */
+    public Contact getContact(final String phoneNumber) {
+	if (phoneNumber == null)
+	    return null;
+	for (Contact contact : this.contacts)
+	    if (phoneNumber.equals(contact.getPhoneNumber()))
+		return contact;
+	return null;
+    }
+
+    /**
      * Gets the list of {@link Contact}s.
      * 
      * @return The list of {@link Contact}s.
@@ -69,17 +114,5 @@ public final class User {
     public void setCode(final String code) {
 	this.code = code;
     }
-
-    // /**
-    // * Gets the {@link Conversations}.
-    // *
-    // * @return The {@link Conversations}.
-    // */
-    // public Conversations getConversations() {
-    // Conversations conversations = new Conversations();
-    // for (Contact contact : this.contacts)
-    // conversations.add(contact.getConversation());
-    // return conversations;
-    // }
 
 }

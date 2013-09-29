@@ -27,13 +27,17 @@
 	<p:layout fullPage="true">
 		<p:layoutUnit position="north" size="105" style="padding: 10px;">
 			<h:form>
-				<p:graphicImage height="50" library="img" name="logo.png" />
+				<h:outputLink value="index.xhtml">
+					<p:graphicImage height="50" library="img" name="logo.png" />
+				</h:outputLink>
 				<p:themeSwitcher
 					style="width: 200px; position: absolute; right: 0; top: 0; margin-left: auto; margin-right: 0;"
 					value="#{themeSwitcherManagedBean.theme}" var="t">
 					<f:selectItems itemLabel="#{theme.name}" itemValue="#{theme}"
 						value="#{themeSwitcherManagedBean.themes}" var="theme" />
+					<!-- TODO ajax -->
 					<p:ajax event="change" />
+					<p:ajax event="valueChange" />
 					<p:column>
 						<p:graphicImage height="50px"
 							value="/resources/img/theme/#{t.image}" />
@@ -58,10 +62,9 @@
 					selection="#{smsManagedBean.selectedContact}"
 					selectionMode="single" styleClass="no-header"
 					value="#{smsManagedBean.contacts}" var="contact">
-					<p:ajax event="rowSelect"
-						oncomplete="scrollTop()" update=":currentConversation, :input" />
-					<p:ajax event="rowUnselect"
-						update=":currentConversation" />
+					<p:ajax event="rowSelect" oncomplete="scrollTop()"
+						update=":currentConversation, :input" />
+					<p:ajax event="rowUnselect" update=":currentConversation, :input" />
 					<p:column>
 						<h:outputText value="#{contact.name}" />
 					</p:column>
@@ -102,7 +105,8 @@
 									</p:inputTextarea>
 								</p:column>
 								<p:column>
-									<p:commandButton value="Envoyer" />
+									<p:commandButton actionListener="#{smsManagedBean.send}"
+										update=":currentConversation, :input" value="Envoyer" />
 								</p:column>
 								<p:column>
 									<p:commandButton value="Annuler" />

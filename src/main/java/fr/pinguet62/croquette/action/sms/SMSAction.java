@@ -1,7 +1,6 @@
 package fr.pinguet62.croquette.action.sms;
 
-import org.primefaces.json.JSONException;
-import org.primefaces.json.JSONObject;
+import javax.json.JsonObject;
 
 import fr.pinguet62.croquette.action.IAction;
 
@@ -11,16 +10,18 @@ public abstract class SMSAction implements IAction {
     /** Key for phone number. */
     public static final String CONTACT_PHONE_NUMBER = "phone number";
 
+    /** Key for content. */
+    public static final String CONTENT = "content";
+
     /**
-     * Validate the JSON message for SMS action.
+     * Test if the JSON message is valid for SMS action.
      * 
      * @param jsonMessage
      *            The JSON message to validate.
-     * @throws JSONException
-     *             Invalid JSON message.
+     * @return Is valid.
      */
-    protected void validate(final JSONObject jsonMessage) throws JSONException {
-	jsonMessage.get(SMSAction.CONTACT_PHONE_NUMBER);
+    protected boolean isValid(final JsonObject jsonMessage) {
+	return jsonMessage.containsKey(SMSAction.CONTACT_PHONE_NUMBER);
     }
 
 }

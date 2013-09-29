@@ -1,4 +1,4 @@
-package oauth;
+package fr.pinguet62.croquette.oauth;
 
 import java.io.IOException;
 

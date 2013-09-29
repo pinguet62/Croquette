@@ -1,45 +1,30 @@
 package fr.pinguet62.croquette.action.sms;
 
-import org.primefaces.json.JSONException;
-import org.primefaces.json.JSONObject;
+import javax.json.Json;
+import javax.json.JsonObject;
 
-import fr.pinguet62.croquette.action.ActionType;
+import fr.pinguet62.croquette.action.Action;
 import fr.pinguet62.croquette.action.IAction;
 import fr.pinguet62.croquette.model.Message;
 
 /** Send a SMS. */
+@Action(SendSMSAction.ACTION_KEY)
 public class SendSMSAction extends SMSAction {
 
-    /** The JSON message. */
-    private JSONObject jsonMessage = null;
+    /** The <code>action</code> key. */
+    public static final String ACTION_KEY = "SMS_SEND";
 
-    /**
-     * Constructor with JSON message.
-     * 
-     * @param jsonMessage
-     *            The JSON message.
-     * @throws JSONException
-     *             Invalid JSON message.
-     */
-    public SendSMSAction(final JSONObject jsonMessage) throws JSONException {
-	this.validate(jsonMessage);
-	this.jsonMessage = jsonMessage;
-    }
+    /** The {@link Message} to send. */
+    private Message message = null;
 
     /**
      * Constructor with {@link Message}.
      * 
      * @param message
      *            The message to send.
-     * @throws JSONException
-     *             Invalid JSON message.
      */
-    public SendSMSAction(final Message message) throws JSONException {
-	// Implement SendSMSAction.SendSMSAction(Message)
-	this.jsonMessage = new JSONObject();
-	this.jsonMessage.append(IAction.ACTION_TYPE, ActionType.SMS_SEND);
-	this.jsonMessage.append(SMSAction.CONTACT_PHONE_NUMBER, message
-		.getContact().getPhoneNumber());
+    public SendSMSAction(final Message message) {
+	this.message = message;
     }
 
     /** {@inheritDoc} */
@@ -47,7 +32,12 @@ public class SendSMSAction extends SMSAction {
     public void execute() {
 	// TODO Implement SendSMSAction.execute()
 	// send JSONObject
-	this.jsonMessage = new JSONObject(); // tmp
+	JsonObject json = Json
+		.createObjectBuilder()
+		.add(IAction.ACTION_TYPE, SendSMSAction.ACTION_KEY)
+		.add(SMSAction.CONTACT_PHONE_NUMBER,
+			this.message.getContact().getPhoneNumber())
+		.add("content", this.message.getContent()).build();
     }
 
 }
