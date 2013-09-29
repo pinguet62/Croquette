@@ -3,10 +3,6 @@ package fr.pinguet62.croquette.bean;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.AjaxBehaviorEvent;
-
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
 
 import fr.pinguet62.croquette.Session;
 import fr.pinguet62.croquette.model.Contact;
@@ -39,6 +35,26 @@ public final class SmsManagedBean {
 	return this.selectedContact.getConversation();
     }
 
+    /**
+     * Gets the input.
+     * 
+     * @return The input.
+     */
+    public String getInput() {
+	if (this.getCurrentConversation() == null)
+	    return null;
+	return this.getCurrentConversation().getInput();
+    }
+
+    /**
+     * Gets the selected {@link Contact}.
+     * 
+     * @return The selected {@link Contact}.
+     */
+    public Contact getSelectedContact() {
+	return this.selectedContact;
+    }
+
     /** Initialization of this bean. */
     @PostConstruct
     private void init() {
@@ -46,38 +62,25 @@ public final class SmsManagedBean {
     }
 
     /**
-     * Called when user enter text.
+     * Sets the input.
      * 
-     * @param event
-     *            The event.
+     * @param input
+     *            The input to set.
      */
-    public void inputChange(final AjaxBehaviorEvent event) {
+    public void setInput(final String input) {
 	if (this.getCurrentConversation() == null)
 	    return;
-	this.getCurrentConversation().setInput("");
+	this.getCurrentConversation().setInput(input);
     }
 
     /**
-     * Call when user select a {@link Contact}.
+     * Sets the selected {@link Contact}.
      * 
-     * @param event
-     *            The selection event.
+     * @param selectedContact
+     *            The selected {@link Contact} to set.
      */
-    public void onContactSelected(final SelectEvent event) {
-	this.selectedContact = (Contact) event.getObject();
-	// this.currentConversation = Session.getUser().getConversations()
-	// .get(this.selectedContact.getPhoneNumber());
-    }
-
-    /**
-     * Call when user select a {@link Contact}.
-     * 
-     * @param event
-     *            The unselection event.
-     */
-    public void onContactUnselected(final UnselectEvent event) {
-	this.selectedContact = null;
-	// this.currentConversation = null;
+    public void setSelectedContact(final Contact selectedContact) {
+	this.selectedContact = selectedContact;
     }
 
 }

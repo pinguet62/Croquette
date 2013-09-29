@@ -54,14 +54,13 @@
 		<p:layoutUnit collapsible="true" header="Contacts" position="west"
 			resizable="true" size="200">
 			<h:form prependId="false">
-				<p:dataTable selectionMode="single" styleClass="no-header"
-					value="#{smsManagedBean.contacts}" var="contact"
-					rowKey="#{contact.phoneNumber}">
+				<p:dataTable rowKey="#{contact.phoneNumber}"
+					selection="#{smsManagedBean.selectedContact}"
+					selectionMode="single" styleClass="no-header"
+					value="#{smsManagedBean.contacts}" var="contact">
 					<p:ajax event="rowSelect"
-						listener="#{smsManagedBean.onContactSelected}"
-						oncomplete="scrollTop()" update=":currentConversation" />
+						oncomplete="scrollTop()" update=":currentConversation, :input" />
 					<p:ajax event="rowUnselect"
-						listener="#{smsManagedBean.onContactUnselected}"
 						update=":currentConversation" />
 					<p:column>
 						<h:outputText value="#{contact.name}" />
@@ -93,27 +92,28 @@
 					</h:form>
 				</p:layoutUnit>
 				<p:layoutUnit position="south" resizable="true">
-					<p:panelGrid style="width: 100%">
-						<p:row>
-							<p:column style="width: 100%">
-								<p:inputTextarea autoResize="false"
-									value="#{smsManagedBean.currentConversation.input}"
-									style="width: 100%">
-									<p:ajax event="blur" />
-								</p:inputTextarea>
-							</p:column>
-							<p:column>
-								<p:commandButton value="Envoyer" />
-							</p:column>
-							<p:column>
-								<p:commandButton value="Annuler" />
-							</p:column>
-						</p:row>
-					</p:panelGrid>
+					<h:form id="input">
+						<p:panelGrid style="width: 100%">
+							<p:row>
+								<p:column style="width: 100%">
+									<p:inputTextarea autoResize="false"
+										value="#{smsManagedBean.input}" style="width: 100%">
+										<f:ajax event="keyup" />
+									</p:inputTextarea>
+								</p:column>
+								<p:column>
+									<p:commandButton value="Envoyer" />
+								</p:column>
+								<p:column>
+									<p:commandButton value="Annuler" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</h:form>
 				</p:layoutUnit>
 			</p:layout>
 		</p:layoutUnit>
-		<p:layoutUnit position="south" id="south">
+		<p:layoutUnit position="south">
             TODO south
         </p:layoutUnit>
 	</p:layout>
