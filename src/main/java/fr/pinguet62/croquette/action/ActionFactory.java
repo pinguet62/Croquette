@@ -62,7 +62,7 @@ public final class ActionFactory {
      * @return The {@link Action}.
      */
     public static IAction getAction(final JsonObject jsonMessage) {
-	final String actionKey = jsonMessage.getString(IAction.ACTION_TYPE);
+	final String actionKey = jsonMessage.getString(IAction.ACTION_KEY);
 	if (actionKey == null)
 	    return null;
 

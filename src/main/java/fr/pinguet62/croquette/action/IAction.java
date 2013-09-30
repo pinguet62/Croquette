@@ -4,7 +4,7 @@ package fr.pinguet62.croquette.action;
 public interface IAction {
 
     /** Key for {@link ActionType}. */
-    public static final String ACTION_TYPE = "action";
+    public static final String ACTION_KEY = "action";
 
     /** Execute the action. */
     void execute();

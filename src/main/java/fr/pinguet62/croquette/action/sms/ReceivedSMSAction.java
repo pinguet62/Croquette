@@ -10,8 +10,11 @@ import fr.pinguet62.croquette.model.Message;
 import fr.pinguet62.croquette.model.User;
 
 /** SMS received. */
-@Action("SMS_RECEIVED")
+@Action(ReceivedSMSAction.ACTION_VALUE)
 public class ReceivedSMSAction extends SMSAction {
+
+    /** The <code>action</code> value. */
+    public static final String ACTION_VALUE = "SMS_RECEIVED";
 
     /** The JSON message. */
     private JsonObject jsonMessage = null;
