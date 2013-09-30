@@ -66,9 +66,15 @@ public final class SmsManagedBean {
 	User.initTest();
     }
 
-    /** Called when {@link User} want send the SMS to her {@link Contact}. */
+    /**
+     * Called when {@link User} want send the SMS to her {@link Contact}.
+     * <p>
+     * Generate and execute the {@link SendSMSAction}.
+     */
     public void send() {
 	if (this.getCurrentConversation() == null)
+	    return;
+	if ((this.getInput() == null) || this.getInput().isEmpty())
 	    return;
 
 	Message message = new Message();

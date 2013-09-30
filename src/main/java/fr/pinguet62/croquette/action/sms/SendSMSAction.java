@@ -11,7 +11,7 @@ import fr.pinguet62.croquette.model.Message;
 @Action(SendSMSAction.ACTION_KEY)
 public class SendSMSAction extends SMSAction {
 
-    /** The <code>action</code> key. */
+    /** The <code>action</code> value. */
     public static final String ACTION_KEY = "SMS_SEND";
 
     /** The {@link Message} to send. */
@@ -27,7 +27,10 @@ public class SendSMSAction extends SMSAction {
 	this.message = message;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Create the {@link JsonObject} from the {@link Message}. <br />
+     * Send to <code>GTalk</code> account.
+     */
     @Override
     public void execute() {
 	// TODO Implement SendSMSAction.execute()

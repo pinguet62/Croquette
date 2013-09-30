@@ -1,6 +1,15 @@
 package fr.pinguet62.croquette.action;
 
-/** Define the value of <code>action</code> into JSON message. */
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+/**
+ * Annotation used to define the value of <code>action</code> key in the JSON
+ * message. <br />
+ * The annotated classes are explored by {@link ActionFactory} to determinate
+ * the action to perform.
+ */
+@Retention(RetentionPolicy.RUNTIME)
 public @interface Action {
 
     /** Value of <code>action</code> key. */
