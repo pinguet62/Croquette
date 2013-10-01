@@ -9,7 +9,7 @@ import fr.pinguet62.croquette.model.Message;
 
 /** Send a SMS. */
 @Action(SendSMSAction.ACTION_KEY)
-public class SendSMSAction extends SMSAction {
+public final class SendSMSAction extends SMSAction {
 
     /** The <code>action</code> value. */
     public static final String ACTION_KEY = "SMS_SEND";
@@ -33,10 +33,7 @@ public class SendSMSAction extends SMSAction {
      */
     @Override
     public void execute() {
-	// TODO Implement SendSMSAction.execute()
-	// send JSONObject
-	JsonObject json = Json
-		.createObjectBuilder()
+	Json.createObjectBuilder()
 		.add(IAction.ACTION_KEY, SendSMSAction.ACTION_KEY)
 		.add(SMSAction.CONTACT_PHONE_NUMBER,
 			this.message.getContact().getPhoneNumber())

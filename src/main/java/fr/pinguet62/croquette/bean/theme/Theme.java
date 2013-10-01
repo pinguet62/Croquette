@@ -1,7 +1,7 @@
 package fr.pinguet62.croquette.bean.theme;
 
 /** Used to store informations about a theme. */
-public class Theme {
+public final class Theme {
 
     /** The path of image. */
     private String image;

@@ -102,4 +102,8 @@ public final class ActionFactory {
 	return ActionFactory.explorePackage(packageName, directory);
     }
 
+    /** Private constructor. */
+    private ActionFactory() {
+    }
+
 }

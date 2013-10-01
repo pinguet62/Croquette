@@ -11,7 +11,7 @@ import fr.pinguet62.croquette.model.User;
 
 /** SMS received. */
 @Action(ReceivedSMSAction.ACTION_VALUE)
-public class ReceivedSMSAction extends SMSAction {
+public final class ReceivedSMSAction extends SMSAction {
 
     /** The <code>action</code> value. */
     public static final String ACTION_VALUE = "SMS_RECEIVED";

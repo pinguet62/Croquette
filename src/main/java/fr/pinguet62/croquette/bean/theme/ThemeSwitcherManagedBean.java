@@ -11,7 +11,7 @@ import javax.faces.bean.ManagedBean;
 /** Used to switch of PrimeFaces theme. */
 @ManagedBean(eager = true, name = "themeSwitcherManagedBean")
 @ApplicationScoped
-public class ThemeSwitcherManagedBean {
+public final class ThemeSwitcherManagedBean {
 
     /** The list of {@link Theme}s. */
     private static final Iterable<Theme> themes;
