@@ -6,18 +6,34 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.primefaces.push.PushContext;
+import org.primefaces.push.PushContextFactory;
+
 import fr.pinguet62.croquette.action.sms.SendSMSAction;
 import fr.pinguet62.croquette.model.Contact;
 import fr.pinguet62.croquette.model.Conversation;
 import fr.pinguet62.croquette.model.Message;
 import fr.pinguet62.croquette.model.User;
 
+/** Managed bean used to control the SMS view. */
 @ManagedBean(name = "smsManagedBean")
 @SessionScoped
 public final class SmsManagedBean {
 
+    /** The channel name of the connection with the view. */
+    public static final String CHANNEL = "/channel";
+
     /** The selected {@link Contact}. */
     private Contact selectedContact = null;
+
+    /**
+     * Gets the channel name of the connection with the view.
+     * 
+     * @return The channel.
+     */
+    public String getChannel() {
+	return SmsManagedBean.CHANNEL;
+    }
 
     /**
      * Gets the list of {@link Contact}s of {@link User}.
@@ -110,6 +126,27 @@ public final class SmsManagedBean {
      */
     public void setSelectedContact(final Contact selectedContact) {
 	this.selectedContact = selectedContact;
+    }
+
+    // TODO Delete this
+    public void test() {
+	// JsonObject jsonMessage = Json.createObjectBuilder()
+	// .add(IAction.ACTION_KEY, ReceivedSMSAction.ACTION_VALUE)
+	// .add(SMSAction.CONTACT_PHONE_NUMBER, "")
+	// .add(SMSAction.CONTENT, "content").build();
+	// ReceivedSMSAction action = new ReceivedSMSAction(jsonMessage);
+	// action.execute();
+
+	Message message = new Message();
+	message.setContact(this.selectedContact);
+	message.setContent("test");
+	message.setDate(new Date());
+	message.setSent(true);
+	this.getCurrentConversation().add(message);
+
+	PushContext pushContext = PushContextFactory.getDefault()
+		.getPushContext();
+	pushContext.push(SmsManagedBean.CHANNEL, "ça marche !!!");
     }
 
 }

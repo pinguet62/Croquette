@@ -39,6 +39,7 @@ public final class ActionFactoryTest {
 		.build();
 	IAction action = ActionFactory.getAction(jsonMessage);
 	Assert.assertTrue(action instanceof ReceivedSMSAction);
+	action.execute();
     }
 
 }

@@ -2,9 +2,14 @@ package fr.pinguet62.croquette.action.sms;
 
 import java.util.Date;
 
+import javax.faces.application.FacesMessage;
 import javax.json.JsonObject;
 
+import org.primefaces.push.PushContext;
+import org.primefaces.push.PushContextFactory;
+
 import fr.pinguet62.croquette.action.Action;
+import fr.pinguet62.croquette.bean.SmsManagedBean;
 import fr.pinguet62.croquette.model.Conversation;
 import fr.pinguet62.croquette.model.Message;
 import fr.pinguet62.croquette.model.User;
@@ -44,6 +49,10 @@ public final class ReceivedSMSAction extends SMSAction {
 	message.setContact(User.get().getContact(
 		this.jsonMessage.getString(SMSAction.CONTACT_PHONE_NUMBER)));
 	message.setSent(false);
+
+	PushContext pushContext = PushContextFactory.getDefault()
+		.getPushContext();
+	pushContext.push(SmsManagedBean.CHANNEL, new FacesMessage("", ""));
     }
 
 }
