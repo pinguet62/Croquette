@@ -27,6 +27,16 @@ public final class SmsManagedBean {
     private Contact selectedContact = null;
 
     /**
+     * Destructor.
+     * <p>
+     * Disconnect user of <code>GTalk</code>.
+     */
+    @Override
+    public void finalize() {
+	// TODO Implement
+    }
+
+    /**
      * Gets the channel name of the connection with the view.
      * 
      * @return The channel.
@@ -76,10 +86,16 @@ public final class SmsManagedBean {
 	return this.selectedContact;
     }
 
-    /** Initialization of this bean. */
+    /**
+     * Initialization of this bean.
+     * <p>
+     * Connect user to <code>GTalk</code>.
+     */
     @PostConstruct
     private void init() {
 	User.initTest();
+
+	// TODO Implement
     }
 
     /**

@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.pinguet62.croquette.model.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /** Used when the OAuth server redirect user after her authentication. */
 @WebServlet(urlPatterns = RedirectOAuth.URL)
@@ -26,13 +27,15 @@ public final class RedirectOAuth extends HttpServlet {
 	String error = request.getParameter("error");
 	if (error != null)
 	    System.err.println(this.getClass().toString() + " : " + error);
-	String code = request.getParameter("code");
-	if (code == null)
-	    System.err.println(this.getClass().toString() + " : no code");
-	else if (User.get() != null)
-	    User.set(new User(code));
+	String token = request.getParameter("code");
+	if (token == null) {
+	    System.err.println(this.getClass().toString() + " : no token");
+	    return;
+	}
 
-	response.sendRedirect("");
+	Authentication authentication = new OAuthAuthenticationToken(token);
+	SecurityContextHolder.getContext().setAuthentication(authentication);
+
+	response.sendRedirect(request.getContextPath() + "/index.xhtml");
     }
-
 }
