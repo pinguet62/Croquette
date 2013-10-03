@@ -11,7 +11,7 @@ import fr.pinguet62.croquette.model.User;
  * Used to authenticate the user with OAuth. <br />
  * Simple extension of {@link AbstractAuthenticationToken} because
  * <code>username</code> and <code>password</code> are not used. <br />
- * Default right is <code>ROLE_USER</code>.
+ * Define the default <code>ROLE_USER</code> right.
  */
 public final class OAuthAuthenticationToken extends AbstractAuthenticationToken {
 

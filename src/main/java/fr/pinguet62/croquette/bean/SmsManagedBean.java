@@ -27,8 +27,7 @@ public final class SmsManagedBean {
     private Contact selectedContact = null;
 
     /**
-     * Destructor.
-     * <p>
+     * Destructor. <br />
      * Disconnect user of <code>GTalk</code>.
      */
     @Override
@@ -87,8 +86,7 @@ public final class SmsManagedBean {
     }
 
     /**
-     * Initialization of this bean.
-     * <p>
+     * Initialization of this bean. <br />
      * Connect user to <code>GTalk</code>.
      */
     @PostConstruct
@@ -99,8 +97,7 @@ public final class SmsManagedBean {
     }
 
     /**
-     * Called when {@link User} want send the SMS to her {@link Contact}.
-     * <p>
+     * Called when {@link User} want send the SMS to her {@link Contact}. <br />
      * Generate and execute the {@link SendSMSAction}.
      */
     public void send() {

@@ -3,8 +3,7 @@ package fr.pinguet62.croquette.model;
 import java.util.TreeSet;
 
 /**
- * Contains list of {@link Conversation}s.
- * <p>
+ * Contains list of {@link Conversation}s. <br />
  * Extends {@link TreeSet} to sort and add some methods.
  */
 public final class Conversations extends TreeSet<Conversation> {

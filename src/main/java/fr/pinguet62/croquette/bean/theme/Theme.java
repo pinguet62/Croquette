@@ -86,8 +86,7 @@ public final class Theme {
     }
 
     /**
-     * Return the {@link String} representation of this current {@link Theme}.
-     * <p>
+     * Return the {@link String} representation of this current {@link Theme}. <br >>
      * Used by the <code>ThemeSwitcher</code> to get the new key.
      * 
      * @return The {@link String} representation.
