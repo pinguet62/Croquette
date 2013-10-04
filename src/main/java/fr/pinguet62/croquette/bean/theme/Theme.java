@@ -91,9 +91,9 @@ public final class Theme {
      * 
      * @return The {@link String} representation.
      */
-    @Override
-    public String toString() {
-	return this.key;
-    }
+    // @Override
+    // public String toString() {
+    // return this.key;
+    // }
 
 }

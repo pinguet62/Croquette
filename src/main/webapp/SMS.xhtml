@@ -10,6 +10,7 @@
 <h:head>
 	<h:outputStylesheet library="css" name="main.css" />
 	<h:outputStylesheet library="css" name="chat.css" />
+	<f:loadBundle basename="fr.pinguet62.croquette.messages" var="msg" />
 	<title>TODO title</title>
 	<script type="text/javascript">
 		function scrollTop() {
@@ -41,6 +42,7 @@
 					<!-- TODO ajax -->
 					<p:ajax event="change" />
 					<p:ajax event="valueChange" />
+					<f:converter converterId="themeConverter" />
 					<p:column>
 						<p:graphicImage height="50px"
 							value="/resources/img/theme/#{t.image}" />
@@ -54,12 +56,13 @@
 					<p:menuitem icon="ui-icon-person" value="Delete" />
 					<p:separator />
 					<p:menuitem actionListener="#{userManagedBean.logout}"
-						icon="ui-icon-close" url="/SMS.xhtml" value="Déconnexion" />
+						icon="ui-icon-close" url="/SMS.xhtml"
+						value="#{msg['login.logout']}" />
 				</p:menuButton>
 			</h:form>
 		</p:layoutUnit>
-		<p:layoutUnit collapsible="true" header="Contacts" position="west"
-			resizable="true" size="200">
+		<p:layoutUnit collapsible="true" header="#{msg['sms.contacts.title']}"
+			position="west" resizable="true" size="200">
 			<h:form id="contactsForm" prependId="false">
 				<p:dataTable id="contacts" rowKey="#{contact.phoneNumber}"
 					selection="#{smsManagedBean.selectedContact}"
@@ -102,6 +105,7 @@
 				</p:layoutUnit>
 				<p:layoutUnit position="south" resizable="true">
 					<h:form id="input">
+						<p:growl autoUpdate="true" showDetail="true" />
 						<p:panelGrid style="width: 100%">
 							<p:row>
 								<p:column style="width: 100%">
@@ -112,11 +116,12 @@
 								</p:column>
 								<p:column>
 									<p:commandButton actionListener="#{smsManagedBean.send}"
-										update=":currentConversation, :input" value="Envoyer" />
+										update=":currentConversation, :input"
+										value="#{msg['sms.action.send']}" />
 								</p:column>
 								<p:column>
 									<p:commandButton actionListener="#{smsManagedBean.test}"
-										value="Annuler" />
+										value="#{msg['sms.action.reset']}" />
 								</p:column>
 							</p:row>
 						</p:panelGrid>
@@ -128,8 +133,9 @@
             TODO south
         </p:layoutUnit>
 	</p:layout>
-	<p:socket channel="#{smsManagedBean.channel}">
+	<!-- <p:socket channel="#{smsManagedBean.channel}">
 		<p:ajax event="message" update="contactsForm:contacts, :currentConversation" />
-	</p:socket>
+	</p:socket> -->
+	<p:socket channel="/channel" onMessage="alert('ok');" />
 </h:body>
 </html>

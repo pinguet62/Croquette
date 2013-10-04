@@ -13,6 +13,14 @@
 		<param-name>primefaces.THEME</param-name>
 		<param-value>#{themeSwitcherManagedBean.theme.key}</param-value>
 	</context-param>
+	<servlet>
+	    <servlet-name>Push Servlet</servlet-name>
+	    <servlet-class>org.primefaces.push.PushServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>Push Servlet</servlet-name>
+        <url-pattern>/primepush/*</url-pattern>
+    </servlet-mapping>
 
 	<!-- JSF -->
 	<servlet>
@@ -26,7 +34,7 @@
 	</servlet-mapping>
 
 	<!-- Spring Security -->
-    <context-param>
+    <!-- <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/security.xml</param-value>
     </context-param>
@@ -40,5 +48,5 @@
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/SMS.xhtml</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 </web-app>

@@ -14,7 +14,7 @@ import javax.faces.bean.ManagedBean;
 public final class ThemeSwitcherManagedBean {
 
     /** The list of {@link Theme}s. */
-    private static final Iterable<Theme> themes;
+    public static final Iterable<Theme> THEMES;
     static {
 	List<Theme> tmpThemes = new ArrayList<Theme>();
 	tmpThemes.add(new Theme("afterdark", "Afterdark", "afterdark.png"));
@@ -61,7 +61,7 @@ public final class ThemeSwitcherManagedBean {
 	tmpThemes.add(new Theme("ui-lightness", "UI-Lightness",
 		"ui-lightness.png"));
 	tmpThemes.add(new Theme("vader", "Vader", "vader.png"));
-	themes = Collections.unmodifiableList(tmpThemes);
+	THEMES = Collections.unmodifiableList(tmpThemes);
     }
 
     /** The current {@link Theme}. */
@@ -82,13 +82,13 @@ public final class ThemeSwitcherManagedBean {
      * @return The list of {@link Theme}s.
      */
     public Iterable<Theme> getThemes() {
-	return ThemeSwitcherManagedBean.themes;
+	return ThemeSwitcherManagedBean.THEMES;
     }
 
     /** Initialization of this bean. */
     @PostConstruct
     private void init() {
-	for (Theme theme : ThemeSwitcherManagedBean.themes)
+	for (Theme theme : ThemeSwitcherManagedBean.THEMES)
 	    if ("bootstrap".equals(theme.getKey()))
 		this.theme = theme;
     }

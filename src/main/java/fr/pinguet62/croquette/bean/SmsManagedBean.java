@@ -3,8 +3,10 @@ package fr.pinguet62.croquette.bean;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.push.PushContext;
 import org.primefaces.push.PushContextFactory;
@@ -117,6 +119,11 @@ public final class SmsManagedBean {
 
 	this.getCurrentConversation().add(message);
 	this.getCurrentConversation().setInput(null);
+
+	FacesContext.getCurrentInstance().addMessage(
+		null,
+		new FacesMessage(FacesMessage.SEVERITY_INFO,
+			"SMS send success", message.getContent()));
     }
 
     /**

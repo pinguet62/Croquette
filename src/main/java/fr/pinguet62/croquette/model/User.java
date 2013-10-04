@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 /** Informations about user. */
 public final class User {
+
+    private static User u;
 
     /**
      * Gets the session user.
@@ -16,13 +15,14 @@ public final class User {
      * @return The session user.
      */
     public static User get() {
-	Authentication authentication = SecurityContextHolder.getContext()
-		.getAuthentication();
-	if ((authentication == null) || !authentication.isAuthenticated())
-	    return null;
-	else
-	    return (User) SecurityContextHolder.getContext()
-		    .getAuthentication().getDetails();
+	return User.u;
+	// Authentication authentication = SecurityContextHolder.getContext()
+	// .getAuthentication();
+	// if ((authentication == null) || !authentication.isAuthenticated())
+	// return null;
+	// else
+	// return (User) SecurityContextHolder.getContext()
+	// .getAuthentication().getDetails();
     }
 
     // TODO Delete this
@@ -55,6 +55,7 @@ public final class User {
     }
 
     public static void set(final User user) {
+	User.u = user;
     }
 
     /** The code. */
