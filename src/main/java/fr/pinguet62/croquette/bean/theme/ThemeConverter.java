@@ -24,12 +24,7 @@ public final class ThemeConverter implements Converter {
     @Override
     public Object getAsObject(final FacesContext context,
 	    final UIComponent component, final String value) {
-	if (value == null)
-	    return null;
-	for (Theme theme : ThemeSwitcherManagedBean.THEMES)
-	    if (value.equals(theme.getKey()))
-		return theme;
-	return null;
+	return Theme.fromKey(value);
     }
 
     /**
