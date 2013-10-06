@@ -34,7 +34,7 @@
 				<h:outputLink value="index.xhtml">
 					<p:graphicImage height="50" library="img" name="logo.png" />
 				</h:outputLink>
-				<p:themeSwitcher
+				<p:themeSwitcher converter="themeConverter"
 					style="width: 200px; position: absolute; right: 0; top: 0; margin-left: auto; margin-right: 0;"
 					value="#{themeSwitcherManagedBean.theme}" var="t">
 					<f:selectItems itemLabel="#{theme.name}" itemValue="#{theme}"
@@ -42,7 +42,6 @@
 					<!-- TODO ajax -->
 					<p:ajax event="change" />
 					<p:ajax event="valueChange" />
-					<f:converter converterId="themeConverter" />
 					<p:column>
 						<p:graphicImage height="50px"
 							value="/resources/img/theme/#{t.image}" />

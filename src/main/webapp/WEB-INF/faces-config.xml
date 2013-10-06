@@ -14,8 +14,4 @@
 			<var>msg</var>
 		</resource-bundle>
 	</application>
-	<converter>
-		<converter-id>themeConverter</converter-id>
-		<converter-class>fr.pinguet62.croquette.bean.theme.ThemeConverter</converter-class>
-	</converter>
 </faces-config>

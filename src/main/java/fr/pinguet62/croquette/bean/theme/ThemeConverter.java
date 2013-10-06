@@ -3,11 +3,13 @@ package fr.pinguet62.croquette.bean.theme;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 
 /**
  * The {@link Theme} converter.<br />
  * Uses the <code>key</code> as an identifier.
  */
+@FacesConverter("themeConverter")
 public final class ThemeConverter implements Converter {
 
     /**
