@@ -13,17 +13,9 @@
 	<f:loadBundle basename="fr.pinguet62.croquette.messages" var="msg" />
 	<title>TODO title</title>
 	<script type="text/javascript">
-		function scrollTop() {
-			var conversationContent = $(PrimeFaces.escapeClientId('layout'));
+		function scrollConversationBottom() {
+			var conversationContent = $(PrimeFaces.escapeClientId('messages'));
 			conversationContent.scrollTop = conversationContent.scrollHeight;
-			//conversationContent.animate({scrollTop: conversationContent.height()}, 5000);
-			//conversationContent.scrollTop(conversationContent.height());
-			//var conversationContent = document.getElementById('layout');
-			//conversationContent.animate({scrollTop: 500000}, 8000);
-			//$('#layout').animate({ scrollTop: $('#currentConversation').height() }, 400)
-		}
-		function handleMessage(facesmessage) {
-			alert("message reçu");
 		}
 	</script>
 </h:head>
@@ -39,9 +31,7 @@
 					value="#{themeSwitcherManagedBean.theme}" var="t">
 					<f:selectItems itemLabel="#{theme.name}" itemValue="#{theme}"
 						value="#{themeSwitcherManagedBean.themes}" var="theme" />
-					<!-- TODO ajax -->
 					<p:ajax event="change" />
-					<p:ajax event="valueChange" />
 					<p:column>
 						<p:graphicImage height="50px"
 							value="/resources/img/theme/#{t.image}" />
@@ -67,7 +57,7 @@
 					selection="#{smsManagedBean.selectedContact}"
 					selectionMode="single" styleClass="no-header"
 					value="#{smsManagedBean.contacts}" var="contact">
-					<p:ajax event="rowSelect" oncomplete="scrollTop()"
+					<p:ajax event="rowSelect" oncomplete="scrollConversationBottom()"
 						update="@this, :currentConversation, :input" />
 					<p:ajax event="rowUnselect" update=":currentConversation, :input" />
 					<p:column>
@@ -83,23 +73,25 @@
 			<p:layout>
 				<p:layoutUnit id="layout" position="center" style="display: block;">
 					<h:form id="currentConversation" prependId="false">
-						<c:forEach items="#{smsManagedBean.currentConversation}"
-							var="message">
-							<c:choose>
-								<c:when test="#{message.sent}">
-									<div class="bubble-sent">
-										<h:outputText value="#{message.content}" />
-									</div>
-									<br />
-								</c:when>
-								<c:otherwise>
-									<div class="bubble-received">
-										<h:outputText value="#{message.content}" />
-									</div>
-									<br />
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
+						<p:outputPanel id="messages">
+							<c:forEach items="#{smsManagedBean.currentConversation}"
+								var="message">
+								<c:choose>
+									<c:when test="#{message.sent}">
+										<div class="bubble-sent">
+											<h:outputText value="#{message.content}" />
+										</div>
+										<br />
+									</c:when>
+									<c:otherwise>
+										<div class="bubble-received">
+											<h:outputText value="#{message.content}" />
+										</div>
+										<br />
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</p:outputPanel>
 					</h:form>
 				</p:layoutUnit>
 				<p:layoutUnit position="south" resizable="true">
@@ -110,7 +102,7 @@
 								<p:column style="width: 100%">
 									<p:inputTextarea autoResize="false"
 										value="#{smsManagedBean.input}" style="width: 100%">
-										<f:ajax event="keyup" />
+										<f:ajax event="change" />
 									</p:inputTextarea>
 								</p:column>
 								<p:column>
@@ -119,7 +111,7 @@
 										value="#{msg['sms.action.send']}" />
 								</p:column>
 								<p:column>
-									<p:commandButton actionListener="#{smsManagedBean.test}"
+									<p:commandButton type="reset"
 										value="#{msg['sms.action.reset']}" />
 								</p:column>
 							</p:row>
@@ -132,9 +124,19 @@
             TODO south
         </p:layoutUnit>
 	</p:layout>
-	<!-- <p:socket channel="#{smsManagedBean.channel}">
-		<p:ajax event="message" update="contactsForm:contacts, :currentConversation" />
-	</p:socket> -->
-	<p:socket channel="/channel" onMessage="alert('ok');" />
+	<!-- TODO Delete this -->
+	<p:commandButton onclick="PF('testsDialog').show();"
+		style="position: absolute; left: 50%;" value="Tests" />
+	<p:dialog header="Tests" resizable="false" widgetVar="testsDialog">
+		<p:commandButton actionListener="#{testManagedBean.receviedSMSAction}"
+			value="ReceveidSMSAction" />
+		<br />
+		<p:commandButton onclick="scrollConversationBottom()"
+			value="scrollConversationBottom()" />
+	</p:dialog>
+	<p:socket channel="#{smsManagedBean.channel}">
+		<p:ajax event="message"
+			update="contactsForm:contacts, :currentConversation" />
+	</p:socket>
 </h:body>
 </html>
