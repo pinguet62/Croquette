@@ -76,20 +76,14 @@
 						<p:outputPanel id="messages">
 							<c:forEach items="#{smsManagedBean.currentConversation}"
 								var="message">
-								<c:choose>
-									<c:when test="#{message.sent}">
-										<div class="bubble-sent">
-											<h:outputText value="#{message.content}" />
-										</div>
-										<br />
-									</c:when>
-									<c:otherwise>
-										<div class="bubble-received">
-											<h:outputText value="#{message.content}" />
-										</div>
-										<br />
-									</c:otherwise>
-								</c:choose>
+								<div class="#{message.sent ? 'bubble-sent' : 'bubble-received'}">
+									<h:outputText style="font-size: small;" value="#{message.date}">
+										<f:convertDateTime pattern="#{msg['datetime.pattern']}" />
+									</h:outputText>
+									<br />
+									<h:outputText value="#{message.content}" />
+								</div>
+								<br />
 							</c:forEach>
 						</p:outputPanel>
 					</h:form>
@@ -124,19 +118,20 @@
             TODO south
         </p:layoutUnit>
 	</p:layout>
+	<p:socket channel="#{smsManagedBean.channel}">
+		<p:ajax event="message"
+			update="contactsForm:contacts, :currentConversation" />
+	</p:socket>
 	<!-- TODO Delete this -->
 	<p:commandButton onclick="PF('testsDialog').show();"
 		style="position: absolute; left: 50%;" value="Tests" />
-	<p:dialog header="Tests" resizable="false" widgetVar="testsDialog">
+	<p:dialog header="Tests" position="top" resizable="false"
+		widgetVar="testsDialog">
 		<p:commandButton actionListener="#{testManagedBean.receviedSMSAction}"
 			value="ReceveidSMSAction" />
 		<br />
 		<p:commandButton onclick="scrollConversationBottom()"
 			value="scrollConversationBottom()" />
 	</p:dialog>
-	<p:socket channel="#{smsManagedBean.channel}">
-		<p:ajax event="message"
-			update="contactsForm:contacts, :currentConversation" />
-	</p:socket>
 </h:body>
 </html>

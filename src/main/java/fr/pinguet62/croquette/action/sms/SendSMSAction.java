@@ -35,7 +35,7 @@ public final class SendSMSAction extends SMSAction {
     public void execute() {
 	Json.createObjectBuilder()
 		.add(IAction.ACTION_KEY, SendSMSAction.ACTION_KEY)
-		.add(SMSAction.CONTACT_PHONE_NUMBER,
+		.add(SMSAction.PHONE_NUMBER,
 			this.message.getContact().getPhoneNumber())
 		.add("content", this.message.getContent()).build();
     }

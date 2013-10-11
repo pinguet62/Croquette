@@ -1,17 +1,19 @@
 package fr.pinguet62.croquette.action.sms;
 
-import java.util.Date;
+import java.text.DateFormat;
 
-import javax.faces.application.FacesMessage;
 import javax.json.JsonObject;
 
 import org.primefaces.push.PushContext;
 import org.primefaces.push.PushContextFactory;
 
 import fr.pinguet62.croquette.action.Action;
+import fr.pinguet62.croquette.action.ActionException;
 import fr.pinguet62.croquette.bean.SmsManagedBean;
+import fr.pinguet62.croquette.model.Contact;
 import fr.pinguet62.croquette.model.Conversation;
 import fr.pinguet62.croquette.model.Message;
+import fr.pinguet62.croquette.model.Message.State;
 import fr.pinguet62.croquette.model.User;
 
 /** SMS received. */
@@ -40,19 +42,28 @@ public final class ReceivedSMSAction extends SMSAction {
      */
     @Override
     public void execute() {
-	// TODO Implement ReceivedSMSAction.execute();
-	// WebSocket
+	try {
+	    Contact contact = User.get().getContact(
+		    this.jsonMessage.getString(SMSAction.PHONE_NUMBER));
 
-	Message message = new Message();
-	message.setDate(new Date());
-	message.setContent(this.jsonMessage.getString(SMSAction.CONTENT));
-	message.setContact(User.get().getContact(
-		this.jsonMessage.getString(SMSAction.CONTACT_PHONE_NUMBER)));
-	message.setSent(false);
+	    Message message = new Message();
+	    message.setContact(contact);
+	    message.setContent(this.jsonMessage.getString(SMSAction.CONTENT));
+	    message.setDate(DateFormat.getDateTimeInstance(DateFormat.DEFAULT,
+		    DateFormat.DEFAULT).parse(
+		    this.jsonMessage.getString(SMSAction.DATE)));
+	    message.setRead(false);
+	    message.setSent(false);
+	    message.setState(State.OK);
+
+	    contact.getConversation().add(message);
+	} catch (Exception e) {
+	    throw new ActionException(e);
+	}
 
 	PushContext pushContext = PushContextFactory.getDefault()
 		.getPushContext();
-	pushContext.push(SmsManagedBean.CHANNEL, new FacesMessage("", ""));
+	pushContext.push(SmsManagedBean.CHANNEL, null);
     }
 
 }

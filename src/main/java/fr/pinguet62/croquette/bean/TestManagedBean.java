@@ -1,17 +1,19 @@
 package fr.pinguet62.croquette.bean;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.json.Json;
+import javax.json.JsonObject;
 
-import org.primefaces.push.PushContext;
-import org.primefaces.push.PushContextFactory;
-
+import fr.pinguet62.croquette.action.ActionFactory;
+import fr.pinguet62.croquette.action.IAction;
 import fr.pinguet62.croquette.action.sms.ReceivedSMSAction;
+import fr.pinguet62.croquette.action.sms.SMSAction;
 import fr.pinguet62.croquette.model.Contact;
-import fr.pinguet62.croquette.model.Message;
 import fr.pinguet62.croquette.model.User;
 
 /** Managed bean used to test some background {@link Action}s in application. */
@@ -27,16 +29,16 @@ public final class TestManagedBean {
 	List<Contact> contacts = User.get().getContacts();
 	Contact contact = contacts.get((int) (Math.random() * contacts.size()));
 
-	Message message = new Message();
-	message.setContact(contact);
-	message.setContent("test");
-	message.setDate(new Date());
-	message.setSent(true);
-	contact.getConversation().add(message);
-
-	PushContext pushContext = PushContextFactory.getDefault()
-		.getPushContext();
-	pushContext.push(SmsManagedBean.CHANNEL, null);
+	JsonObject jsonMessage = Json
+		.createObjectBuilder()
+		.add(IAction.ACTION_KEY, ReceivedSMSAction.ACTION_VALUE)
+		.add(SMSAction.CONTENT, "TestManagedBean.receviedSMSAction()")
+		.add(SMSAction.DATE,
+			DateFormat.getDateTimeInstance(DateFormat.DEFAULT,
+				DateFormat.DEFAULT).format(new Date()))
+		.add(SMSAction.PHONE_NUMBER, contact.getPhoneNumber()).build();
+	IAction action = ActionFactory.getAction(jsonMessage);
+	action.execute();
     }
 
 }

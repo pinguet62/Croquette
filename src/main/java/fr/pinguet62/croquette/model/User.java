@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import fr.pinguet62.croquette.model.Message.State;
+
 /** Informations about user. */
 public final class User {
 
@@ -46,9 +48,9 @@ public final class User {
 		message.setContact(contact);
 		message.setContent("Contact " + con + " - Message " + mess);
 		message.setDate(new Date(2012 - 1900, 9, mess));
-		message.setInProgress(mess == 19);
 		message.setRead((5 < con) || (mess < 18));
 		message.setSent(((int) (2 * Math.random()) % 2) == 0);
+		message.setState(State.OK);
 		conversation.add(message);
 	    }
 	}

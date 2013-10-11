@@ -6,6 +6,10 @@ import java.util.Date;
 /** Message exchanged with a {@link Contact}. */
 public final class Message implements Comparable<Message>, Serializable {
 
+    public enum State {
+	ERROR, IN_PROGRESS, OK;
+    }
+
     /** Auto generated serial version UID. */
     private static final long serialVersionUID = 5126051315118508362L;
 
@@ -18,14 +22,14 @@ public final class Message implements Comparable<Message>, Serializable {
     /** The date of issue or receiving. */
     private Date date = null;
 
-    /** If it is in progress. */
-    private Boolean inprogress = null;
-
     /** If if was read. */
     private boolean read = true;
 
     /** If it was sent by user. */
     private Boolean sent = null;
+
+    /** The {@link State}. */
+    private State state = null;
 
     /**
      * Method used to compare the current {@link Message} to an other.
@@ -69,21 +73,21 @@ public final class Message implements Comparable<Message>, Serializable {
     }
 
     /**
-     * Gets if it is in progress.
-     * 
-     * @return Result.
-     */
-    public Boolean getInProgress() {
-	return this.inprogress;
-    }
-
-    /**
      * Gets if it was sent by user.
      * 
      * @return Result.
      */
     public Boolean getSent() {
 	return this.sent;
+    }
+
+    /**
+     * Gets the {@link State}.
+     * 
+     * @return The {@link State}.
+     */
+    public State getState() {
+	return this.state;
     }
 
     /**
@@ -135,16 +139,6 @@ public final class Message implements Comparable<Message>, Serializable {
     }
 
     /**
-     * Sets if it is in progress.
-     * 
-     * @param inprogress
-     *            Is in progress.
-     */
-    public void setInProgress(final Boolean inprogress) {
-	this.inprogress = inprogress;
-    }
-
-    /**
      * Sets if it was read.
      * 
      * @param read
@@ -162,6 +156,16 @@ public final class Message implements Comparable<Message>, Serializable {
      */
     public void setSent(final Boolean sent) {
 	this.sent = sent;
+    }
+
+    /**
+     * Sets the {@link State}.
+     * 
+     * @param state
+     *            The {@link State}.
+     */
+    public void setState(final State state) {
+	this.state = state;
     }
 
 }
