@@ -71,9 +71,16 @@
 		</p:layoutUnit>
 		<p:layoutUnit position="center">
 			<p:layout>
-				<p:layoutUnit id="layout" position="center" style="display: block;">
+				<p:layoutUnit position="center" style="display: block;">
 					<h:form id="currentConversation" prependId="false">
-						<p:outputPanel id="messages">
+						<p:outputPanel id="messages"
+							style="display: block; text-align: center;">
+							<c:if test="#{smsManagedBean.currentConversation.hasOldMessages}">
+								<p:commandLink action="#{smsManagedBean.loadOldMessages}" update="currentConversation"
+									value="#{msg['sms.loadOld']}" />
+								<br />
+								<br />
+							</c:if>
 							<c:forEach items="#{smsManagedBean.currentConversation}"
 								var="message">
 								<div class="#{message.sent ? 'bubble-sent' : 'bubble-received'}">
@@ -126,7 +133,7 @@
 	<p:commandButton onclick="PF('testsDialog').show();"
 		style="position: absolute; left: 50%;" value="Tests" />
 	<p:dialog header="Tests" position="top" resizable="false"
-		widgetVar="testsDialog">
+		visible="true" widgetVar="testsDialog">
 		<p:commandButton actionListener="#{testManagedBean.receviedSMSAction}"
 			value="ReceveidSMSAction" />
 		<br />

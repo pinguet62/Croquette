@@ -42,6 +42,8 @@ public final class User {
 	    // Conversation
 	    Conversation conversation = new Conversation();
 	    contact.setConversation(conversation);
+	    conversation
+		    .setHasOldMessages(((int) (2 * Math.random()) % 2) == 0);
 	    // Messages
 	    for (int mess = 1; mess <= 20; mess++) {
 		final Message message = new Message();

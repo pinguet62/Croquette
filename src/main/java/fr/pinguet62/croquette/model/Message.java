@@ -22,7 +22,7 @@ public final class Message implements Comparable<Message>, Serializable {
     /** The date of issue or receiving. */
     private Date date = null;
 
-    /** If if was read. */
+    /** If it was read. */
     private boolean read = true;
 
     /** If it was sent by user. */
@@ -142,7 +142,7 @@ public final class Message implements Comparable<Message>, Serializable {
      * Sets if it was read.
      * 
      * @param read
-     *            the read to set
+     *            If it was read.
      */
     public void setRead(final boolean read) {
 	this.read = read;

@@ -14,6 +14,9 @@ public final class Conversation extends TreeSet<Message> {
     /** The sender or addressee {@link Contact}. */
     private Contact contact = null;
 
+    /** If has old {@link Message}s. */
+    private boolean hasOldMessages = true;
+
     /**
      * The input text of the new {@link Message} into this {@link Conversation}.
      */
@@ -32,6 +35,15 @@ public final class Conversation extends TreeSet<Message> {
      */
     public Contact getContact() {
 	return this.contact;
+    }
+
+    /**
+     * Gets if has old {@link Message}s.
+     * 
+     * @return Result.
+     */
+    public boolean getHasOldMessages() {
+	return this.hasOldMessages;
     }
 
     /**
@@ -64,6 +76,16 @@ public final class Conversation extends TreeSet<Message> {
      */
     public void setContact(final Contact contact) {
 	this.contact = contact;
+    }
+
+    /**
+     * Sets if has old {@link Message}s.
+     * 
+     * @param hasOldMessages
+     *            If has old {@link Message}s.
+     */
+    public void setHasOldMessages(final boolean hasOldMessages) {
+	this.hasOldMessages = hasOldMessages;
     }
 
     /**

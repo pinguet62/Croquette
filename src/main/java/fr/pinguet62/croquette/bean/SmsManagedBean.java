@@ -1,5 +1,6 @@
 package fr.pinguet62.croquette.bean;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +13,7 @@ import fr.pinguet62.croquette.action.sms.SendSMSAction;
 import fr.pinguet62.croquette.model.Contact;
 import fr.pinguet62.croquette.model.Conversation;
 import fr.pinguet62.croquette.model.Message;
+import fr.pinguet62.croquette.model.Message.State;
 import fr.pinguet62.croquette.model.User;
 
 /** Managed bean used to control the SMS view. */
@@ -96,6 +98,25 @@ public final class SmsManagedBean {
 	User.initTest();
 
 	// TODO Implement
+    }
+
+    /** Load old {@link Message}s of the current {@link Conversation}. */
+    public void loadOldMessages() {
+	// TODO Delete this
+	int nbMessages = (int) (5 * Math.random());
+	for (int i = 0; i < nbMessages; i++) {
+	    Message message = new Message();
+	    message.setContact(this.selectedContact);
+	    message.setContent("SmsManagedBean.loadOldMessages()");
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(this.getCurrentConversation().first().getDate());
+	    calendar.add(Calendar.DATE, -1);
+	    message.setDate(calendar.getTime());
+	    message.setRead(true);
+	    message.setSent(((int) (2 * Math.random()) % 2) == 0);
+	    message.setState(State.OK);
+	    this.getCurrentConversation().add(message);
+	}
     }
 
     /**
