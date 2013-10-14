@@ -115,6 +115,8 @@ public final class SmsManagedBean {
 	    message.setRead(true);
 	    message.setSent(((int) (2 * Math.random()) % 2) == 0);
 	    message.setState(State.OK);
+	    this.getCurrentConversation().setHasOldMessages(
+		    ((int) (2 * Math.random()) % 2) == 0);
 	    this.getCurrentConversation().add(message);
 	}
     }

@@ -3,17 +3,24 @@ package fr.pinguet62.croquette.action.sms;
 import java.text.DateFormat;
 
 import javax.json.Json;
+import javax.json.JsonObject;
 
 import fr.pinguet62.croquette.action.Action;
 import fr.pinguet62.croquette.action.IAction;
 import fr.pinguet62.croquette.model.Conversation;
 
-/** Load old SMS. */
-@Action(LoadindSMSManagedBean.ACTION_KEY)
+/** Load old SMS of a {@link Conversation}. */
+@Action(LoadindSMSManagedBean.ACTION_VALUE)
 public final class LoadindSMSManagedBean extends SMSAction {
 
     /** The <code>action</code> value. */
-    public static final String ACTION_KEY = "SMS_LOADOLD";
+    public static final String ACTION_VALUE = "SMS_LOADING";
+
+    /** Key for number of SMS to load. */
+    public static final String COUNT_KEY = "count";
+
+    /** Value for number of SMS to load. */
+    public static final int COUNT_VALUE = 5;
 
     /**
      * Key for the date of the oldest {@link Message} of the
@@ -39,19 +46,23 @@ public final class LoadindSMSManagedBean extends SMSAction {
     }
 
     /**
-     * Create the JsonObject from the Message.<br />
+     * Create the {@link JsonObject}.<br />
      * Send to GTalk account.
      */
     @Override
     public void execute() {
 	this.conversation.getContact();
 	Json.createObjectBuilder()
-		.add(IAction.ACTION_KEY, LoadindSMSManagedBean.ACTION_KEY)
-		.add(SMSAction.PHONE_NUMBER,
-			this.conversation.getContact().getPhoneNumber())
+		.add(IAction.ACTION_KEY, LoadindSMSManagedBean.ACTION_VALUE)
+		.add(LoadindSMSManagedBean.COUNT_KEY,
+			LoadindSMSManagedBean.COUNT_VALUE)
 		.add(LoadindSMSManagedBean.OLDEST,
 			DateFormat.getDateTimeInstance(DateFormat.DEFAULT,
 				DateFormat.DEFAULT).format(
-				this.conversation.first().getDate())).build();
+				this.conversation.first().getDate()))
+		.add(SMSAction.PHONE_NUMBER,
+			this.conversation.getContact().getPhoneNumber())
+		.build();
     }
+
 }

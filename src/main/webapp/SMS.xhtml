@@ -139,6 +139,9 @@
 		<br />
 		<p:commandButton onclick="scrollConversationBottom()"
 			value="scrollConversationBottom()" />
+        <br />
+        <p:commandButton actionListener="#{testManagedBean.loadedSMSAction(smsManagedBean.selectedContact)}"
+            value="testManagedBean.loadedSMSAction(smsManagedBean.selectedContact)" />
 	</p:dialog>
 </h:body>
 </html>

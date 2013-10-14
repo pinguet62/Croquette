@@ -37,7 +37,7 @@ public final class ReceivedSMSAction extends SMSAction {
     }
 
     /**
-     * Create the {@link Message} from the {@link JsonObject}. <br />
+     * Create the {@link Message} from the JSON message. <br />
      * Add to {@link Conversation} and update the view.
      */
     @Override
