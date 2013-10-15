@@ -134,12 +134,12 @@
 		style="position: absolute; left: 50%;" value="Tests" />
 	<p:dialog header="Tests" position="top" resizable="false"
 		visible="true" widgetVar="testsDialog">
+        <p:commandButton onclick="scrollConversationBottom()"
+            value="scrollConversationBottom()" />
+        <br />
 		<p:commandButton actionListener="#{testManagedBean.receviedSMSAction}"
 			value="ReceveidSMSAction" />
 		<br />
-		<p:commandButton onclick="scrollConversationBottom()"
-			value="scrollConversationBottom()" />
-        <br />
         <p:commandButton actionListener="#{testManagedBean.loadedSMSAction(smsManagedBean.selectedContact)}"
             value="testManagedBean.loadedSMSAction(smsManagedBean.selectedContact)" />
 	</p:dialog>

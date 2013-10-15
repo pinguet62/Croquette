@@ -14,8 +14,8 @@ import javax.json.JsonObjectBuilder;
 
 import fr.pinguet62.croquette.action.ActionFactory;
 import fr.pinguet62.croquette.action.IAction;
-import fr.pinguet62.croquette.action.sms.LoadedSMSManagedBean;
-import fr.pinguet62.croquette.action.sms.LoadindSMSManagedBean;
+import fr.pinguet62.croquette.action.sms.LoadedSMSAction;
+import fr.pinguet62.croquette.action.sms.LoadindSMSAction;
 import fr.pinguet62.croquette.action.sms.ReceivedSMSAction;
 import fr.pinguet62.croquette.action.sms.SMSAction;
 import fr.pinguet62.croquette.model.Contact;
@@ -39,26 +39,25 @@ public final class TestManagedBean {
 	calendar.add(Calendar.DATE, -1);
 
 	JsonObjectBuilder baseBuilder = Json.createObjectBuilder()
-		.add(IAction.ACTION_KEY, LoadedSMSManagedBean.ACTION_VALUE)
+		.add(IAction.ACTION_KEY, LoadedSMSAction.ACTION_VALUE)
 		.add(SMSAction.PHONE_NUMBER, contact.getPhoneNumber());
 	JsonArrayBuilder messagesBuilder = Json.createArrayBuilder();
-	int nbMessages = ((int) (2 * Math.random()) + LoadindSMSManagedBean.COUNT_VALUE) - 1;
+	int nbMessages = ((int) (2 * Math.random()) + LoadindSMSAction.COUNT_VALUE) - 1;
 	for (int i = 0; i < nbMessages; i++) {
 	    calendar.add(Calendar.DATE, -1);
 	    JsonObjectBuilder messageBuilder = Json
 		    .createObjectBuilder()
-		    .add(IAction.ACTION_KEY, LoadedSMSManagedBean.ACTION_VALUE)
 		    .add(SMSAction.CONTENT,
 			    "TestManagedBean.loadedSMSAction(Contact)")
 		    .add(SMSAction.DATE,
 			    DateFormat.getDateTimeInstance(DateFormat.DEFAULT,
 				    DateFormat.DEFAULT).format(
 				    calendar.getTime()))
-		    .add(LoadedSMSManagedBean.SENT,
+		    .add(LoadedSMSAction.SENT,
 			    ((int) (2 * Math.random()) == 0));
 	    messagesBuilder.add(messageBuilder);
 	}
-	baseBuilder.add(LoadedSMSManagedBean.MESSAGES, messagesBuilder);
+	baseBuilder.add(LoadedSMSAction.MESSAGES, messagesBuilder);
 	JsonObject jsonMessage = baseBuilder.build();
 	IAction action = ActionFactory.getAction(jsonMessage);
 	action.execute();
