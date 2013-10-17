@@ -1,8 +1,13 @@
 package fr.pinguet62.croquette.model;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.google.gdata.client.contacts.ContactsService;
+import com.google.gdata.data.contacts.ContactEntry;
+import com.google.gdata.data.contacts.ContactFeed;
 
 import fr.pinguet62.croquette.model.Message.State;
 
@@ -68,6 +73,9 @@ public final class User {
     /** The {@link Contact}s. */
     private final List<Contact> contacts = new ArrayList<Contact>();
 
+    /** The OAuth token. */
+    private String token;
+
     /** Default constructor. */
     public User() {
     }
@@ -80,6 +88,21 @@ public final class User {
      */
     public User(final String code) {
 	this.code = code;
+    }
+
+    /**
+     * Download {@link ContactEntry} from Google account with the OAuth token. <br />
+     * Pop list of {@link Contact}s of the {@link User}.
+     * 
+     * @throws Exception
+     *             Error during operations.
+     */
+    public void downloadGoogleContacts() throws Exception {
+	ContactsService contactsService = new ContactsService("Croquette");
+	contactsService.setHeader("Authorization", "Bearer " + this.token);
+	URL feedUrl = new URL(
+		"https://www.google.com/m8/feeds/contacts/default/full");
+	ContactFeed resultFeed = contactsService.getFeed(feedUrl, ContactFeed.class);
     }
 
     /**
@@ -124,6 +147,16 @@ public final class User {
      */
     public void setCode(final String code) {
 	this.code = code;
+    }
+
+    /**
+     * Sets the OAuth token.
+     * 
+     * @param token
+     *            The OAuth token to set.
+     */
+    public void setToken(final String token) {
+	this.token = token;
     }
 
 }
