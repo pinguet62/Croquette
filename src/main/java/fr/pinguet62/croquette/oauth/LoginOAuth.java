@@ -3,6 +3,7 @@ package fr.pinguet62.croquette.oauth;
 import java.io.IOException;
 
 import javax.servlet.Servlet;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,56 +18,19 @@ public final class LoginOAuth extends HttpServlet {
 
     /** URL for Google OAuth. */
     private static final String url = "https://accounts.google.com/o/oauth2/auth"
-	    + "?response_type=code"
-	    + "&redirect_uri=http://localhost:8081/Croquette/OAuth/redirect"
-	    + "&client_id=79632324639.apps.googleusercontent.com"
-	    + "&scope=https://www.googleapis.com/auth/userinfo.email"
-	    + "+https://www.google.com/m8/feeds"
-	    + "+https://www.googleapis.com/auth/googletalk";
+	    + "?client_id=79632324639.apps.googleusercontent.com"
+	    + ("&redirect_uri=http://localhost:8081/Croquette" + RedirectOAuthServlet.URL)
+	    + "&response_type=code"
+	    + ("&scope=https://www.googleapis.com/auth/userinfo.email" /* Email */
+		    + "+https://www.google.com/m8/feeds" /* Contacts */
+		    + "+https://www.googleapis.com/auth/googletalk" /* GTalk */);
 
-    /** The token. */
-    private String token = null;
-
-    /** Default constructor. */
-    public LoginOAuth() {
-    }
-
-    /**
-     * Constructor.
-     * 
-     * @param token
-     *            The token.
-     */
-    public LoginOAuth(final String token) {
-	this.token = token;
-    }
-
+    /** Redirect user to Google OAuth authentication. */
     @Override
-    public void doGet(final HttpServletRequest request,
-	    final HttpServletResponse response) {
-	try {
-	    response.sendRedirect(LoginOAuth.url);
-	} catch (IOException e) {
-	}
-    }
-
-    /**
-     * Gets the token.
-     * 
-     * @return The token.
-     */
-    public String getToken() {
-	return this.token;
-    }
-
-    /**
-     * Sets the token.
-     * 
-     * @param token
-     *            The token to set.
-     */
-    public void setToken(final String token) {
-	this.token = token;
+    protected void doGet(final HttpServletRequest request,
+	    final HttpServletResponse response) throws ServletException,
+	    IOException {
+	response.sendRedirect(LoginOAuth.url);
     }
 
 }

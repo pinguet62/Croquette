@@ -67,9 +67,6 @@ public final class User {
 	User.u = user;
     }
 
-    /** The code. */
-    private String code = null;
-
     /** The {@link Contact}s. */
     private final List<Contact> contacts = new ArrayList<Contact>();
 
@@ -81,37 +78,23 @@ public final class User {
     }
 
     /**
-     * Constructor.
-     * 
-     * @param code
-     *            The code.
-     */
-    public User(final String code) {
-	this.code = code;
-    }
-
-    /**
      * Download {@link ContactEntry} from Google account with the OAuth token. <br />
      * Pop list of {@link Contact}s of the {@link User}.
-     * 
-     * @throws Exception
-     *             Error during operations.
      */
-    public void downloadGoogleContacts() throws Exception {
-	ContactsService contactsService = new ContactsService("Croquette");
-	contactsService.setHeader("Authorization", "Bearer " + this.token);
-	URL feedUrl = new URL(
-		"https://www.google.com/m8/feeds/contacts/default/full");
-	ContactFeed resultFeed = contactsService.getFeed(feedUrl, ContactFeed.class);
-    }
-
-    /**
-     * Gets the code.
-     * 
-     * @return The code.
-     */
-    public String getCode() {
-	return this.code;
+    public void downloadGoogleContacts() {
+	try {
+	    ContactsService contactsService = new ContactsService("Croquette");
+	    contactsService.setHeader("Authorization", "Bearer " + this.token);
+	    URL feedUrl = new URL(
+		    "https://www.google.com/m8/feeds/contacts/default/full");
+	    ContactFeed resultFeed = contactsService.getFeed(feedUrl,
+		    ContactFeed.class);
+	    List<ContactEntry> contactEntries = resultFeed.getEntries();
+	    for (ContactEntry contactEntry : contactEntries)
+		System.out.println(contactEntry.toString());
+	} catch (Exception exception) {
+	    exception.printStackTrace();
+	}
     }
 
     /**
@@ -137,16 +120,6 @@ public final class User {
      */
     public List<Contact> getContacts() {
 	return this.contacts;
-    }
-
-    /**
-     * Sets the code.
-     * 
-     * @param code
-     *            The code to set.
-     */
-    public void setCode(final String code) {
-	this.code = code;
     }
 
     /**
