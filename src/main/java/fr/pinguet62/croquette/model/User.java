@@ -2,8 +2,12 @@ package fr.pinguet62.croquette.model;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.google.gdata.client.contacts.ContactsService;
 import com.google.gdata.data.contacts.ContactEntry;
@@ -14,22 +18,20 @@ import fr.pinguet62.croquette.model.Message.State;
 /** Informations about user. */
 public final class User {
 
-    private static User u;
-
     /**
      * Gets the session user.
      * 
      * @return The session user.
      */
     public static User get() {
-	return User.u;
-	// Authentication authentication = SecurityContextHolder.getContext()
-	// .getAuthentication();
-	// if ((authentication == null) || !authentication.isAuthenticated())
-	// return null;
-	// else
-	// return (User) SecurityContextHolder.getContext()
-	// .getAuthentication().getDetails();
+	// return User.u;
+	Authentication authentication = SecurityContextHolder.getContext()
+		.getAuthentication();
+	if ((authentication == null) || !authentication.isAuthenticated())
+	    return null;
+	else
+	    return (User) SecurityContextHolder.getContext()
+		    .getAuthentication().getDetails();
     }
 
     // TODO Delete this
@@ -64,7 +66,6 @@ public final class User {
     }
 
     public static void set(final User user) {
-	User.u = user;
     }
 
     /** The {@link Contact}s. */
@@ -90,8 +91,10 @@ public final class User {
 	    ContactFeed resultFeed = contactsService.getFeed(feedUrl,
 		    ContactFeed.class);
 	    List<ContactEntry> contactEntries = resultFeed.getEntries();
-	    for (ContactEntry contactEntry : contactEntries)
-		System.out.println(contactEntry.toString());
+	    for (ContactEntry contactEntry : contactEntries) {
+		Collection<Contact> contacts = Contact.convert(contactEntry);
+		this.getContacts().addAll(contacts);
+	    }
 	} catch (Exception exception) {
 	    exception.printStackTrace();
 	}

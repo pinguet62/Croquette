@@ -95,8 +95,6 @@ public final class SmsManagedBean {
      */
     @PostConstruct
     private void init() {
-	User.initTest();
-
 	// TODO Implement
     }
 

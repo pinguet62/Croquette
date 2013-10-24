@@ -1,12 +1,46 @@
 package fr.pinguet62.croquette.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import com.google.gdata.data.contacts.ContactEntry;
+import com.google.gdata.data.extensions.PhoneNumber;
 
 /** Contains informations about a contact. */
 public final class Contact implements Serializable {
 
     /** Auto generated serial version UID. */
     private static final long serialVersionUID = -594515732428430186L;
+
+    /**
+     * Convert Google contact to {@link Contact}s.
+     * 
+     * @param contactEntry
+     *            Google contact.
+     */
+    public static Collection<Contact> convert(final ContactEntry contactEntry) {
+	Collection<Contact> contacts = new ArrayList<Contact>();
+
+	for (PhoneNumber phoneNumber : contactEntry.getPhoneNumbers()) {
+	    if (!contactEntry.hasPhoneNumbers())
+		continue;
+	    else if (!contactEntry.hasName())
+		continue;
+	    else if (!contactEntry.getName().hasFamilyName())
+		continue;
+	    else if (!contactEntry.getName().hasGivenName())
+		continue;
+
+	    Contact contact = new Contact();
+	    contact.setName(contactEntry.getName().getFamilyName().getValue());
+	    contact.setFirstName(contactEntry.getName().getGivenName()
+		    .getValue());
+	    contact.setPhoneNumber(phoneNumber.getPhoneNumber());
+	}
+
+	return contacts;
+    }
 
     /** The {@link Conversation}. */
     private Conversation conversation = new Conversation();

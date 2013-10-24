@@ -26,6 +26,11 @@ import fr.pinguet62.croquette.model.User;
 @SessionScoped
 public final class TestManagedBean {
 
+    /** Download Google contacts */
+    public void downloadGoogleContacts() {
+	User.get().downloadGoogleContacts();
+    }
+
     /**
      * Invoke {@link LoadedSMSAction}.<br />
      * The number of SMS are chosen randomly.
@@ -53,8 +58,7 @@ public final class TestManagedBean {
 			    DateFormat.getDateTimeInstance(DateFormat.DEFAULT,
 				    DateFormat.DEFAULT).format(
 				    calendar.getTime()))
-		    .add(LoadedSMSAction.SENT,
-			    ((int) (2 * Math.random()) == 0));
+		    .add(LoadedSMSAction.SENT, ((int) (2 * Math.random()) == 0));
 	    messagesBuilder.add(messageBuilder);
 	}
 	baseBuilder.add(LoadedSMSAction.MESSAGES, messagesBuilder);

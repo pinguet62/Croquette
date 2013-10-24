@@ -16,7 +16,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.pinguet62.croquette.model.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import fr.pinguet62.croquette.springsecurity.OAuthAuthenticationToken;
 
 /** Used when the OAuth server redirect user after her authentication. */
 @WebServlet(urlPatterns = RedirectOAuthServlet.URL)
@@ -35,15 +38,16 @@ public final class RedirectOAuthServlet extends HttpServlet {
 	    IOException {
 	response.sendRedirect(request.getContextPath() + "/index.xhtml");
 
-	// Get code
 	String error = request.getParameter("error");
 	if (error != null) {
 	    System.err.println(this.getClass().toString() + " : " + error);
 	    return;
 	}
+
+	// Get code
 	String code = request.getParameter("code");
 	if (code == null) {
-	    System.err.println(this.getClass().toString() + " : no token");
+	    System.err.println(this.getClass().toString() + " : no code");
 	    return;
 	}
 
@@ -70,11 +74,20 @@ public final class RedirectOAuthServlet extends HttpServlet {
 	String token = jsonResponse.getString("access_token");
 
 	// TODO delete this
-	User.initTest();
-	User.get().setToken(token);
-	// TODO Implement
-	// Authentication authentication = new OAuthAuthenticationToken(token);
-	// SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
+	// User.initTest();
+	// User.get().setToken(token);
+	// User.get().downloadGoogleContacts();
 
+	// TODO OAuthAuthenticationToken
+	Authentication authentication = new OAuthAuthenticationToken(token);
+
+	// UsernamePasswordAuthenticationToken authentication = new
+	// UsernamePasswordAuthenticationToken(
+	// token, null, Collections.singleton(new SimpleGrantedAuthority(
+	// "ROLE_USER")));
+	// User user = new User();
+	// user.setToken(token);
+	// authentication.setDetails(user);
+	SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
 }
