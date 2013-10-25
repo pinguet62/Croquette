@@ -14,6 +14,7 @@ import com.google.gdata.data.contacts.ContactEntry;
 import com.google.gdata.data.contacts.ContactFeed;
 
 import fr.pinguet62.croquette.model.Message.State;
+import fr.pinguet62.croquette.springsecurity.OAuthAuthenticationToken;
 
 /** Informations about user. */
 public final class User {
@@ -27,7 +28,9 @@ public final class User {
 	// return User.u;
 	Authentication authentication = SecurityContextHolder.getContext()
 		.getAuthentication();
-	if ((authentication == null) || !authentication.isAuthenticated())
+	if ((authentication == null)
+		|| !(authentication instanceof OAuthAuthenticationToken)
+		|| !authentication.isAuthenticated())
 	    return null;
 	else
 	    return (User) SecurityContextHolder.getContext()

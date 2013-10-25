@@ -15,9 +15,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 import fr.pinguet62.croquette.springsecurity.OAuthAuthenticationToken;
 
@@ -36,11 +38,11 @@ public final class RedirectOAuthServlet extends HttpServlet {
     protected void doGet(final HttpServletRequest request,
 	    final HttpServletResponse response) throws ServletException,
 	    IOException {
-	response.sendRedirect(request.getContextPath() + "/index.xhtml");
 
 	String error = request.getParameter("error");
 	if (error != null) {
 	    System.err.println(this.getClass().toString() + " : " + error);
+	    this.redirectToIndex(request, response);
 	    return;
 	}
 
@@ -48,6 +50,7 @@ public final class RedirectOAuthServlet extends HttpServlet {
 	String code = request.getParameter("code");
 	if (code == null) {
 	    System.err.println(this.getClass().toString() + " : no code");
+	    this.redirectToIndex(request, response);
 	    return;
 	}
 
@@ -73,21 +76,31 @@ public final class RedirectOAuthServlet extends HttpServlet {
 	JsonObject jsonResponse = reader.readObject();
 	String token = jsonResponse.getString("access_token");
 
-	// TODO delete this
-	// User.initTest();
-	// User.get().setToken(token);
-	// User.get().downloadGoogleContacts();
-
-	// TODO OAuthAuthenticationToken
 	Authentication authentication = new OAuthAuthenticationToken(token);
-
-	// UsernamePasswordAuthenticationToken authentication = new
-	// UsernamePasswordAuthenticationToken(
-	// token, null, Collections.singleton(new SimpleGrantedAuthority(
-	// "ROLE_USER")));
-	// User user = new User();
-	// user.setToken(token);
-	// authentication.setDetails(user);
 	SecurityContextHolder.getContext().setAuthentication(authentication);
+	// Store security context into session
+	HttpSession session = request.getSession(true);
+	session.setAttribute(
+		HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+		SecurityContextHolder.getContext());
+
+	this.redirectToIndex(request, response);
     }
+
+    /**
+     * Redirect user to index page after authentication.
+     * 
+     * @param request
+     *            The {@link HttpServletRequest} request.
+     * @param response
+     *            The {@link HttpServletResponse} response.
+     * @throws IOException
+     *             If an input or output error is detected when the servlet
+     *             handles the GET request.
+     */
+    private void redirectToIndex(final HttpServletRequest request,
+	    final HttpServletResponse response) throws IOException {
+	response.sendRedirect(request.getContextPath() + "/index.xhtml");
+    }
+
 }
