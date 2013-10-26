@@ -3,10 +3,11 @@ package fr.pinguet62.croquette.model;
 import java.util.TreeSet;
 
 /**
- * Contains list of {@link Message}s. <br />
- * Extends {@link TreeSet} to sort and add some attributes and methods.
+ * Contains list of {@link Message}s.<br />
+ * There are ordered by ascending date.
  */
-public final class Conversation extends TreeSet<Message> {
+public final class Conversation extends TreeSet<Message> implements
+	Comparable<Conversation> {
 
     /** Auto generated serial version UID. */
     private static final long serialVersionUID = -6466753476994997663L;
@@ -26,6 +27,24 @@ public final class Conversation extends TreeSet<Message> {
     public void allRead() {
 	for (Message message : this)
 	    message.setRead(true);
+    }
+
+    /**
+     * Method used to compare the current {@link Conversation} to an other.
+     * 
+     * @param other
+     *            The other {@link Conversation}.
+     * @return A negative integer if the latest {@link Message} of the current
+     *         {@link Conversation} is latest than the latest {@link Message} of
+     *         the other, zero if there are equal, a positive integer otherwise.
+     */
+    @Override
+    public int compareTo(final Conversation other) {
+	if (this.isEmpty())
+	    return -1;
+	if (other.isEmpty())
+	    return +1;
+	return this.first().getDate().compareTo(other.first().getDate());
     }
 
     /**
@@ -97,5 +116,4 @@ public final class Conversation extends TreeSet<Message> {
     public void setInput(final String input) {
 	this.input = input;
     }
-
 }

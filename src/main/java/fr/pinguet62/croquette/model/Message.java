@@ -36,9 +36,8 @@ public final class Message implements Comparable<Message>, Serializable {
      * 
      * @param other
      *            The other {@link Message}.
-     * @return A negative integer if this current {@link Message} is oldest then
-     *         the other, zero if there are equals, a positive integer if this
-     *         current {@link Message} is newest then the other.
+     * @return A negative integer if this current {@link Message} is oldest than
+     *         the other, zero if there are equal, a positive integer otherwise.
      */
     @Override
     public int compareTo(final Message other) {

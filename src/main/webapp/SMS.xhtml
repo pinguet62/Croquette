@@ -50,21 +50,25 @@
 				</p:menuButton>
 			</h:form>
 		</p:layoutUnit>
-		<p:layoutUnit collapsible="true" header="#{msg['sms.contacts.title']}"
-			position="west" resizable="true" size="200">
-			<h:form id="contactsForm" prependId="false">
-				<p:dataTable id="contacts" rowKey="#{contact.phoneNumber}"
-					selection="#{smsManagedBean.selectedContact}"
+		<p:layoutUnit collapsible="true"
+			header="#{msg['sms.conversations.title']}" position="west"
+			resizable="true" size="200">
+			<h:form id="conversationsForm" prependId="false">
+				<p:commandButton icon="ui-icon-plusthick"
+					label="#{msg['sms.conversations.new']}" />
+				<p:dataTable emptyMessage="#{msg['sms.conversations.empty']}"
+					id="conversations" rowKey="#{conversation.contact.phoneNumber}"
+					selection="#{smsManagedBean.selectedConversation}"
 					selectionMode="single" styleClass="no-header"
-					value="#{smsManagedBean.contacts}" var="contact">
+					value="#{smsManagedBean.conversations}" var="conversation">
 					<p:ajax event="rowSelect" oncomplete="scrollConversationBottom()"
-						update="@this, :currentConversation, :input" />
-					<p:ajax event="rowUnselect" update=":currentConversation, :input" />
+						update="@this, :selectedConversation, :input" />
+					<p:ajax event="rowUnselect" update=":selectedConversation, :input" />
 					<p:column>
-						<h:outputText rendered="#{contact.conversation.unreadCount != 0}"
-							value="#{contact.conversation.unreadCount}" style="float: right;"
+						<h:outputText rendered="#{conversation.unreadCount != 0}"
+							value="#{conversation.unreadCount}" style="float: right;"
 							styleClass="badge" />
-						<h:outputText value="#{contact.name}" />
+						<h:outputText value="#{conversation.contact.name}" />
 					</p:column>
 				</p:dataTable>
 			</h:form>
@@ -72,16 +76,17 @@
 		<p:layoutUnit position="center">
 			<p:layout>
 				<p:layoutUnit position="center" style="display: block;">
-					<h:form id="currentConversation" prependId="false">
+					<h:form id="selectedConversation" prependId="false">
 						<p:outputPanel id="messages"
 							style="display: block; text-align: center;">
-							<c:if test="#{smsManagedBean.currentConversation.hasOldMessages}">
+							<c:if
+								test="#{smsManagedBean.selectedConversation.hasOldMessages}">
 								<p:commandLink action="#{smsManagedBean.loadOldMessages}"
-									update="currentConversation" value="#{msg['sms.loadOld']}" />
+									update="selectedConversation" value="#{msg['sms.loadOld']}" />
 								<br />
 								<br />
 							</c:if>
-							<c:forEach items="#{smsManagedBean.currentConversation}"
+							<c:forEach items="#{smsManagedBean.selectedConversation}"
 								var="message">
 								<div class="#{message.sent ? 'bubble-sent' : 'bubble-received'}">
 									<h:outputText style="font-size: small;" value="#{message.date}">
@@ -108,7 +113,7 @@
 								</p:column>
 								<p:column>
 									<p:commandButton actionListener="#{smsManagedBean.send}"
-										update=":currentConversation, :input"
+										update=":selectedConversation, :input"
 										value="#{msg['sms.action.send']}" />
 								</p:column>
 								<p:column>
@@ -127,7 +132,7 @@
 	</p:layout>
 	<p:socket channel="#{smsManagedBean.channel}">
 		<p:ajax event="message"
-			update="contactsForm:contacts, :currentConversation" />
+			update="conversationsForm:conversations, :selectedConversation" />
 	</p:socket>
 	<!-- TODO Delete this -->
 	<p:commandButton onclick="PF('testsDialog').show();"
@@ -137,16 +142,18 @@
 		<p:commandButton onclick="scrollConversationBottom()"
 			value="scrollConversationBottom()" />
 		<br />
+		<p:commandButton actionListener="#{testManagedBean.downloadGoogle}"
+			value="testManagedBean.downloadGoogle()" />
+		<br />
+		<p:commandButton actionListener="#{testManagedBean.initTestData}"
+			value="testManagedBean.initTestData()" />
+		<br />
 		<p:commandButton actionListener="#{testManagedBean.receviedSMSAction}"
 			value="ReceveidSMSAction" />
 		<br />
 		<p:commandButton
-			actionListener="#{testManagedBean.loadedSMSAction(smsManagedBean.selectedContact)}"
-			value="testManagedBean.loadedSMSAction(smsManagedBean.selectedContact)" />
-		<br />
-		<p:commandButton
-			actionListener="#{testManagedBean.downloadGoogleContacts}"
-			value="testManagedBean.downloadGoogleContacts()" />
+			actionListener="#{testManagedBean.loadedSMSAction(smsManagedBean.selectedConversation)}"
+			value="testManagedBean.loadedSMSAction(smsManagedBean.selectedConversation)" />
 	</p:dialog>
 </h:body>
 </html>

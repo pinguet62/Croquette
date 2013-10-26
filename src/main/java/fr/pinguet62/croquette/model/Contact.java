@@ -54,10 +54,6 @@ public final class Contact implements Serializable {
     /** The phone number. */
     private String phoneNumber = null;
 
-    /** Default constructor. */
-    public Contact() {
-    }
-
     /**
      * Gets the {@link Conversation}.
      * 
