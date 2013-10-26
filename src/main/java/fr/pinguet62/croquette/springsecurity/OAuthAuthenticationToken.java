@@ -16,8 +16,7 @@ import fr.pinguet62.croquette.model.User;
  * object; <li> {@link GrantedAuthority} is <code>ROLE_USER</code>.
  */
 public final class OAuthAuthenticationToken extends
-	UsernamePasswordAuthenticationToken /** TODO AbstractAuthenticationToken */
-{
+	UsernamePasswordAuthenticationToken {
 
     /** Auto-generated serial version UID. */
     private static final long serialVersionUID = -7960714936545188027L;
@@ -36,4 +35,5 @@ public final class OAuthAuthenticationToken extends
 	user.setToken(token);
 	this.setDetails(user);
     }
+
 }
