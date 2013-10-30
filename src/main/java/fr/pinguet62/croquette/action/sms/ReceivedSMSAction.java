@@ -43,12 +43,31 @@ public final class ReceivedSMSAction extends SMSAction {
     @Override
     public void execute() {
 	try {
-	    Contact contact = User.get().getContact(
-		    this.jsonMessage.getString(SMSAction.PHONE_NUMBER));
+	    Conversation conversation = null;
+	    // Existing conversation
+	    if (this.jsonMessage.containsKey(SMSAction.CONVERSATION)) {
+		int conversationId = this.jsonMessage
+			.getInt(SMSAction.CONVERSATION);
+		conversation = User.get().getConversations()
+			.get(conversationId);
+	    }
+	    // New conversation
+	    else {
+		String phoneNumber = this.jsonMessage
+			.getString(SMSAction.PHONE_NUMBER);
+		Contact contact = User.get().getContact(phoneNumber);
+		// New contact
+		if (contact == null) {
+		    contact = new Contact();
+		    contact.setName(phoneNumber);
+		    contact.setPhoneNumber(phoneNumber);
+		}
+		conversation.setContact(contact);
+	    }
 
 	    Message message = new Message();
-	    message.setContact(contact);
 	    message.setContent(this.jsonMessage.getString(SMSAction.CONTENT));
+	    message.setConversation(conversation);
 	    message.setDate(DateFormat.getDateTimeInstance(DateFormat.DEFAULT,
 		    DateFormat.DEFAULT).parse(
 		    this.jsonMessage.getString(SMSAction.DATE)));
@@ -56,7 +75,8 @@ public final class ReceivedSMSAction extends SMSAction {
 	    message.setSent(false);
 	    message.setState(State.OK);
 
-	    contact.getConversation().add(message);
+	    conversation.add(message);
+	    User.get().getConversations().add(conversation);
 	} catch (Exception e) {
 	    throw new ActionException(e);
 	}
@@ -65,5 +85,4 @@ public final class ReceivedSMSAction extends SMSAction {
 		.getPushContext();
 	pushContext.push(SmsManagedBean.CHANNEL, null);
     }
-
 }

@@ -55,18 +55,16 @@ public final class LoadedSMSAction extends SMSAction {
 
 	    // Get each message
 	    List<JsonObject> jsonMessages = this.jsonMessage.getJsonArray(
-		    LoadedSMSAction.MESSAGES)
-		    .getValuesAs(JsonObject.class);
+		    LoadedSMSAction.MESSAGES).getValuesAs(JsonObject.class);
 	    for (JsonObject jsonMessage : jsonMessages) {
 		Message message = new Message();
-		message.setContact(contact);
 		message.setContent(jsonMessage.getString(SMSAction.CONTENT));
+		message.setConversation(null); // TODO
 		message.setDate(DateFormat.getDateTimeInstance(
 			DateFormat.DEFAULT, DateFormat.DEFAULT).parse(
 			jsonMessage.getString(SMSAction.DATE)));
 		message.setRead(true);
-		message.setSent(jsonMessage
-			.getBoolean(LoadedSMSAction.SENT));
+		message.setSent(jsonMessage.getBoolean(LoadedSMSAction.SENT));
 		message.setState(State.OK);
 
 		contact.getConversation().add(message);

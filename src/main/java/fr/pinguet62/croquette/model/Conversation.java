@@ -18,6 +18,9 @@ public final class Conversation extends TreeSet<Message> implements
     /** If has old {@link Message}s. */
     private boolean hasOldMessages = true;
 
+    /** The id. */
+    private Integer id = null;
+
     /**
      * The input text of the new {@link Message} into this {@link Conversation}.
      */
@@ -40,11 +43,7 @@ public final class Conversation extends TreeSet<Message> implements
      */
     @Override
     public int compareTo(final Conversation other) {
-	if (this.isEmpty())
-	    return -1;
-	if (other.isEmpty())
-	    return +1;
-	return this.first().getDate().compareTo(other.first().getDate());
+	return other.first().getDate().compareTo(this.first().getDate());
     }
 
     /**
@@ -63,6 +62,15 @@ public final class Conversation extends TreeSet<Message> implements
      */
     public boolean getHasOldMessages() {
 	return this.hasOldMessages;
+    }
+
+    /**
+     * Gets the id.
+     * 
+     * @return The id.
+     */
+    public Integer getId() {
+	return this.id;
     }
 
     /**
@@ -105,6 +113,16 @@ public final class Conversation extends TreeSet<Message> implements
      */
     public void setHasOldMessages(final boolean hasOldMessages) {
 	this.hasOldMessages = hasOldMessages;
+    }
+
+    /**
+     * Sets the id.
+     * 
+     * @param id
+     *            The id.
+     */
+    public void setId(final Integer id) {
+	this.id = id;
     }
 
     /**

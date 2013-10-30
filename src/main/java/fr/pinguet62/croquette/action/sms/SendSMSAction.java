@@ -36,7 +36,8 @@ public final class SendSMSAction extends SMSAction {
 		.add(IAction.ACTION_KEY, SendSMSAction.ACTION_VALUE)
 		.add(SMSAction.CONTENT, this.message.getContent())
 		.add(SMSAction.PHONE_NUMBER,
-			this.message.getContact().getPhoneNumber()).build();
+			this.message.getConversation().getContact()
+				.getPhoneNumber()).build();
     }
 
 }

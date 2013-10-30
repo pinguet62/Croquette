@@ -34,10 +34,6 @@ public final class User {
     /** The OAuth token. */
     private String token = null;
 
-    /** Default constructor. */
-    public User() {
-    }
-
     /**
      * Gets {@link Contact} by phone number.
      * 

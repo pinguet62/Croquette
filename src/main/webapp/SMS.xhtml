@@ -57,7 +57,7 @@
 				<p:commandButton icon="ui-icon-plusthick"
 					label="#{msg['sms.conversations.new']}" />
 				<p:dataTable emptyMessage="#{msg['sms.conversations.empty']}"
-					id="conversations" rowKey="#{conversation.contact.phoneNumber}"
+					id="conversations" rowKey="#{conversation.id}"
 					selection="#{smsManagedBean.selectedConversation}"
 					selectionMode="single" styleClass="no-header"
 					value="#{smsManagedBean.conversations}" var="conversation">
@@ -71,6 +71,7 @@
 						<h:outputText value="#{conversation.contact.name}" />
 					</p:column>
 				</p:dataTable>
+				<p:commandLink value="#{msg['sms.conversations.loadOld']}" />
 			</h:form>
 		</p:layoutUnit>
 		<p:layoutUnit position="center">

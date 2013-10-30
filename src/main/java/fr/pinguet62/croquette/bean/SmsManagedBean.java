@@ -2,7 +2,9 @@ package fr.pinguet62.croquette.bean;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -53,9 +55,10 @@ public final class SmsManagedBean {
      * @return The list of {@link Contact}s.
      */
     public Iterable<Conversation> getConversations() {
-	// TODO TreeSet no iterable into xhtml
-	return new ArrayList<>(User.get().getConversations());
-	// return User.get().getConversations();
+	List<Conversation> conversations = new ArrayList<Conversation>(User
+		.get().getConversations());
+	Collections.sort(conversations);
+	return conversations;
     }
 
     /**
@@ -67,15 +70,6 @@ public final class SmsManagedBean {
 	if (this.selectedConversation == null)
 	    return null;
 	return this.selectedConversation.getInput();
-    }
-
-    /**
-     * Gets the selected {@link Conversation}.
-     * 
-     * @return The selected {@link Conversation}.
-     */
-    public Conversation getSelectedContact() {
-	return this.selectedConversation;
     }
 
     /**
@@ -104,8 +98,8 @@ public final class SmsManagedBean {
 	int nbMessages = (int) (5 * Math.random());
 	for (int i = 0; i < nbMessages; i++) {
 	    Message message = new Message();
-	    message.setContact(this.selectedConversation.getContact());
 	    message.setContent("SmsManagedBean.loadOldMessages()");
+	    message.setConversation(this.selectedConversation);
 	    Calendar calendar = Calendar.getInstance();
 	    calendar.setTime(this.selectedConversation.first().getDate());
 	    calendar.add(Calendar.DATE, -1);
@@ -130,8 +124,8 @@ public final class SmsManagedBean {
 	    return;
 
 	Message message = new Message();
-	message.setContact(this.selectedConversation.getContact());
 	message.setContent(this.selectedConversation.getInput());
+	message.setConversation(this.selectedConversation);
 	message.setDate(new Date());
 	message.setSent(true);
 

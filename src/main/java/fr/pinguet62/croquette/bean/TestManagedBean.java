@@ -19,8 +19,8 @@ import fr.pinguet62.croquette.action.sms.LoadindSMSAction;
 import fr.pinguet62.croquette.action.sms.ReceivedSMSAction;
 import fr.pinguet62.croquette.action.sms.SMSAction;
 import fr.pinguet62.croquette.model.Contact;
-import fr.pinguet62.croquette.model.Contacts;
 import fr.pinguet62.croquette.model.Conversation;
+import fr.pinguet62.croquette.model.Conversations;
 import fr.pinguet62.croquette.model.Message;
 import fr.pinguet62.croquette.model.Message.State;
 import fr.pinguet62.croquette.model.User;
@@ -36,26 +36,29 @@ public final class TestManagedBean {
     }
 
     /** Initialize application with test data. */
-    @SuppressWarnings("deprecation")
     public void initTestData() {
+	Calendar calendar = Calendar.getInstance();
+	calendar.set(2012, 0, 0);
 	User user = User.get();
-	for (int i = 1; i <= 30; ++i) {
-	    // Conversation
+	// Conversation
+	for (int conv = 8; conv <= 38; ++conv) {
 	    Conversation conversation = new Conversation();
-	    // Contact
-	    Contact contact = new Contact();
 	    conversation
 		    .setHasOldMessages(((int) (2 * Math.random()) % 2) == 0);
-	    contact.setName("Contact " + i);
-	    contact.setPhoneNumber("phoneNumber " + i);
+	    conversation.setId(conv);
+	    // Contact
+	    Contact contact = new Contact();
+	    contact.setName("Contact " + conv);
+	    contact.setPhoneNumber("phoneNumber " + conv);
 	    conversation.setContact(contact);
 	    // Messages
-	    for (int j = 1; j <= 20; ++j) {
+	    for (int mess = 1; mess <= 20; ++mess) {
 		final Message message = new Message();
-		message.setContact(contact);
-		message.setContent("Contact " + i + " - Message " + j);
-		message.setDate(new Date(2012 - 1900, 9, j));
-		message.setRead((5 < i) || (j < 18));
+		message.setContent("Contact " + conv + " - Message " + mess);
+		message.setConversation(null); // TODO
+		message.setDate(calendar.getTime());
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		message.setRead((conv < 35) || (mess < 15));
 		message.setSent(((int) (2 * Math.random()) % 2) == 0);
 		message.setState(State.OK);
 		conversation.add(message);
@@ -71,14 +74,16 @@ public final class TestManagedBean {
      * @param contact
      *            The contact.
      */
-    public void loadedSMSAction(final Contact contact) {
+    public void loadedSMSAction(final Conversation conversation) {
 	Calendar calendar = Calendar.getInstance();
-	calendar.setTime(contact.getConversation().first().getDate());
+	calendar.setTime(conversation.first().getDate());
 	calendar.add(Calendar.DATE, -1);
 
-	JsonObjectBuilder baseBuilder = Json.createObjectBuilder()
+	JsonObjectBuilder baseBuilder = Json
+		.createObjectBuilder()
 		.add(IAction.ACTION_KEY, LoadedSMSAction.ACTION_VALUE)
-		.add(SMSAction.PHONE_NUMBER, contact.getPhoneNumber());
+		.add(SMSAction.PHONE_NUMBER,
+			conversation.getContact().getPhoneNumber());
 	JsonArrayBuilder messagesBuilder = Json.createArrayBuilder();
 	int nbMessages = ((int) (2 * Math.random()) + LoadindSMSAction.COUNT_VALUE) - 1;
 	for (int i = 0; i < nbMessages; i++) {
@@ -105,11 +110,18 @@ public final class TestManagedBean {
      * The {@link Contact} is chosen randomly.
      */
     public void receviedSMSAction() {
-	Contacts contacts = User.get().getContacts();
-	Contact contact = null;
-	Iterator<Contact> it = User.get().getContacts().iterator();
-	for (int i = 1; i < (int) (Math.random() * contacts.size()); i++)
-	    contact = it.next();
+	String phoneNumber = null;
+	if ((int) ((2 * Math.random()) % 2) == 0)
+	    phoneNumber = DateFormat.getDateTimeInstance(DateFormat.DEFAULT,
+		    DateFormat.DEFAULT).format(new Date());
+	else {
+	    Conversations conversations = User.get().getConversations();
+	    Conversation conversation = null;
+	    Iterator<Conversation> it = conversations.iterator();
+	    for (int i = 1; i < (int) (Math.random() * conversations.size()); i++)
+		conversation = it.next();
+	    phoneNumber = conversation.getContact().getPhoneNumber();
+	}
 
 	JsonObject jsonMessage = Json
 		.createObjectBuilder()
@@ -118,7 +130,7 @@ public final class TestManagedBean {
 		.add(SMSAction.DATE,
 			DateFormat.getDateTimeInstance(DateFormat.DEFAULT,
 				DateFormat.DEFAULT).format(new Date()))
-		.add(SMSAction.PHONE_NUMBER, contact.getPhoneNumber()).build();
+		.add(SMSAction.PHONE_NUMBER, phoneNumber).build();
 	IAction action = ActionFactory.getAction(jsonMessage);
 	action.execute();
     }

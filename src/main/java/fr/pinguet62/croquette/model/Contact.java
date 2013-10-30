@@ -8,7 +8,7 @@ import com.google.gdata.data.contacts.ContactEntry;
 import com.google.gdata.data.extensions.PhoneNumber;
 
 /** Contains informations about a contact. */
-public final class Contact implements Serializable {
+public final class Contact implements Comparable<Contact>, Serializable {
 
     /** Auto generated serial version UID. */
     private static final long serialVersionUID = -594515732428430186L;
@@ -27,15 +27,11 @@ public final class Contact implements Serializable {
 		continue;
 	    else if (!contactEntry.hasName())
 		continue;
-	    else if (!contactEntry.getName().hasFamilyName())
-		continue;
-	    else if (!contactEntry.getName().hasGivenName())
+	    else if (!contactEntry.getName().hasFullName())
 		continue;
 
 	    Contact contact = new Contact();
-	    contact.setName(contactEntry.getName().getFamilyName().getValue());
-	    contact.setFirstName(contactEntry.getName().getGivenName()
-		    .getValue());
+	    contact.setName(contactEntry.getName().getFullName().getValue());
 	    contact.setPhoneNumber(phoneNumber.getPhoneNumber());
 	}
 
@@ -43,10 +39,7 @@ public final class Contact implements Serializable {
     }
 
     /** The {@link Conversation}. */
-    private Conversation conversation = new Conversation();
-
-    /** The first name. */
-    private String firstName = null;
+    private Conversation conversation = null;
 
     /** The name. */
     private String name = null;
@@ -55,21 +48,29 @@ public final class Contact implements Serializable {
     private String phoneNumber = null;
 
     /**
+     * Method used to sort {@link Contact}s by <code>name</code>.<br />
+     * Sort by <code>phone number</code> if they are the same <code>name</code>.
+     * 
+     * @param other
+     *            The other {@link Contact}.
+     * @return A negative integer if this current {@link Contact} is before the
+     *         other, zero if there are equal, a positive integer otherwise.
+     */
+    @Override
+    public int compareTo(final Contact other) {
+	int nameCompare = this.name.compareTo(other.name);
+	if (nameCompare != 0)
+	    return nameCompare;
+	return this.phoneNumber.compareTo(other.phoneNumber);
+    }
+
+    /**
      * Gets the {@link Conversation}.
      * 
      * @return The {@link Conversation}.
      */
     public Conversation getConversation() {
 	return this.conversation;
-    }
-
-    /**
-     * Gets the first name.
-     * 
-     * @return The first name.
-     */
-    public String getFirstName() {
-	return this.firstName;
     }
 
     /**
@@ -98,16 +99,6 @@ public final class Contact implements Serializable {
      */
     public void setConversation(final Conversation conversation) {
 	this.conversation = conversation;
-    }
-
-    /**
-     * Sets the first name.
-     * 
-     * @param firstName
-     *            The first name to set.
-     */
-    public void setFirstName(final String firstName) {
-	this.firstName = firstName;
     }
 
     /**
