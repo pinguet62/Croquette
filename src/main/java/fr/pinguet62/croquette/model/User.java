@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import fr.pinguet62.croquette.springsecurity.OAuthAuthenticationToken;
+import fr.pinguet62.croquette.xmpp.Manager;
 
 /** Informations about user. */
 public final class User {
@@ -31,8 +32,14 @@ public final class User {
     /** The {@link Conversation}s. */
     private final Conversations conversations = new Conversations();
 
+    /** The email. */
+    private String email = null;
+
     /** The OAuth token. */
     private String token = null;
+
+    /** The XMPP Manager. */
+    private Manager xmppManager = null;
 
     /**
      * Gets {@link Contact} by phone number.
@@ -69,12 +76,40 @@ public final class User {
     }
 
     /**
+     * Gets the email.
+     * 
+     * @return The email.
+     */
+    public String getEmail() {
+	return this.email;
+    }
+
+    /**
      * Gets the OAuth token.
      * 
      * @return The OAuth token.
      */
     public String getToken() {
 	return this.token;
+    }
+
+    /**
+     * Gets the XMPP manager.
+     * 
+     * @return The XMPP manager.
+     */
+    public Manager getXmppManager() {
+	return this.xmppManager;
+    }
+
+    /**
+     * Sets the email.
+     * 
+     * @param email
+     *            The email.
+     */
+    public void setEmail(final String email) {
+	this.email = email;
     }
 
     /**
@@ -85,6 +120,16 @@ public final class User {
      */
     public void setToken(final String token) {
 	this.token = token;
+    }
+
+    /**
+     * Sets the XMPP manager.
+     * 
+     * @param xmppManager
+     *            The XMPP manager.
+     */
+    public void setXmppManager(final Manager xmppManager) {
+	this.xmppManager = xmppManager;
     }
 
 }
