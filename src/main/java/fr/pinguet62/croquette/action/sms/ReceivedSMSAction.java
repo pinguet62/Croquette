@@ -62,6 +62,7 @@ public final class ReceivedSMSAction extends SMSAction {
 		    contact.setName(phoneNumber);
 		    contact.setPhoneNumber(phoneNumber);
 		}
+		conversation = new Conversation();
 		conversation.setContact(contact);
 	    }
 

@@ -4,7 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import fr.pinguet62.croquette.springsecurity.OAuthAuthenticationToken;
-import fr.pinguet62.croquette.xmpp.Manager;
+import fr.pinguet62.croquette.xmpp.XMPPManager;
 
 /** Informations about user. */
 public final class User {
@@ -39,7 +39,7 @@ public final class User {
     private String token = null;
 
     /** The XMPP Manager. */
-    private Manager xmppManager = null;
+    private XMPPManager xmppManager = null;
 
     /**
      * Gets {@link Contact} by phone number.
@@ -98,7 +98,9 @@ public final class User {
      * 
      * @return The XMPP manager.
      */
-    public Manager getXmppManager() {
+    public XMPPManager getXmppManager() {
+	if ((this.xmppManager == null) && (this.token != null))
+	    this.xmppManager = new XMPPManager();
 	return this.xmppManager;
     }
 
@@ -128,7 +130,7 @@ public final class User {
      * @param xmppManager
      *            The XMPP manager.
      */
-    public void setXmppManager(final Manager xmppManager) {
+    public void setXmppManager(final XMPPManager xmppManager) {
 	this.xmppManager = xmppManager;
     }
 

@@ -89,7 +89,7 @@ public final class SmsManagedBean {
      */
     @PostConstruct
     private void init() {
-	// TODO Implement
+	User.get().getXmppManager().connect();
     }
 
     /** Load old {@link Message}s of the selected {@link Conversation}. */

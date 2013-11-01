@@ -8,7 +8,11 @@ import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.sasl.SASLMechanism;
 import org.jivesoftware.smack.util.Base64;
 
+/** SASL mechanism for GTalk. */
 public final class GTalkSASLMechanism extends SASLMechanism {
+
+    /** The name of this SASL mechanism. */
+    public static final String NAME = "X-GOOGLE-TOKEN";
 
     /**
      * Constructor.
@@ -49,7 +53,7 @@ public final class GTalkSASLMechanism extends SASLMechanism {
 
     @Override
     protected String getName() {
-	return null;
+	return GTalkSASLMechanism.NAME;
     }
 
 }
