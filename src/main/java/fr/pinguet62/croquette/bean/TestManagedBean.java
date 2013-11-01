@@ -135,4 +135,9 @@ public final class TestManagedBean {
 	action.execute();
     }
 
+    /** Send XMPP message. */
+    public void sendXmppMessage() {
+	User.get().getXmppManager().send("{\"key\": \"value\"}");
+    }
+
 }

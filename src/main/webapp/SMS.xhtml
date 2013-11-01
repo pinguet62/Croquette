@@ -150,11 +150,15 @@
 			value="testManagedBean.initTestData()" />
 		<br />
 		<p:commandButton actionListener="#{testManagedBean.receviedSMSAction}"
-			value="ReceveidSMSAction" />
+			value="ReceveidSMSAction()" />
 		<br />
 		<p:commandButton
 			actionListener="#{testManagedBean.loadedSMSAction(smsManagedBean.selectedConversation)}"
 			value="testManagedBean.loadedSMSAction(smsManagedBean.selectedConversation)" />
+        <br />
+        <p:commandButton
+            actionListener="#{testManagedBean.sendXmppMessage}"
+            value="testManagedBean.sendXmppMessage())" />
 	</p:dialog>
 </h:body>
 </html>
