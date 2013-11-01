@@ -6,6 +6,7 @@ import javax.json.JsonObject;
 import fr.pinguet62.croquette.action.Action;
 import fr.pinguet62.croquette.action.IAction;
 import fr.pinguet62.croquette.model.Conversation;
+import fr.pinguet62.croquette.model.User;
 
 /** Load old SMS of a {@link Conversation}. */
 @Action(LoadindSMSAction.ACTION_VALUE)
@@ -48,14 +49,15 @@ public final class LoadindSMSAction extends SMSAction {
      */
     @Override
     public void execute() {
-	this.conversation.getContact();
-	Json.createObjectBuilder()
+	JsonObject jsonObject = Json
+		.createObjectBuilder()
 		.add(IAction.ACTION_KEY, LoadindSMSAction.ACTION_VALUE)
 		.add(LoadindSMSAction.COUNT_KEY, LoadindSMSAction.COUNT_VALUE)
 		.add(LoadindSMSAction.OLDEST, this.conversation.first().getId())
 		.add(SMSAction.PHONE_NUMBER,
 			this.conversation.getContact().getPhoneNumber())
 		.build();
+	User.get().getXmppManager().send(jsonObject.toString());
     }
 
 }
