@@ -2,6 +2,7 @@ package fr.pinguet62.croquette.action.sms;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 import fr.pinguet62.croquette.action.Action;
 import fr.pinguet62.croquette.action.IAction;
@@ -49,15 +50,15 @@ public final class LoadindSMSAction extends SMSAction {
      */
     @Override
     public void execute() {
-	JsonObject jsonObject = Json
+	JsonObjectBuilder jsonObjectBuilder = Json
 		.createObjectBuilder()
 		.add(IAction.ACTION_KEY, LoadindSMSAction.ACTION_VALUE)
-		.add(LoadindSMSAction.COUNT_KEY, LoadindSMSAction.COUNT_VALUE)
+		.add(SMSAction.CONVERSATION, this.conversation.getId())
 		.add(LoadindSMSAction.OLDEST, this.conversation.first().getId())
-		.add(SMSAction.PHONE_NUMBER,
-			this.conversation.getContact().getPhoneNumber())
-		.build();
-	User.get().getXmppManager().send(jsonObject.toString());
+		.add(LoadindSMSAction.COUNT_KEY, LoadindSMSAction.COUNT_VALUE);
+	JsonObject jsonObject = jsonObjectBuilder.build();
+	String message = jsonObject.toString();
+	User.get().getXmppManager().send(message);
     }
 
 }
