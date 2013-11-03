@@ -77,7 +77,8 @@ public final class XMPPManager implements MessageListener {
 	JsonReader jsonReader = Json.createReader(inputStream);
 	JsonObject jsonObject = jsonReader.readObject();
 	IAction action = ActionFactory.getAction(jsonObject);
-	action.execute();
+	if (action.fromSmartphone())
+	    action.execute();
     }
 
     /**

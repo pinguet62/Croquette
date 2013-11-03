@@ -61,4 +61,9 @@ public final class LoadindSMSAction extends SMSAction {
 	User.get().getXmppManager().send(message);
     }
 
+    @Override
+    public boolean fromSmartphone() {
+	return false;
+    }
+
 }

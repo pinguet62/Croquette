@@ -86,4 +86,10 @@ public final class ReceivedSMSAction extends SMSAction {
 		.getPushContext();
 	pushContext.push(SmsManagedBean.CHANNEL, null);
     }
+
+    @Override
+    public boolean fromSmartphone() {
+	return true;
+    }
+
 }
