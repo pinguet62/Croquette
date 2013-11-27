@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -127,9 +127,9 @@
 				</p:layoutUnit>
 			</p:layout>
 		</p:layoutUnit>
-		<p:layoutUnit position="south">
-            TODO south
-        </p:layoutUnit>
+		<!-- <p:layoutUnit position="south" size="125">
+			<ui:include src="footer.xhtml" />
+		</p:layoutUnit> -->
 	</p:layout>
 	<p:socket channel="#{smsManagedBean.channel}">
 		<p:ajax event="message"
@@ -155,10 +155,9 @@
 		<p:commandButton
 			actionListener="#{testManagedBean.loadedSMSAction(smsManagedBean.selectedConversation)}"
 			value="testManagedBean.loadedSMSAction(smsManagedBean.selectedConversation)" />
-        <br />
-        <p:commandButton
-            actionListener="#{testManagedBean.sendXmppMessage}"
-            value="testManagedBean.sendXmppMessage())" />
+		<br />
+		<p:commandButton actionListener="#{testManagedBean.sendXmppMessage}"
+			value="testManagedBean.sendXmppMessage())" />
 	</p:dialog>
 </h:body>
 </html>

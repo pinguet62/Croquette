@@ -1,5 +1,7 @@
 package fr.pinguet62.croquette.model;
 
+import java.io.Serializable;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -7,7 +9,10 @@ import fr.pinguet62.croquette.springsecurity.OAuthAuthenticationToken;
 import fr.pinguet62.croquette.xmpp.XMPPManager;
 
 /** Informations about user. */
-public final class User {
+public final class User implements Serializable {
+
+    /** Auto generated serial version UID. */
+    private static final long serialVersionUID = 8792705815936052711L;
 
     /**
      * Gets the session user.

@@ -34,6 +34,7 @@ public final class ThemeSwitcherManagedBean {
     @PostConstruct
     private void init() {
 	this.theme = Theme.fromKey("bootstrap");
+	this.theme = Theme.fromKey("dark-hive"); // TODO delete
     }
 
     /**
