@@ -13,8 +13,23 @@
 	<title>TODO title</title>
 </h:head>
 <h:body style="margin: 0">
-	<p:button href="SMS.xhtml" value="SMS" />
-	<p:button href="OAuth/login" value="OAuth" />
+	<div style="text-align: center;">
+		<h1>
+			<h:outputText value="Croquette" />
+		</h1>
+		<h:outputText value="Send SMS from your browser !" />
+		<div style="display: block;">
+			<p:button href="SMS.xhtml"
+				style="height: 50px; margin: 0 50px 0 50px; width: 150px;"
+				value="SMS" />
+			<p:button href="OAuth/login"
+				style="height: 50px; margin: 0 50px 0 50px; width: 150px;"
+				value="OAuth" />
+			<p:button href=" "
+				style="height: 50px; margin: 0 50px 0 50px; width: 150px;"
+				value="Smartphone" />
+		</div>
+	</div>
 	<ui:include src="footer.xhtml" />
 </h:body>
 </html>
