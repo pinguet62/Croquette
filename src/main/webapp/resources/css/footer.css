@@ -1,0 +1,51 @@
+a {
+	color: inherit;
+	/* remplacer la couleur bleu et violette par la couleur du reste du texte */
+	text-decoration: inherit;
+	/* masquer le soulignement des liens hypertextes */
+}
+
+.footer {
+	background: none repeat scroll 0% 0% rgb(66, 69, 72);
+	color: rgb(255, 255, 255); /* couleur du texte */
+	text-align: center; /* centrer le footer */
+}
+
+.footer div {
+	display: inline-block; /* listes horizontales */
+}
+
+/* titres 1 des listes */
+.footer h1 {
+	color: rgb(137, 137, 137); /* couleur du texte */
+	font-size: large; /* taille de la police */
+}
+
+/************************************************/
+.footer_lists li {
+	display: inline-block; /* listes horizontales */
+	text-align: left; /* contenu des listes alignés à gauche */
+	vertical-align: top; /* listes collés en haut */
+	margin: 10px 50px 5px 0px;
+	/* marge : à droite pour espacer les listes + en haut pour espacer les lignes */
+}
+
+/************************************************/
+.footer_list {
+	
+}
+
+.footer_list li {
+	display: block; /* sous-listes verticales */
+}
+
+.footer_list ul {
+	padding-left: 0px;
+	/* retrait à gauche de chaque éléments de chaque liste */
+}
+
+/************************************************/
+.icon {
+	vertical-align: middle; /* aligner verticalement avec le texte */
+	width: 30px; /* taille */
+}

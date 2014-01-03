@@ -7,47 +7,82 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<h:form>
-		<p:panel style="text-decoration: none;">
-			<h:panelGrid columns="2" style="margin: 0 auto;">
-				<p:panel header="License">
-					<h:outputLink
-						hreflang="http://creativecommons.org/licenses/by-nc-sa/4.0/">
-						<h:outputText value="Creative Commons" />
-					</h:outputLink>
-					<br />
-					<h:outputLink hreflang="https://github.com/pinguet62/Croquette">
-						<h:outputText value="Sources" />
-					</h:outputLink>
-				</p:panel>
-				<p:panel header="Contact">
-					<h:outputLink hreflang="mailto:pinguet62@gmail.com">
-						<h:outputText value="Email" />
-					</h:outputLink>
-					<br />
-					<h:outputLink hreflang="https://www.facebook.com/pinguet62">
-						<h:outputText value="Facebook" />
-					</h:outputLink>
-					<br />
-					<h:outputLink hreflang="https://twitter.com/pinguet62">
-						<h:outputText value="Twitter" />
-					</h:outputLink>
-					<br />
-					<h:outputLink hreflang="http://www.linkedin.com/in/pinguet62">
-						<h:outputText value="LinkedIn" />
-					</h:outputLink>
-					<br />
-					<h:outputLink hreflang="http://www.viadeo.com/fr/profile/pinguet62">
-						<h:outputText value="Viadeo" />
-					</h:outputLink>
-					<br />
-					<h:outputLink
-						hreflang="https://plus.google.com/105083747971564697504">
-						<h:outputText value="Google+" />
-					</h:outputLink>
-				</p:panel>
-				<ui:include src="PayPal.xhtml" />
-			</h:panelGrid>
-		</p:panel>
-	</h:form>
+	<div class="footer">
+		<div class="footer_lists">
+			<ul>
+				<li class="footer_list">
+					<h1>Contact</h1>
+					<ul>
+						<li><h:outputLink value="Suggestion.xhtml">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Idea.png" /> Suggestion</h:outputLink></li>
+						<li><h:outputLink value="Problem.xhtml">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/ExclamationPoint.png" /> Problème</h:outputLink></li>
+						<li><h:outputLink value="FAQ.xhtml">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/InterrogationPoint.png" /> FAQ</h:outputLink></li>
+					</ul>
+				</li>
+				<li class="footer_list">
+					<h1>Partager</h1>
+					<ul>
+						<li><h:outputLink value="https://www.facebook.com">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Facebook.png" /> Facebook</h:outputLink></li>
+						<li><h:outputLink value="https://twitter.com">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Twitter.png" /> Twitter</h:outputLink></li>
+					</ul>
+				</li>
+				<li class="footer_list">
+					<h1>Application</h1>
+					<ul>
+						<li><h:outputLink
+								value="http://creativecommons.org/licenses/by-nc-sa/4.0">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/CreativeCommons.png" />
+								Licence</h:outputLink></li>
+						<li><h:outputLink
+								value="http://www.linkedin.com/in/pinguet62/Croquette">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/GitHub.png" /> Sources</h:outputLink></li>
+					</ul>
+				</li>
+				<li class="footer_list">
+					<h1>Développeur</h1>
+					<ul>
+						<li><h:outputLink value="mailto:pinguet62@gmail.com">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Email.png" /> Email</h:outputLink></li>
+						<li><h:outputLink value="https://www.facebook.com/pinguet62">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Facebook.png" /> Facebook</h:outputLink></li>
+						<li><h:outputLink value="https://github.com/pinguet62">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/GitHub.png" /> GitHub</h:outputLink></li>
+						<li><h:outputLink
+								value="http://www.linkedin.com/in/pinguet62">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/LinkedIn.png" /> LinkedIn</h:outputLink></li>
+						<li><h:outputLink value="https://twitter.com/pinguet62">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Twitter.png" /> Twitter</h:outputLink></li>
+						<li><h:outputLink
+								value="http://www.viadeo.com/fr/profile/pinguet62">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Viadeo.png" /> Viadeo</h:outputLink></li>
+						<li><h:outputLink
+								value="https://plus.google.com/105083747971564697504">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Google+.png" /> Google+</h:outputLink></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<!-- <div>
+			<p:graphicImage alt="ERROR"
+				src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" />
+		</div> -->
+	</div>
 </ui:composition>
