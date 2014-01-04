@@ -5,47 +5,35 @@ a {
 	/* masquer le soulignement des liens hypertextes */
 }
 
+.icon {
+	vertical-align: middle; /* aligner verticalement avec le texte */
+	width: 30px; /* taille */
+}
+
 .footer {
-	background: none repeat scroll 0% 0% rgb(66, 69, 72);
+	background: none repeat scroll 0% 0% rgb(66, 69, 72); /* arrière plan */
 	color: rgb(255, 255, 255); /* couleur du texte */
-	text-align: center; /* centrer le footer */
+	overflow: auto; /* ? garde le background avec le float:left des box */
 }
 
-.footer div {
-	display: inline-block; /* listes horizontales */
+.footer .box-section {
+	margin: 0px auto; /* centrage */
+	width: 1000px; /* largeur utilisée pour le centrage */
 }
 
-/* titres 1 des listes */
-.footer h1 {
-	color: rgb(137, 137, 137); /* couleur du texte */
-	font-size: large; /* taille de la police */
+.box-section .box {
+	float: left; /* listes côtes à côtes */
+	width: 250px;
+	/* espacer les listes /!\  pas trop large pour éviter le retour à la ligne */
 }
 
-/************************************************/
-.footer_lists li {
-	display: inline-block; /* listes horizontales */
-	text-align: left; /* contenu des listes alignés à gauche */
-	vertical-align: top; /* listes collés en haut */
-	margin: 10px 50px 5px 0px;
-	/* marge : à droite pour espacer les listes + en haut pour espacer les lignes */
-}
-
-/************************************************/
-.footer_list {
-	
-}
-
-.footer_list li {
-	display: block; /* sous-listes verticales */
-}
-
-.footer_list ul {
+.footer-list {
+	list-style: none outside none; /* cacher les puces des listes */
 	padding-left: 0px;
 	/* retrait à gauche de chaque éléments de chaque liste */
 }
 
-/************************************************/
-.icon {
-	vertical-align: middle; /* aligner verticalement avec le texte */
-	width: 30px; /* taille */
+.box h1 {
+	color: rgb(137, 137, 137); /* couleur du texte */
+	font-size: large; /* taille de la police */
 }

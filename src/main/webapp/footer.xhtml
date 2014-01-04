@@ -8,81 +8,107 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<div class="footer">
-		<div class="footer_lists">
-			<ul>
-				<li class="footer_list">
-					<h1>Contact</h1>
-					<ul>
-						<li><h:outputLink value="Suggestion.xhtml">
-								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
-									name="icon/Idea.png" /> Suggestion</h:outputLink></li>
-						<li><h:outputLink value="Problem.xhtml">
-								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
-									name="icon/ExclamationPoint.png" /> Problème</h:outputLink></li>
-						<li><h:outputLink value="FAQ.xhtml">
-								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
-									name="icon/InterrogationPoint.png" /> FAQ</h:outputLink></li>
-					</ul>
-				</li>
-				<li class="footer_list">
-					<h1>Partager</h1>
-					<ul>
-						<li><h:outputLink value="https://www.facebook.com">
-								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
-									name="icon/Facebook.png" /> Facebook</h:outputLink></li>
-						<li><h:outputLink value="https://twitter.com">
-								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
-									name="icon/Twitter.png" /> Twitter</h:outputLink></li>
-					</ul>
-				</li>
-				<li class="footer_list">
-					<h1>Application</h1>
-					<ul>
-						<li><h:outputLink
-								value="http://creativecommons.org/licenses/by-nc-sa/4.0">
-								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
-									name="icon/CreativeCommons.png" />
-								Licence</h:outputLink></li>
-						<li><h:outputLink
-								value="http://www.linkedin.com/in/pinguet62/Croquette">
-								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
-									name="icon/GitHub.png" /> Sources</h:outputLink></li>
-					</ul>
-				</li>
-				<li class="footer_list">
-					<h1>Développeur</h1>
-					<ul>
-						<li><h:outputLink value="mailto:pinguet62@gmail.com">
-								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
-									name="icon/Email.png" /> Email</h:outputLink></li>
-						<li><h:outputLink value="https://www.facebook.com/pinguet62">
-								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
-									name="icon/Facebook.png" /> Facebook</h:outputLink></li>
-						<li><h:outputLink value="https://github.com/pinguet62">
-								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
-									name="icon/GitHub.png" /> GitHub</h:outputLink></li>
-						<li><h:outputLink
-								value="http://www.linkedin.com/in/pinguet62">
-								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
-									name="icon/LinkedIn.png" /> LinkedIn</h:outputLink></li>
-						<li><h:outputLink value="https://twitter.com/pinguet62">
-								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
-									name="icon/Twitter.png" /> Twitter</h:outputLink></li>
-						<li><h:outputLink
-								value="http://www.viadeo.com/fr/profile/pinguet62">
-								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
-									name="icon/Viadeo.png" /> Viadeo</h:outputLink></li>
-						<li><h:outputLink
-								value="https://plus.google.com/105083747971564697504">
-								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
-									name="icon/Google+.png" /> Google+</h:outputLink></li>
-					</ul>
-				</li>
-			</ul>
+		<div class="box-section">
+			<div class="box">
+				<h1>
+					<h:outputText value="Contact" />
+				</h1>
+				<ul class="footer-list">
+					<li><h:outputLink value="suggestion.xhtml">
+							<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+								name="icon/Idea.png" />
+							<h:outputText value="Suggestion" />
+						</h:outputLink></li>
+					<li><h:outputLink value="problem.xhtml">
+							<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+								name="icon/ExclamationPoint.png" />
+							<h:outputText value="Problème" />
+						</h:outputLink></li>
+					<li><h:outputLink value="FAQ.xhtml">
+							<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+								name="icon/InterrogationPoint.png" />
+							<h:outputText value="FAQ" />
+						</h:outputLink></li>
+				</ul>
+			</div>
+			<div class="box">
+				<h1>
+					<h:outputText value="Partager" />
+				</h1>
+				<ul class="footer-list">
+					<li><h:outputLink value="https://www.facebook.com">
+							<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+								name="icon/Facebook.png" />
+							<h:outputText value="" />Facebook</h:outputLink></li>
+					<li><h:outputLink value="https://twitter.com">
+							<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+								name="icon/Twitter.png" />
+							<h:outputText value="" />Twitter</h:outputLink></li>
+				</ul>
+			</div>
+			<div class="box">
+				<h1>
+					<h:outputText value="Application" />
+				</h1>
+				<ul class="footer-list">
+					<li><h:outputLink
+							value="http://creativecommons.org/licenses/by-nc-sa/4.0">
+							<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+								name="icon/CreativeCommons.png" />
+							<h:outputText value="Licence" />
+						</h:outputLink></li>
+					<li><h:outputLink
+							value="http://www.linkedin.com/in/pinguet62/Croquette">
+							<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+								name="icon/GitHub.png" />
+							<h:outputText value="Sources" />
+						</h:outputLink></li>
+				</ul>
+			</div>
+			<div class="box">
+				<h1>
+					<h:outputText value="Développeur" />
+				</h1>
+				<ul class="footer-list">
+					<li><h:outputLink value="mailto:pinguet62@gmail.com">
+							<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+								name="icon/Email.png" />
+							<h:outputText value="Email" />
+						</h:outputLink></li>
+					<li><h:outputLink value="https://www.facebook.com/pinguet62">
+							<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+								name="icon/Facebook.png" />
+							<h:outputText value="Facebook" />
+						</h:outputLink></li>
+					<li><h:outputLink value="https://github.com/pinguet62">
+							<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+								name="icon/GitHub.png" />
+							<h:outputText value="GitHub" />
+						</h:outputLink></li>
+					<li><h:outputLink value="http://www.linkedin.com/in/pinguet62">
+							<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+								name="icon/LinkedIn.png" />
+							<h:outputText value="LinkedIn" />
+						</h:outputLink></li>
+					<li><h:outputLink value="https://twitter.com/pinguet62">
+							<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+								name="icon/Twitter.png" />
+							<h:outputText value="Twitter" />
+						</h:outputLink></li>
+					<li><h:outputLink
+							value="http://www.viadeo.com/fr/profile/pinguet62">
+							<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+								name="icon/Viadeo.png" />
+							<h:outputText value="Viadeo" />
+						</h:outputLink></li>
+					<li><h:outputLink
+							value="https://plus.google.com/105083747971564697504">
+							<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+								name="icon/Google+.png" />
+							<h:outputText value="Google+" />
+						</h:outputLink></li>
+				</ul>
+			</div>
 		</div>
-		<!-- <div>
-			<p:graphicImage alt="ERROR"
-				src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" />
-		</div> -->
 	</div>
 </ui:composition>
