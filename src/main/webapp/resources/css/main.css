@@ -2,6 +2,10 @@
 Main CSS for Croquette
 */
 
+body {
+	margin: 0px;
+}
+
 /* Hide the column header of a dataTable */
 .no-header table thead tr {
 	display: none;

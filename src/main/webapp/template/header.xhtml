@@ -7,5 +7,21 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<div>header</div>
+	<div class="ui-widget ui-widget-header">
+		header
+		<p:themeSwitcher converter="themeConverter"
+			style="width: 200px; position: absolute; right: 0; top: 0; margin-left: auto; margin-right: 0;"
+			value="#{themeSwitcherManagedBean.theme}" var="t">
+			<f:selectItems itemLabel="#{theme.name}" itemValue="#{theme}"
+				value="#{themeSwitcherManagedBean.themes}" var="theme" />
+			<p:ajax event="change" />
+			<p:column>
+				<p:graphicImage height="50px"
+					value="/resources/img/theme/#{t.image}" />
+			</p:column>
+			<p:column>
+				<p:outputLabel value="#{t.name}" />
+			</p:column>
+		</p:themeSwitcher>
+	</div>
 </ui:composition>

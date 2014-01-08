@@ -1,6 +1,4 @@
-a {
-	color: inherit;
-	/* remplacer la couleur bleu et violette par la couleur du reste du texte */
+#footer a {
 	text-decoration: inherit;
 	/* masquer le soulignement des liens hypertextes */
 }
@@ -10,13 +8,11 @@ a {
 	width: 30px; /* taille */
 }
 
-.footer {
-	background: none repeat scroll 0% 0% rgb(66, 69, 72); /* arrière plan */
-	color: rgb(255, 255, 255); /* couleur du texte */
-	overflow: auto; /* ? garde le background avec le float:left des box */
+#footer {
+	height: 290px; /* TODO: size auto */
 }
 
-.footer .box-section {
+#footer .box-section {
 	margin: 0px auto; /* centrage */
 	width: 1000px; /* largeur utilisée pour le centrage */
 }
@@ -27,17 +23,8 @@ a {
 	/* espacer les listes /!\  pas trop large pour éviter le retour à la ligne */
 }
 
-.box h1 {
-	color: rgb(137, 137, 137); /* couleur du texte */
-	font-size: large; /* taille de la police */
-}
-
-.footer-list {
-	list-style: none outside none; /* cacher les puces des listes */
-	padding-left: 0px;
-	/* retrait à gauche de chaque éléments de chaque liste */
-}
-
-.footer-list li {
-	margin-bottom: 5px; /* espacement des éléments de la liste */
+/* Overrides PrimeFaces */
+#footer .ui-datalist-data {
+	list-style: none; /* puces */
+	padding-left: 0px; /* décalage à gauche */
 }
