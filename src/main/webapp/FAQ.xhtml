@@ -9,39 +9,30 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/template/layout.xhtml">
 	<ui:define name="content">
-		<h:outputStylesheet>
-.content {
-    margin: 0px auto; /* centrer */
-    width: 1000px; /* largeur */
-}
-        </h:outputStylesheet>
-		<div class="content">
-			<div class="content-header">
-				<h1>
-					<h:outputText value="FAQ" />
-				</h1>
-				<i><h:outputText value="Frequently Asked Questions" /></i><br />
-				<h:outputText
-					value="Vous trouverez peut-être ici les réponses à toutes vos questions..." />
-			</div>
-			<div class="content-content">
-				<ul>
-					<li><strong>Est-ce que Croquette enregistre les
-							identifiants Google ?</strong>
-						<p>
-							Non ! Il s'agit du protôcole
-							<h:outputLink value="http://oauth.net/">OAuth</h:outputLink>
-							qui permet aux sites comme Croquette d'accéder aux informations
-							de Google de manière sécurisée.
-						</p></li>
-					<li><strong>Est-ce que Croquette enregistre mes SMS ?</strong>
-						<p>Non ! Les données sont sauvegardées temporairement en
-							session, qui expire après un temps d'inactivité. L'historique des
-							conversations sont téléchargées depuis le smartphone. Les
-							messages privés ne sont sauvegardés dans aucune base de données
-							quelconque.</p></li>
-				</ul>
-			</div>
+		<div class="content-header">
+			<h1>
+				<h:outputText value="FAQ" />
+			</h1>
+			<i><h:outputText value="Frequently Asked Questions" /></i><br />
+			<h:outputText
+				value="Vous trouverez peut-être ici les réponses à toutes vos questions..." />
+		</div>
+		<div class="content-content">
+			<ul>
+				<li><strong>Est-ce que Croquette enregistre les
+						identifiants Google ?</strong>
+					<p>
+						Non ! Il s'agit du protôcole
+						<h:outputLink value="http://oauth.net/">OAuth</h:outputLink>
+						qui permet aux sites comme Croquette d'accéder aux informations de
+						Google de manière sécurisée.
+					</p></li>
+				<li><strong>Est-ce que Croquette enregistre mes SMS ?</strong>
+					<p>Non ! Les données sont sauvegardées temporairement en
+						session, qui expire après un temps d'inactivité. L'historique des
+						conversations sont téléchargées depuis le smartphone. Les messages
+						privés ne sont sauvegardés dans aucune base de données quelconque.</p></li>
+			</ul>
 		</div>
 	</ui:define>
 </ui:composition>
