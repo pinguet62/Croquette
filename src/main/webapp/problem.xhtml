@@ -7,12 +7,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/template/contact.xhtml">
-	<ui:define name="title">
-		<h:outputText value="Suggestion" />
-	</ui:define>
-	<ui:define name="subtitle">
-		<h:outputText
-			value="Vous rencontrez un problème ou un bug ? Prévenez moi !" />
+	template="/template/layout.xhtml">
+	<ui:define name="content">
+		<ui:include src="contact.xhtml">
+			<ui:param name="managedBean" value="#{problemManagedBean}" />
+			<ui:param name="subtitle"
+				value="Vous rencontrez un problème ou un bug ? Prévenez moi !" />
+			<ui:param name="title" value="Problème" />
+		</ui:include>
 	</ui:define>
 </ui:composition>
