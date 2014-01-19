@@ -28,7 +28,8 @@
 					<p:inputTextarea id="message" rows="5" style="width: 100%"
 						value="#{managedBean.message}" />
 					<p:spacer />
-					<p:commandButton action="#{managedBean.send}" value="Envoyer" />
+					<p:commandButton action="#{managedBean.send}" update="@form"
+						value="Envoyer" />
 				</h:panelGrid>
 			</h:form>
 		</p:panel>
