@@ -72,7 +72,6 @@ mvn eclipse:clean
 #### Dependencies
 
 Add to `pom.xml` file:
-
 ```xml
 <dependencies>
 	<dependency>
@@ -91,7 +90,6 @@ Add to `pom.xml` file:
 #### Configuration
 
 Add to `web.xml` file:
-
 ```xml
 <servlet>
 	<servlet-name>Faces Servlet</servlet-name>
@@ -110,7 +108,6 @@ Add to `web.xml` file:
 #### Dependencies
 
 Add to `pom.xml` file:
-
 ```xml
 <repositories>
 	<repository>
@@ -152,7 +149,6 @@ Add to `pom.xml` file:
 ##### Constant
 
 Add to `web.xml` file to set Theme, `bootstrap` here:
-
 ```xml
 <context-param>
 	<param-name>primefaces.THEME</param-name>
@@ -165,7 +161,6 @@ Add to `web.xml` file to set Theme, `bootstrap` here:
 To change dynamically the theme:
 
 1. Declare a Bean store in session:
-
 ``` java
 @SessionScoped
 public class ThemeSwitcherManagedBean {
@@ -178,7 +173,6 @@ public class ThemeSwitcherManagedBean {
 ```
 
 2. Use the Bean in `web.xml` file:
-
 ``` xml
 		<context-param>
 			<param-name>primefaces.THEME</param-name>
@@ -193,7 +187,6 @@ This project uses Servlet 3.0 version.
 #### Maven dependencies
 
 Add to `pom.xml` file:
-
 ``` xml
 <dependency>
 	<groupId>javax.servlet</groupId>
