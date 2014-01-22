@@ -1,12 +1,12 @@
 package fr.pinguet62.croquette.bean.theme;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 /** Used to switch of PrimeFaces theme. */
 @ManagedBean(eager = true, name = "themeSwitcherManagedBean")
-@ApplicationScoped
+@SessionScoped
 public final class ThemeSwitcherManagedBean {
 
     /** The current {@link Theme}. */
@@ -18,7 +18,7 @@ public final class ThemeSwitcherManagedBean {
      * @return The current {@link Theme}.
      */
     public Theme getTheme() {
-	return this.theme;
+	return theme;
     }
 
     /**
@@ -33,8 +33,7 @@ public final class ThemeSwitcherManagedBean {
     /** Initialization of this bean. */
     @PostConstruct
     private void init() {
-	this.theme = Theme.fromKey("bootstrap");
-	this.theme = Theme.fromKey("dark-hive"); // TODO delete
+	theme = Theme.fromKey("dark-hive"); // TODO delete
     }
 
     /**

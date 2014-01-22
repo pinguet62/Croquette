@@ -1,119 +1,208 @@
 # How create the project
 
 ## Create Maven project
-This project is a Maven project, initialised with this command :
 
-	mvn archetype:create -X -DarchetypeArtifactId=maven-archetype-webapp -DartifactId=Croquette -DgroupId=fr.pinguet62.croquette
+Run this Maven command to initialize the Maven project:
+
+```
+mvn archetype:create -X -DarchetypeArtifactId=maven-archetype-webapp -DartifactId=Croquette -DgroupId=fr.pinguet62.croquette
+```
+
+This command will generate this structure in current path:
+
+```
+|-- pom.xml
+`-- src
+	`-- main
+		|-- resources
+		`-- webapp
+			|-- index.jsp
+			`-- WEB-INF
+				`-- web.xml
+```
+
+The file `src/main/webapp/index.jsp` can be deleted for JSF project.
 
 ## Eclipse
-Execute Maven command :
 
-	mvn eclipse:eclipse
+### Generate configuration files (obsolete)
 
-Creates `.project` file, `.classpath` file, `.settings` folder and update `.gitgnore` files for Eclipse.
+Run this Maven command to initialize the project to Eclipse:
 
-### Import into Eclipse :
-Go to `File`, `Import...`, `Existing Projects into Workspace`, ...(TODO)
-Go to `Package Explorer` view, do right click on `Croquette` project, `Configure`, `Convert to Maven project`.
+```
+mvn eclipse:eclipse
+```
 
-### Correct bug of Maven updating project :
-Go to `Package Explorer` view, do right click on `Croquette` project, `Maven`, `Disable Nature Project`.
-Execute `mvn eclipse:clean`
-Go to `Package Explorer` view, fo right click on `Croquette` project, `Configure`, `Convert to Maven project`.
+This command will create, `.project`, `.classpath`, `.settings` files.
+
+### Gitgnore
+
+The three configuration files will not be committed.
+
+Add this content to `.gitgnore` file:
+
+```
+/.classpath
+/.project
+/.settings
+```
+
+### Import project into Eclipse
+
+`Package Explorer` view, right click on `JSFBaseProject` project, `Maven`, `Update Project...`.
+
+`Package Explorer` view, right click on `JSFBaseProject` project, `Configure`, `Convert to Maven project`.
+
+### Correct bug of Maven updating project
+
+`Package Explorer` view, right click on `JSFBaseProject` project, `Maven`, `Disable Nature Project`.
+
+Run this Maven command:
+
+```
+mvn eclipse:clean
+```
+
+`Package Explorer` view, right click on `JSFBaseProject` project, `Configure`, `Convert to Maven project`.
 
 ## Configuration
 
 ### JavaServer Faces
 
 #### Dependencies
-Insert into `pom.xml` file :
 
-	<dependencies>
-		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-api</artifactId>
-			<version>2.2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-impl</artifactId>
-			<version>2.2.2</version>
-		</dependency>
-	</dependencies>
+Add to `pom.xml` file:
+
+```xml
+<dependencies>
+	<dependency>
+		<groupId>com.sun.faces</groupId>
+		<artifactId>jsf-api</artifactId>
+		<version>2.2.2</version>
+	</dependency>
+	<dependency>
+		<groupId>com.sun.faces</groupId>
+		<artifactId>jsf-impl</artifactId>
+		<version>2.2.2</version>
+	</dependency>
+</dependencies>
+```
 
 #### Configuration
-Insert into `web.xml` file :
 
-	<servlet>
-		<servlet-name>Faces Servlet</servlet-name>
-		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
- 
-	<servlet-mapping>
-		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.xhtml</url-pattern>
-	</servlet-mapping>
+Add to `web.xml` file:
+
+```xml
+<servlet>
+	<servlet-name>Faces Servlet</servlet-name>
+	<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+	<load-on-startup>1</load-on-startup>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>Faces Servlet</servlet-name>
+	<url-pattern>*.xhtml</url-pattern>
+</servlet-mapping>
+```
 
 ### PrimeFaces
 
 #### Dependencies
-Insert into `pom.xml` file to download Primefaces and theme :
 
-	<repositories>
-		<repository>
-			<!-- PrimeFaces -->
-			<id>prime-repo</id>  
-			<name>PrimeFaces Maven Repository</name>
-			<url>http://repository.primefaces.org</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
-	<dependencies>
+Add to `pom.xml` file:
+
+```xml
+<repositories>
+	<repository>
 		<!-- PrimeFaces -->
-		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
-			<version>3.5</version>
-		</dependency>
-		<dependency>
-			<groupId>org.primefaces.extensions</groupId>
-			<artifactId>primefaces-extensions</artifactId>
-			<version>0.6.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.primefaces.themes</groupId>
-			<artifactId>bootstrap</artifactId>
-			<version>1.0.10</version>
-		</dependency>
-		<!-- Apache Commons -->
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.2</version>
-		</dependency>
-	<dependencies>
+		<id>prime-repo</id>  
+		<name>PrimeFaces Maven Repository</name>
+		<url>http://repository.primefaces.org</url>
+		<layout>default</layout>
+	</repository>
+</repositories>
+<dependencies>
+	<!-- PrimeFaces -->
+	<dependency>
+		<groupId>org.primefaces</groupId>
+		<artifactId>primefaces</artifactId>
+		<version>3.5</version>
+	</dependency>
+	<dependency>
+		<groupId>org.primefaces.extensions</groupId>
+		<artifactId>primefaces-extensions</artifactId>
+		<version>0.6.3</version>
+	</dependency>
+	<dependency>
+		<groupId>org.primefaces.themes</groupId>
+		<artifactId>bootstrap</artifactId>
+		<version>1.0.10</version>
+	</dependency>
+	<!-- Apache Commons -->
+	<dependency>
+		<groupId>commons-fileupload</groupId>
+		<artifactId>commons-fileupload</artifactId>
+		<version>1.2</version>
+	</dependency>
+<dependencies>
+```
 
 #### Theme
-Insert into `web.xml` file to set theme :
 
-	<context-param>
-		<param-name>primefaces.THEME</param-name>
-		<param-value>bootstrap</param-value>
-	</context-param>
+##### Constant
+
+Add to `web.xml` file to set Theme, `bootstrap` here:
+
+```xml
+<context-param>
+	<param-name>primefaces.THEME</param-name>
+	<param-value>bootstrap</param-value>
+</context-param>
+```
+
+##### Switcher
+
+To change dynamically the theme:
+
+1. Declare a Bean store in session:
+
+``` java
+@SessionScoped
+public class ThemeSwitcherManagedBean {
+	private String theme = "bootstrap";
+	
+	public Theme getTheme() {
+		return theme;
+	}
+}
+```
+
+2. Use the Bean in `web.xml` file:
+
+``` xml
+		<context-param>
+			<param-name>primefaces.THEME</param-name>
+			<param-value>#{themeSwitcherManagedBean.theme}</param-value>
+		</context-param>
+```
 
 ### Servlet
+
 This project uses Servlet 3.0 version.
 
 #### Maven dependencies
-Add this dependencies into `pom.xml` file :
 
-	<dependency>
-		<groupId>javax.servlet</groupId>
-		<artifactId>javax.servlet-api</artifactId>
-		<version>3.0.1</version>
-		<scope>provided</scope>
-	</dependency>
+Add to `pom.xml` file:
+
+``` xml
+<dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>javax.servlet-api</artifactId>
+	<version>3.0.1</version>
+	<scope>provided</scope>
+</dependency>
+```
 
 #### Annotation scan
+
 Remove `metadata-complete="true"` option from `<web-app />` tag, that Tomcat can scan annotations into classes.
