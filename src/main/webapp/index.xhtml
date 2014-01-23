@@ -20,15 +20,12 @@
 		</h1>
 		<h:outputText value="Send SMS from your browser !" />
 		<div style="display: block;">
-			<p:button href="SMS.xhtml"
+			<p:commandButton action="sms"
 				style="height: 50px; margin: 0 50px 0 50px; width: 150px;"
 				value="SMS" />
 			<p:button href="OAuth/login"
 				style="height: 50px; margin: 0 50px 0 50px; width: 150px;"
 				value="OAuth" />
-			<p:button href=" "
-				style="height: 50px; margin: 0 50px 0 50px; width: 150px;"
-				value="Smartphone" />
 		</div>
 	</div>
 	<ui:include src="template/footer.xhtml" />

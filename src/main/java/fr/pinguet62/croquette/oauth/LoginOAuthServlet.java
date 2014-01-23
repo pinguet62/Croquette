@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /** {@link Servlet} used to redirect to Google OAuth.<br /> */
 @WebServlet(urlPatterns = "/OAuth/login")
-public final class LoginOAuth extends HttpServlet {
+public final class LoginOAuthServlet extends HttpServlet {
 
     /** Auto generated serial version UID. */
     private static final long serialVersionUID = 751973283607034249L;
@@ -30,7 +30,7 @@ public final class LoginOAuth extends HttpServlet {
     protected void doGet(final HttpServletRequest request,
 	    final HttpServletResponse response) throws ServletException,
 	    IOException {
-	response.sendRedirect(LoginOAuth.url);
+	response.sendRedirect(LoginOAuthServlet.url);
     }
 
 }
