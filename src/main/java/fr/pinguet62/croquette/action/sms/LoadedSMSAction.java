@@ -72,7 +72,7 @@ public final class LoadedSMSAction extends SMSAction {
 
 	    // If the number of message is not equals to max count, then
 	    // conversation will not have other messages
-	    if (jsonMessages.size() != LoadindSMSAction.COUNT_VALUE)
+	    if (jsonMessages.size() != LoadingSMSAction.COUNT_VALUE)
 		contact.getConversation().setHasOldMessages(false);
 	} catch (Exception e) {
 	    throw new ActionException(e);

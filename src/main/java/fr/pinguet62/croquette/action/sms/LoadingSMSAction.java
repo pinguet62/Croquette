@@ -10,8 +10,8 @@ import fr.pinguet62.croquette.model.Conversation;
 import fr.pinguet62.croquette.model.User;
 
 /** Load old SMS of a {@link Conversation}. */
-@Action(LoadindSMSAction.ACTION_VALUE)
-public final class LoadindSMSAction extends SMSAction {
+@Action(LoadingSMSAction.ACTION_VALUE)
+public final class LoadingSMSAction extends SMSAction {
 
     /** The <code>action</code> value. */
     public static final String ACTION_VALUE = "SMS_LOADING";
@@ -40,7 +40,7 @@ public final class LoadindSMSAction extends SMSAction {
      *            The {@link Conversation} that the {@link User} wants to load
      *            older {@link Message}s.
      */
-    public LoadindSMSAction(final Conversation conversation) {
+    public LoadingSMSAction(final Conversation conversation) {
 	this.conversation = conversation;
     }
 
@@ -52,10 +52,10 @@ public final class LoadindSMSAction extends SMSAction {
     public void execute() {
 	JsonObjectBuilder jsonObjectBuilder = Json
 		.createObjectBuilder()
-		.add(IAction.ACTION_KEY, LoadindSMSAction.ACTION_VALUE)
+		.add(IAction.ACTION_KEY, LoadingSMSAction.ACTION_VALUE)
 		.add(SMSAction.CONVERSATION, this.conversation.getId())
-		.add(LoadindSMSAction.OLDEST, this.conversation.first().getId())
-		.add(LoadindSMSAction.COUNT_KEY, LoadindSMSAction.COUNT_VALUE);
+		.add(LoadingSMSAction.OLDEST, this.conversation.first().getId())
+		.add(LoadingSMSAction.COUNT_KEY, LoadingSMSAction.COUNT_VALUE);
 	JsonObject jsonObject = jsonObjectBuilder.build();
 	String message = jsonObject.toString();
 	User.get().getXmppManager().send(message);

@@ -15,7 +15,7 @@ import javax.json.JsonObjectBuilder;
 import fr.pinguet62.croquette.action.ActionFactory;
 import fr.pinguet62.croquette.action.IAction;
 import fr.pinguet62.croquette.action.sms.LoadedSMSAction;
-import fr.pinguet62.croquette.action.sms.LoadindSMSAction;
+import fr.pinguet62.croquette.action.sms.LoadingSMSAction;
 import fr.pinguet62.croquette.action.sms.ReceivedSMSAction;
 import fr.pinguet62.croquette.action.sms.SMSAction;
 import fr.pinguet62.croquette.model.Contact;
@@ -85,7 +85,7 @@ public final class TestManagedBean {
 		.add(SMSAction.PHONE_NUMBER,
 			conversation.getContact().getPhoneNumber());
 	JsonArrayBuilder messagesBuilder = Json.createArrayBuilder();
-	int nbMessages = ((int) (2 * Math.random()) + LoadindSMSAction.COUNT_VALUE) - 1;
+	int nbMessages = ((int) (2 * Math.random()) + LoadingSMSAction.COUNT_VALUE) - 1;
 	for (int i = 0; i < nbMessages; i++) {
 	    calendar.add(Calendar.DATE, -1);
 	    JsonObjectBuilder messageBuilder = Json

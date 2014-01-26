@@ -1,61 +1,52 @@
 package fr.pinguet62.croquette.action;
 
-import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import javax.json.JsonObject;
+
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.core.type.filter.AssignableTypeFilter;
 
 /** Factory used to generate the corresponding {@link IAction} to execute. */
 public final class ActionFactory {
 
-    /**
-     * Recursive method used to explore package and sub-packages looking for
-     * classes.
-     * 
-     * @param packageName
-     *            The package name (for example
-     *            <code>fr.pinguet62.croquette</code>)
-     * @param directory
-     *            The directory corresponding to the package.
-     * @return The {@link Class}es.
-     */
-    private static Collection<Class<?>> explorePackage(
-	    final String packageName, final File directory) {
-	Collection<Class<?>> classes = new HashSet<Class<?>>();
-	for (File file : directory.listFiles())
-	    // Class
-	    if (file.isFile()) {
-		if (!file.getName().endsWith(".class"))
+    /** {@link Map} who associate the action name and {@link Class}. */
+    private static final Map<String, Class<?>> actionClass = new HashMap<>();
+
+    /** Initialize this factory at the beginning of application. */
+    static {
+	ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(
+		true);
+	provider.addIncludeFilter(new AssignableTypeFilter(IAction.class));
+	Set<BeanDefinition> components = provider
+		.findCandidateComponents("fr.pinguet62.croquette.action"
+			.replace(".", "/"));
+	for (BeanDefinition component : components)
+	    try {
+		Class<?> findedClass = Class.forName(component
+			.getBeanClassName());
+		Action annotation = findedClass.getAnnotation(Action.class);
+		if (annotation == null)
 		    continue;
-		try {
-		    String className = packageName
-			    + "."
-			    + file.getName().substring(0,
-				    file.getName().length() - 6);
-		    Class<?> c = Class.forName(className);
-		    classes.add(c);
-		} catch (ClassNotFoundException e) {
-		}
+		ActionFactory.actionClass.put(annotation.value(), findedClass);
+	    } catch (ClassNotFoundException e) {
 	    }
-	    // Sub package
-	    else if (file.isDirectory()) {
-		String subPackageName = packageName + "." + file.getName();
-		Collection<Class<?>> sousClasses = ActionFactory
-			.explorePackage(subPackageName, file);
-		classes.addAll(sousClasses);
-	    }
-	return classes;
     }
 
-    // TODO Complete ActionFactory.getAction(final JsonMessage message)
     /**
-     * Get the {@link Action}. <br />
-     * Explore classes annotated with {@link Action} to find the
-     * <code>action</code> corresponding value.
+     * Get the {@link Action}.
+     * <p>
+     * To be found, the action class must:
+     * <ul>
+     * <li>implements {@link IAction};
+     * <li>have {@link Action} annotation;
+     * <li>have a constructor with {@link JsonObject} attribute.
+     * </ul>
      * 
      * @param jsonMessage
      *            The JSON message.
@@ -66,40 +57,17 @@ public final class ActionFactory {
 	if (actionKey == null)
 	    return null;
 
-	for (Class<?> classe : ActionFactory
-		.getAllClasses("fr.pinguet62.croquette.action")) {
-	    Action annotation = classe.getAnnotation(Action.class);
-	    if (annotation == null)
-		continue;
-	    String value = annotation.value();
-	    if (actionKey.equals(value))
-		try {
-		    Constructor<?> constructor = classe
-			    .getConstructor(JsonObject.class);
-		    IAction action = (IAction) constructor
-			    .newInstance(jsonMessage);
-		    return action;
-		} catch (NoSuchMethodException | SecurityException
-			| InstantiationException | IllegalAccessException
-			| IllegalArgumentException | InvocationTargetException e) {
-		}
+	try {
+	    Class<?> classe = ActionFactory.actionClass.get(actionKey);
+	    Constructor<?> constructor = classe
+		    .getConstructor(JsonObject.class);
+	    IAction action = (IAction) constructor.newInstance(jsonMessage);
+	    return action;
+	} catch (NoSuchMethodException | SecurityException
+		| InstantiationException | IllegalAccessException
+		| IllegalArgumentException | InvocationTargetException e) {
 	}
 	return null;
-    }
-
-    /**
-     * Gets all {@link Class}es contain into the {@link Package}.
-     * 
-     * @param packageName
-     *            The name of {@link Package}.
-     * @return The {@link Class}es.
-     */
-    private static Collection<Class<?>> getAllClasses(final String packageName) {
-	ClassLoader cld = Thread.currentThread().getContextClassLoader();
-	String path = packageName.replace(".", "/");
-	URL resource = cld.getResource(path);
-	File directory = new File(resource.getFile());
-	return ActionFactory.explorePackage(packageName, directory);
     }
 
     /** Private constructor. */

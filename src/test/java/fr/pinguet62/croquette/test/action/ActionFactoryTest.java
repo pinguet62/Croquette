@@ -1,8 +1,5 @@
 package fr.pinguet62.croquette.test.action;
 
-import java.lang.reflect.Method;
-import java.util.Collection;
-
 import javax.json.Json;
 import javax.json.JsonObject;
 
@@ -16,21 +13,6 @@ import fr.pinguet62.croquette.action.sms.ReceivedSMSAction;
 
 /** Tests for {@link ActionFactory}. */
 public final class ActionFactoryTest {
-
-    /** Test for <code>getAllClasses()</code>. */
-    @Test
-    public void getAllClasses() throws Exception {
-	Method method = ActionFactory.class.getDeclaredMethod("getAllClasses",
-		String.class);
-	method.setAccessible(true);
-	@SuppressWarnings("unchecked")
-	Collection<Class<?>> classes = (Collection<Class<?>>) method.invoke(
-		null, "fr.pinguet62.croquette");
-	// Assert.assertTrue(classes.contains(Action.class));
-	// Assert.assertTrue(classes.contains(ActionFactory.class));
-	// Assert.assertTrue(classes.contains(IAction.class));
-	Assert.assertTrue(classes.contains(ActionFactoryTest.class));
-    }
 
     /** Test for {@link LoadedSMSAction}. */
     @Test
