@@ -149,9 +149,11 @@ Add to `pom.xml` file:
 
 #### Theme
 
+*The theme used here is `bootstrap`.*
+
 ##### Constant
 
-Add to `web.xml` file to set Theme, `bootstrap` here:
+Add to `web.xml` file:
 
 ```xml
 <context-param>
@@ -177,14 +179,16 @@ public class ThemeSwitcherManagedBean {
 }
 ```
 
-2. Use the Bean in `web.xml` file:
+2. Add to `web.xml` file:
 
 ``` xml
-		<context-param>
-			<param-name>primefaces.THEME</param-name>
-			<param-value>#{themeSwitcherManagedBean.theme}</param-value>
-		</context-param>
+<context-param>
+	<param-name>primefaces.THEME</param-name>
+	<param-value>#{themeSwitcherManagedBean.theme}</param-value>
+</context-param>
 ```
+
+It uses the previous Bean.
 
 ### Servlet
 
