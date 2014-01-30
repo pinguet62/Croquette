@@ -5,7 +5,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 /** Used to switch of PrimeFaces theme. */
-@ManagedBean(eager = true, name = "themeSwitcherManagedBean")
+@ManagedBean(name = "themeSwitcherManagedBean")
 @SessionScoped
 public final class ThemeSwitcherManagedBean {
 

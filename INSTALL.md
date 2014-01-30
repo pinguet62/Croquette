@@ -166,11 +166,12 @@ Add to `web.xml` file:
 
 To change dynamically the theme:
 
-1. Declare a Bean store in session:
+1. Declare a Bean:
 
 ``` java
+@ManagedBean(name = "themeManagedBean")
 @SessionScoped
-public class ThemeSwitcherManagedBean {
+public class ThemeManagedBean {
 	private String theme = "bootstrap";
 	
 	public Theme getTheme() {
@@ -179,12 +180,14 @@ public class ThemeSwitcherManagedBean {
 }
 ```
 
+It should be stored in session, to be specific to the user, and be kept during the navigation between pages.
+
 2. Add to `web.xml` file:
 
 ``` xml
 <context-param>
 	<param-name>primefaces.THEME</param-name>
-	<param-value>#{themeSwitcherManagedBean.theme}</param-value>
+	<param-value>#{themeManagedBean.theme}</param-value>
 </context-param>
 ```
 
