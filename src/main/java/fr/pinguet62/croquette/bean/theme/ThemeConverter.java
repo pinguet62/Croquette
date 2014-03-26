@@ -14,7 +14,7 @@ public final class ThemeConverter implements Converter {
 
     /**
      * Convert {@link String} to {@link Theme}.
-     * 
+     *
      * @param context
      *            The context.
      * @param component
@@ -24,14 +24,14 @@ public final class ThemeConverter implements Converter {
      * @return The theme value, <code>null</code> if not find.
      */
     @Override
-    public Object getAsObject(final FacesContext context,
-	    final UIComponent component, final String value) {
+    public Object getAsObject(FacesContext context, UIComponent component,
+	    String value) {
 	return Theme.fromKey(value);
     }
 
     /**
      * Convert {@link Theme} to {@link String}.
-     * 
+     *
      * @param context
      *            The context.
      * @param component
@@ -41,8 +41,8 @@ public final class ThemeConverter implements Converter {
      * @return The string value.
      */
     @Override
-    public String getAsString(final FacesContext context,
-	    final UIComponent component, final Object value) {
+    public String getAsString(FacesContext context, UIComponent component,
+	    Object value) {
 	Theme theme = (Theme) value;
 	return theme.getKey();
     }

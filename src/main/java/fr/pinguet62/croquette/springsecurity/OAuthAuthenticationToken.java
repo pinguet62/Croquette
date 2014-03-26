@@ -21,18 +21,18 @@ public final class OAuthAuthenticationToken extends AbstractAuthenticationToken 
 
     /**
      * Constructor.
-     * 
+     *
      * @param token
      *            The user token.
      */
-    public OAuthAuthenticationToken(final String token) {
+    public OAuthAuthenticationToken(String token) {
 	super(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
 
-	this.setAuthenticated(true);
+	setAuthenticated(true);
 
 	User user = new User();
 	user.setToken(token);
-	this.setDetails(user);
+	setDetails(user);
     }
 
     @Override

@@ -8,12 +8,12 @@ public final class ManagedBean {
 
     /**
      * Gets bean from its name.
-     * 
+     *
      * @param beanName
      *            The name of bean (without <code>#{</code> <code>}</code>).
      * @return The bean, <code>null</code> if not found.
      */
-    public static Object getManagedBean(final String beanName) {
+    public static Object getManagedBean(String beanName) {
 	Object bean;
 	try {
 	    ELContext elContext = FacesContext.getCurrentInstance()

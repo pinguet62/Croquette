@@ -33,7 +33,7 @@ public final class XMPPManager implements MessageListener {
 
     /** Connect to GTalk. */
     public void connect() {
-	if (this.connection != null)
+	if (connection != null)
 	    return;
 
 	SASLAuthentication.registerSASLMechanism(GTalkSASLMechanism.NAME,
@@ -44,27 +44,28 @@ public final class XMPPManager implements MessageListener {
 		"talk.google.com", 5222, "gmail.com");
 	configuration.setSASLAuthenticationEnabled(true);
 
-	this.connection = new XMPPConnection(configuration);
+	connection = new XMPPConnection(configuration);
 	try {
-	    this.connection.connect();
-	    this.connection.login(User.get().getEmail(), User.get().getToken());
-	    this.chat = this.connection.getChatManager().createChat(
+	    connection.connect();
+	    connection.login(User.get().getEmail(), User.get().getToken());
+	    chat = connection.getChatManager().createChat(
 		    User.get().getEmail(), this);
 	} catch (XMPPException e) {
+	    e.printStackTrace();
 	}
     }
 
     /** Disconnect to GTalk. */
     public void disconnect() {
-	if (this.connection == null)
+	if (connection == null)
 	    return;
 
-	this.connection.disconnect();
+	connection.disconnect();
     }
 
     /**
      * Handler when user receive {@link Message}.
-     * 
+     *
      * @param chat
      *            The {@link Chat}.
      * @param messahe
@@ -83,13 +84,13 @@ public final class XMPPManager implements MessageListener {
 
     /**
      * Send XMPP message to oneself.
-     * 
+     *
      * @param message
      *            The message.
      */
     public void send(final String message) {
 	try {
-	    this.chat.sendMessage(message);
+	    chat.sendMessage(message);
 	} catch (XMPPException e) {
 	    e.printStackTrace();
 	}

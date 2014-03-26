@@ -1,13 +1,13 @@
 package fr.pinguet62.croquette.model;
 
 import java.net.URL;
-import java.util.Collection;
 import java.util.List;
 import java.util.TreeSet;
 
 import com.google.gdata.client.contacts.ContactsService;
 import com.google.gdata.data.contacts.ContactEntry;
 import com.google.gdata.data.contacts.ContactFeed;
+import com.google.gdata.data.extensions.PhoneNumber;
 
 public final class Contacts extends TreeSet<Contact> {
 
@@ -28,10 +28,21 @@ public final class Contacts extends TreeSet<Contact> {
 	    ContactFeed resultFeed = contactsService.getFeed(feedUrl,
 		    ContactFeed.class);
 	    List<ContactEntry> contactEntries = resultFeed.getEntries();
-	    for (ContactEntry contactEntry : contactEntries) {
-		Collection<Contact> contacts = Contact.convert(contactEntry);
-		this.addAll(contacts);
-	    }
+	    for (ContactEntry contactEntry : contactEntries)
+		for (PhoneNumber phoneNumber : contactEntry.getPhoneNumbers()) {
+		    if (!contactEntry.hasPhoneNumbers())
+			continue;
+		    else if (!contactEntry.hasName())
+			continue;
+		    else if (!contactEntry.getName().hasFullName())
+			continue;
+
+		    Contact contact = new Contact();
+		    contact.setName(contactEntry.getName().getFullName()
+			    .getValue());
+		    contact.setPhoneNumber(phoneNumber.getPhoneNumber());
+		    add(contact);
+		}
 	} catch (Exception exception) {
 	    exception.printStackTrace();
 	}

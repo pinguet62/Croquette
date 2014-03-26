@@ -20,19 +20,24 @@ public final class ActionFactory {
 
     /** Initialize this factory at the beginning of application. */
     static {
+	// Find classes who inherit from IAction
 	ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(
 		true);
 	provider.addIncludeFilter(new AssignableTypeFilter(IAction.class));
 	Set<BeanDefinition> components = provider
 		.findCandidateComponents("fr.pinguet62.croquette.action"
 			.replace(".", "/"));
+
 	for (BeanDefinition component : components)
 	    try {
+		// Get their action value
 		Class<?> findedClass = Class.forName(component
 			.getBeanClassName());
 		Action annotation = findedClass.getAnnotation(Action.class);
 		if (annotation == null)
 		    continue;
+
+		// Save into this factory
 		ActionFactory.actionClass.put(annotation.value(), findedClass);
 	    } catch (ClassNotFoundException e) {
 	    }
@@ -47,12 +52,12 @@ public final class ActionFactory {
      * <li>have {@link Action} annotation;
      * <li>have a constructor with {@link JsonObject} attribute.
      * </ul>
-     * 
+     *
      * @param jsonMessage
      *            The JSON message.
      * @return The {@link Action}.
      */
-    public static IAction getAction(final JsonObject jsonMessage) {
+    public static IAction getAction(JsonObject jsonMessage) {
 	final String actionKey = jsonMessage.getString(IAction.ACTION_KEY);
 	if (actionKey == null)
 	    return null;

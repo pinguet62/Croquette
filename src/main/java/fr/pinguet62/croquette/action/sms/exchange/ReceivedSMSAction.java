@@ -1,6 +1,4 @@
-package fr.pinguet62.croquette.action.sms;
-
-import java.text.DateFormat;
+package fr.pinguet62.croquette.action.sms.exchange;
 
 import javax.json.JsonObject;
 
@@ -9,6 +7,7 @@ import org.primefaces.push.PushContextFactory;
 
 import fr.pinguet62.croquette.action.Action;
 import fr.pinguet62.croquette.action.ActionException;
+import fr.pinguet62.croquette.action.JsonDateUtil;
 import fr.pinguet62.croquette.bean.SmsManagedBean;
 import fr.pinguet62.croquette.model.Contact;
 import fr.pinguet62.croquette.model.Conversation;
@@ -18,21 +17,24 @@ import fr.pinguet62.croquette.model.User;
 
 /** SMS received. */
 @Action(ReceivedSMSAction.ACTION_VALUE)
-public final class ReceivedSMSAction extends SMSAction {
+public final class ReceivedSMSAction extends ExchangeSMSAction {
 
     /** The <code>action</code> value. */
     public static final String ACTION_VALUE = "SMS_RECEIVED";
 
+    /** Key for the id of the {@link Message}. */
+    public static final String ID = "id";
+
     /** The JSON message. */
-    private JsonObject jsonMessage = null;
+    private final JsonObject jsonMessage;
 
     /**
      * Constructor.
-     * 
+     *
      * @param jsonMessage
      *            The JSON message.
      */
-    public ReceivedSMSAction(final JsonObject jsonMessage) {
+    public ReceivedSMSAction(JsonObject jsonMessage) {
 	this.jsonMessage = jsonMessage;
     }
 
@@ -45,16 +47,25 @@ public final class ReceivedSMSAction extends SMSAction {
 	try {
 	    Conversation conversation = null;
 	    // Existing conversation
-	    if (this.jsonMessage.containsKey(SMSAction.CONVERSATION)) {
-		int conversationId = this.jsonMessage
-			.getInt(SMSAction.CONVERSATION);
+	    if (jsonMessage.containsKey(CONVERSATION)) {
+		int conversationId = jsonMessage.getInt(CONVERSATION);
 		conversation = User.get().getConversations()
 			.get(conversationId);
+
+		// If it's a updating of a sent message
+		for (Message message : conversation)
+		    if ((message.getId() == null)
+			    && message.getContent().equals(
+				    jsonMessage.getString(CONTENT))) {
+			message.setDate(JsonDateUtil.fromString(jsonMessage
+				.getString(DATE)));
+			message.setId(jsonMessage.getInt(ID));
+			break;
+		    }
 	    }
 	    // New conversation
 	    else {
-		String phoneNumber = this.jsonMessage
-			.getString(SMSAction.PHONE_NUMBER);
+		String phoneNumber = jsonMessage.getString(PHONE_NUMBER);
 		Contact contact = User.get().getContact(phoneNumber);
 		// New contact
 		if (contact == null) {
@@ -66,17 +77,17 @@ public final class ReceivedSMSAction extends SMSAction {
 		conversation.setContact(contact);
 	    }
 
+	    // Build message
 	    Message message = new Message();
-	    message.setContent(this.jsonMessage.getString(SMSAction.CONTENT));
+	    message.setContent(jsonMessage.getString(CONTENT));
 	    message.setConversation(conversation);
-	    message.setDate(DateFormat.getDateTimeInstance(DateFormat.DEFAULT,
-		    DateFormat.DEFAULT).parse(
-		    this.jsonMessage.getString(SMSAction.DATE)));
+	    message.setDate(JsonDateUtil.fromString(jsonMessage.getString(DATE)));
+	    message.setId(jsonMessage.getInt(ID));
 	    message.setRead(false);
 	    message.setSent(false);
 	    message.setState(State.OK);
-
 	    conversation.add(message);
+
 	    User.get().getConversations().add(conversation);
 	} catch (Exception e) {
 	    throw new ActionException(e);

@@ -17,14 +17,14 @@ public final class Conversations extends HashSet<Conversation> {
     /**
      * Add new conversation to the list.<br />
      * The conversation requires at less one {@link Message}.
-     * 
+     *
      * @param conversation
      *            The {@link Conversation}.
      * @return <code>true</code> if the {@link Conversation} has been insert,
      *         <code>false</code> otherwise.
      */
     @Override
-    public boolean add(final Conversation conversation) {
+    public boolean add(Conversation conversation) {
 	if (conversation.isEmpty())
 	    return false;
 	User.get().getContacts().add(conversation.getContact());
@@ -33,16 +33,16 @@ public final class Conversations extends HashSet<Conversation> {
 
     /**
      * Find {@link Conversation} into list by id.
-     * 
+     *
      * @param id
      *            The {@link Conversation} id.
      * @return The corresponding {@link Conversation}, <code>null</code> if not
      *         found.
      */
-    public Conversation get(final Integer id) {
+    public Conversation get(Integer id) {
 	if (id == null)
 	    return null;
-	for (final Conversation conversation : this)
+	for (Conversation conversation : this)
 	    if (conversation.getId() == id)
 		return conversation;
 	return null;
@@ -50,20 +50,20 @@ public final class Conversations extends HashSet<Conversation> {
 
     /**
      * Gets if has old {@link Conversation}s.
-     * 
+     *
      * @return Result.
      */
     public boolean getHasOldMessages() {
-	return this.hasOldConversations;
+	return hasOldConversations;
     }
 
     /**
      * Sets if has old {@link Conversation}s.
-     * 
+     *
      * @param hasOldConversations
      *            If has old {@link Conversation}s.
      */
-    public void setHasOldMessages(final boolean hasOldConversations) {
+    public void setHasOldMessages(boolean hasOldConversations) {
 	this.hasOldConversations = hasOldConversations;
     }
 

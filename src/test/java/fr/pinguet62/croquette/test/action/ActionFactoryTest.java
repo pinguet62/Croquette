@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import fr.pinguet62.croquette.action.ActionFactory;
 import fr.pinguet62.croquette.action.IAction;
-import fr.pinguet62.croquette.action.sms.LoadedSMSAction;
-import fr.pinguet62.croquette.action.sms.ReceivedSMSAction;
+import fr.pinguet62.croquette.action.sms.conversation.LoadedSMSAction;
+import fr.pinguet62.croquette.action.sms.exchange.ReceivedSMSAction;
 
 /** Tests for {@link ActionFactory}. */
 public final class ActionFactoryTest {

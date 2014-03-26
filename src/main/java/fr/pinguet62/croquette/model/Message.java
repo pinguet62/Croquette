@@ -17,37 +17,37 @@ public final class Message implements Comparable<Message>, Serializable {
     // private Contact contact = null;
 
     /** The content. */
-    private String content = null;
+    private String content;
 
     /** The {@link Conversation}. */
-    private Conversation conversation = null;
+    private Conversation conversation;
 
     /** The date of issue or receiving. */
-    private Date date = null;
+    private Date date;
 
     /** The id. */
-    private Integer id = null;
+    private Integer id;
 
     /** If it was read. */
-    private boolean read = true;
+    private boolean read;
 
     /** If it was sent by user. */
-    private Boolean sent = null;
+    private Boolean sent;
 
     /** The {@link State}. */
-    private State state = null;
+    private State state;
 
     /**
      * Method used to compare the current {@link Message} to an other.
-     * 
+     *
      * @param other
      *            The other {@link Message}.
      * @return A negative integer if this current {@link Message} is oldest than
      *         the other, zero if there are equal, a positive integer otherwise.
      */
     @Override
-    public int compareTo(final Message other) {
-	return this.date.compareTo(other.date);
+    public int compareTo(Message other) {
+	return date.compareTo(other.date);
     }
 
     // /**
@@ -61,65 +61,65 @@ public final class Message implements Comparable<Message>, Serializable {
 
     /**
      * Gets the content.
-     * 
+     *
      * @return The content.
      */
     public String getContent() {
-	return this.content;
+	return content;
     }
 
     /**
      * Gets the {@link Conversation}.
-     * 
+     *
      * @return The {@link Conversation}.
      */
     public Conversation getConversation() {
-	return this.conversation;
+	return conversation;
     }
 
     /**
      * Gets the date of issue or receiving.
-     * 
+     *
      * @return The date.
      */
     public Date getDate() {
-	return this.date;
+	return date;
     }
 
     /**
      * Gets the id.
-     * 
+     *
      * @return The id.
      */
     public Integer getId() {
-	return this.id;
+	return id;
     }
 
     /**
      * Gets if it was sent by user.
-     * 
+     *
      * @return Result.
      */
     public Boolean getSent() {
-	return this.sent;
+	return sent;
     }
 
     /**
      * Gets the {@link State}.
-     * 
+     *
      * @return The {@link State}.
      */
     public State getState() {
-	return this.state;
+	return state;
     }
 
     /**
      * Gets if it was read.
-     * 
+     *
      * @return Result.
      */
     public boolean isRead() {
-	return this.read;
+	return read;
     }
 
     // /**
@@ -128,86 +128,86 @@ public final class Message implements Comparable<Message>, Serializable {
     // * @param contact
     // * The {@link Contact} to set.
     // */
-    // public void setContact(final Contact contact) {
+    // public void setContact(Contact contact) {
     // this.contact = contact;
     // }
 
     /**
      * Gets if it was sent by user.
-     * 
+     *
      * @return Result.
      */
     public Boolean isSent() {
-	return this.sent;
+	return sent;
     }
 
     /**
      * Sets the content.
-     * 
+     *
      * @param content
      *            The content to set.
      */
-    public void setContent(final String content) {
+    public void setContent(String content) {
 	this.content = content;
     }
 
     /**
      * Sets the {@link Conversation}.
-     * 
+     *
      * @param conversation
      *            The {@link Conversation} to set.
      */
-    public void setConversation(final Conversation conversation) {
+    public void setConversation(Conversation conversation) {
 	this.conversation = conversation;
     }
 
     /**
      * Sets the date of issue or receiving.
-     * 
+     *
      * @param date
      *            The date to set.
      */
-    public void setDate(final Date date) {
+    public void setDate(Date date) {
 	this.date = date;
     }
 
     /**
      * Sets the id.
-     * 
+     *
      * @param id
      *            The id.
      */
-    public void setId(final Integer id) {
+    public void setId(Integer id) {
 	this.id = id;
     }
 
     /**
      * Sets if it was read.
-     * 
+     *
      * @param read
      *            If it was read.
      */
-    public void setRead(final boolean read) {
+    public void setRead(boolean read) {
 	this.read = read;
     }
 
     /**
      * Sets if it was sent by user.
-     * 
+     *
      * @param sent
      *            If sent by user.
      */
-    public void setSent(final Boolean sent) {
+    public void setSent(Boolean sent) {
 	this.sent = sent;
     }
 
     /**
      * Sets the {@link State}.
-     * 
+     *
      * @param state
      *            The {@link State}.
      */
-    public void setState(final State state) {
+    public void setState(State state) {
 	this.state = state;
     }
 

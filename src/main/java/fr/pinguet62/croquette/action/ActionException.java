@@ -7,11 +7,11 @@ public class ActionException extends RuntimeException {
 
     /**
      * Constructor with initial Exception.
-     * 
+     *
      * @param cause
      *            The cause.
      */
-    public ActionException(final Throwable cause) {
+    public ActionException(Throwable cause) {
 	super(cause);
     }
 

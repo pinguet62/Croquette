@@ -39,9 +39,8 @@ public final class RedirectOAuthServlet extends HttpServlet {
 
     /** Google OAuth redirection after authentication. */
     @Override
-    protected void doGet(final HttpServletRequest request,
-	    final HttpServletResponse response) throws ServletException,
-	    IOException {
+    protected void doGet(HttpServletRequest request,
+	    HttpServletResponse response) throws ServletException, IOException {
 
 	// Get code
 	String error = request.getParameter("error");
@@ -57,7 +56,7 @@ public final class RedirectOAuthServlet extends HttpServlet {
 	    return;
 	}
 
-	String token = this.getToken(code);
+	String token = getToken(code);
 
 	// Spring security authentication
 	Authentication authentication = new OAuthAuthenticationToken(token);
@@ -68,7 +67,7 @@ public final class RedirectOAuthServlet extends HttpServlet {
 		HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
 		SecurityContextHolder.getContext());
 
-	String email = this.getEmail(token);
+	String email = getEmail(token);
 	User.get().setEmail(email);
 
 	response.sendRedirect(request.getContextPath()
@@ -77,14 +76,14 @@ public final class RedirectOAuthServlet extends HttpServlet {
 
     /**
      * Gets email from token.
-     * 
+     *
      * @param token
      *            The OAuth token.
      * @return The email.
      * @throws IOException
      *             Exception.
      */
-    private String getEmail(final String token) throws IOException {
+    private String getEmail(String token) throws IOException {
 	URL url = new URL("https://www.googleapis.com/oauth2/v1/userinfo"
 		+ ("?access_token=" + token));
 	HttpsURLConnection connection = (HttpsURLConnection) url
@@ -99,14 +98,14 @@ public final class RedirectOAuthServlet extends HttpServlet {
 
     /**
      * Gets OAuth token from code.
-     * 
+     *
      * @param code
      *            The OAuth code.
      * @return The OAuth token.
      * @throws IOException
      *             Exception.
      */
-    private String getToken(final String code) throws IOException {
+    private String getToken(String code) throws IOException {
 	URL url = new URL("https://accounts.google.com/o/oauth2/token");
 	HttpsURLConnection connection = (HttpsURLConnection) url
 		.openConnection();

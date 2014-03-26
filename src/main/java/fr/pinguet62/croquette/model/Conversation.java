@@ -7,24 +7,24 @@ import java.util.TreeSet;
  * There are ordered by ascending date.
  */
 public final class Conversation extends TreeSet<Message> implements
-	Comparable<Conversation> {
+Comparable<Conversation> {
 
     /** Auto generated serial version UID. */
     private static final long serialVersionUID = -6466753476994997663L;
 
     /** The sender or addressee {@link Contact}. */
-    private Contact contact = null;
+    private Contact contact;
 
     /** If has old {@link Message}s. */
     private boolean hasOldMessages = true;
 
     /** The id. */
-    private Integer id = null;
+    private Integer id;
 
     /**
      * The input text of the new {@link Message} into this {@link Conversation}.
      */
-    private String input = null;
+    private String input;
 
     /** Change <code>read</code> flag of all {@link Message}s. */
     public void allRead() {
@@ -34,7 +34,7 @@ public final class Conversation extends TreeSet<Message> implements
 
     /**
      * Method used to compare the current {@link Conversation} to an other.
-     * 
+     *
      * @param other
      *            The other {@link Conversation}.
      * @return A negative integer if the latest {@link Message} of the current
@@ -42,49 +42,49 @@ public final class Conversation extends TreeSet<Message> implements
      *         the other, zero if there are equal, a positive integer otherwise.
      */
     @Override
-    public int compareTo(final Conversation other) {
-	return other.first().getDate().compareTo(this.first().getDate());
+    public int compareTo(Conversation other) {
+	return other.first().getDate().compareTo(first().getDate());
     }
 
     /**
      * Gets the sender or addressee {@link Contact}.
-     * 
+     *
      * @return The {@link Contact}.
      */
     public Contact getContact() {
-	return this.contact;
+	return contact;
     }
 
     /**
      * Gets if has old {@link Message}s.
-     * 
+     *
      * @return Result.
      */
     public boolean getHasOldMessages() {
-	return this.hasOldMessages;
+	return hasOldMessages;
     }
 
     /**
      * Gets the id.
-     * 
+     *
      * @return The id.
      */
     public Integer getId() {
-	return this.id;
+	return id;
     }
 
     /**
      * Gets the input.
-     * 
+     *
      * @return The input.
      */
     public String getInput() {
-	return this.input;
+	return input;
     }
 
     /**
      * Gets count of unread {@link Message}s.
-     * 
+     *
      * @return The count.
      */
     public int getUnreadCount() {
@@ -97,41 +97,42 @@ public final class Conversation extends TreeSet<Message> implements
 
     /**
      * Sets the sender or addressee {@link Contact}.
-     * 
+     *
      * @param contact
      *            The {@link Contact}.
      */
-    public void setContact(final Contact contact) {
+    public void setContact(Contact contact) {
 	this.contact = contact;
     }
 
     /**
      * Sets if has old {@link Message}s.
-     * 
+     *
      * @param hasOldMessages
      *            If has old {@link Message}s.
      */
-    public void setHasOldMessages(final boolean hasOldMessages) {
+    public void setHasOldMessages(boolean hasOldMessages) {
 	this.hasOldMessages = hasOldMessages;
     }
 
     /**
      * Sets the id.
-     * 
+     *
      * @param id
      *            The id.
      */
-    public void setId(final Integer id) {
+    public void setId(Integer id) {
 	this.id = id;
     }
 
     /**
      * Sets the input.
-     * 
+     *
      * @param input
      *            The input to set.
      */
-    public void setInput(final String input) {
+    public void setInput(String input) {
 	this.input = input;
     }
+
 }

@@ -27,9 +27,8 @@ public final class LoginOAuthServlet extends HttpServlet {
 
     /** Redirect user to Google OAuth authentication. */
     @Override
-    protected void doGet(final HttpServletRequest request,
-	    final HttpServletResponse response) throws ServletException,
-	    IOException {
+    protected void doGet(HttpServletRequest request,
+	    HttpServletResponse response) throws ServletException, IOException {
 	response.sendRedirect(LoginOAuthServlet.url);
     }
 

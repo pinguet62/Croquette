@@ -6,13 +6,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import fr.pinguet62.croquette.action.sms.SendSMSAction;
+import fr.pinguet62.croquette.action.sms.exchange.SendSMSAction;
 import fr.pinguet62.croquette.model.Contact;
 import fr.pinguet62.croquette.model.Conversation;
 import fr.pinguet62.croquette.model.Message;
@@ -31,6 +30,14 @@ public final class SmsManagedBean {
     private Conversation selectedConversation = null;
 
     /**
+     * Default constructor. <br />
+     * Connect user to <code>GTalk</code>.
+     */
+    public SmsManagedBean() {
+	User.get().getXmppManager().connect();
+    }
+
+    /**
      * Destructor.<br />
      * Disconnect user of <code>GTalk</code>.
      */
@@ -42,7 +49,7 @@ public final class SmsManagedBean {
 
     /**
      * Gets the channel name of the connection with the view.
-     * 
+     *
      * @return The channel.
      */
     public String getChannel() {
@@ -51,7 +58,7 @@ public final class SmsManagedBean {
 
     /**
      * Gets the list of {@link Conversation}s of {@link User}.
-     * 
+     *
      * @return The list of {@link Contact}s.
      */
     public Iterable<Conversation> getConversations() {
@@ -63,33 +70,24 @@ public final class SmsManagedBean {
 
     /**
      * Gets the input of selected {@link Conversation}.
-     * 
+     *
      * @return The input.
      */
     public String getInput() {
-	if (this.selectedConversation == null)
+	if (selectedConversation == null)
 	    return null;
-	return this.selectedConversation.getInput();
+	return selectedConversation.getInput();
     }
 
     /**
      * Gets the selected {@link Conversation}.
-     * 
+     *
      * @return The selected {@link Conversation}.
      */
     public Conversation getSelectedConversation() {
-	if (this.selectedConversation != null)
-	    this.selectedConversation.allRead();
-	return this.selectedConversation;
-    }
-
-    /**
-     * Initialization of this bean. <br />
-     * Connect user to <code>GTalk</code>.
-     */
-    @PostConstruct
-    private void init() {
-	User.get().getXmppManager().connect();
+	if (selectedConversation != null)
+	    selectedConversation.allRead();
+	return selectedConversation;
     }
 
     /** Load old {@link Message}s of the selected {@link Conversation}. */
@@ -99,17 +97,17 @@ public final class SmsManagedBean {
 	for (int i = 0; i < nbMessages; i++) {
 	    Message message = new Message();
 	    message.setContent("SmsManagedBean.loadOldMessages()");
-	    message.setConversation(this.selectedConversation);
+	    message.setConversation(selectedConversation);
 	    Calendar calendar = Calendar.getInstance();
-	    calendar.setTime(this.selectedConversation.first().getDate());
+	    calendar.setTime(selectedConversation.first().getDate());
 	    calendar.add(Calendar.DATE, -1);
 	    message.setDate(calendar.getTime());
 	    message.setRead(true);
 	    message.setSent(((int) (2 * Math.random()) % 2) == 0);
 	    message.setState(State.OK);
-	    this.selectedConversation.setHasOldMessages(((int) (2 * Math
-		    .random()) % 2) == 0);
-	    this.selectedConversation.add(message);
+	    selectedConversation
+	    .setHasOldMessages(((int) (2 * Math.random()) % 2) == 0);
+	    selectedConversation.add(message);
 	}
     }
 
@@ -118,22 +116,22 @@ public final class SmsManagedBean {
      * Generate and execute the {@link SendSMSAction}.
      */
     public void send() {
-	if (this.selectedConversation == null)
+	if (selectedConversation == null)
 	    return;
-	if ((this.getInput() == null) || this.getInput().isEmpty())
+	if ((getInput() == null) || getInput().isEmpty())
 	    return;
 
 	Message message = new Message();
-	message.setContent(this.selectedConversation.getInput());
-	message.setConversation(this.selectedConversation);
+	message.setContent(selectedConversation.getInput());
+	message.setConversation(selectedConversation);
 	message.setDate(new Date());
 	message.setSent(true);
 
 	SendSMSAction action = new SendSMSAction(message);
 	action.execute();
 
-	this.selectedConversation.add(message);
-	this.selectedConversation.setInput(null);
+	selectedConversation.add(message);
+	selectedConversation.setInput(null);
 
 	FacesContext.getCurrentInstance().addMessage(
 		null,
@@ -143,19 +141,19 @@ public final class SmsManagedBean {
 
     /**
      * Sets the input.
-     * 
+     *
      * @param input
      *            The input to set.
      */
     public void setInput(final String input) {
-	if (this.selectedConversation == null)
+	if (selectedConversation == null)
 	    return;
-	this.selectedConversation.setInput(input);
+	selectedConversation.setInput(input);
     }
 
     /**
      * Sets the selected {@link Conversation}.
-     * 
+     *
      * @param selectedConversation
      *            The selected {@link Conversation} to set.
      */

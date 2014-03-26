@@ -17,32 +17,32 @@
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>index</from-outcome>
-			<to-view-id>index.xhtml</to-view-id>
+			<to-view-id>/index.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>contact-suggestion</from-outcome>
-			<to-view-id>suggestion.xhtml</to-view-id>
+			<to-view-id>/suggestion.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>contact-problem</from-outcome>
-			<to-view-id>problem.xhtml</to-view-id>
+			<to-view-id>/problem.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>faq</from-outcome>
-			<to-view-id>FAQ.xhtml</to-view-id>
+			<to-view-id>/FAQ.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>license</from-outcome>
-			<to-view-id>license.xhtml</to-view-id>
+			<to-view-id>/license.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>sms</from-outcome>
-			<to-view-id>SMS.xhtml</to-view-id>
+			<to-view-id>/SMS.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>

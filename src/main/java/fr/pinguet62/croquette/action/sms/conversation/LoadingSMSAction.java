@@ -1,4 +1,4 @@
-package fr.pinguet62.croquette.action.sms;
+package fr.pinguet62.croquette.action.sms.conversation;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -7,19 +7,23 @@ import javax.json.JsonObjectBuilder;
 import fr.pinguet62.croquette.action.Action;
 import fr.pinguet62.croquette.action.IAction;
 import fr.pinguet62.croquette.model.Conversation;
+import fr.pinguet62.croquette.model.Message;
 import fr.pinguet62.croquette.model.User;
 
 /** Load old SMS of a {@link Conversation}. */
 @Action(LoadingSMSAction.ACTION_VALUE)
-public final class LoadingSMSAction extends SMSAction {
+public final class LoadingSMSAction implements IAction {
 
     /** The <code>action</code> value. */
     public static final String ACTION_VALUE = "SMS_LOADING";
 
-    /** Key for number of SMS to load. */
+    /** Key for the id of {@link Conversation}. */
+    public static final String CONVERSATION = "conversation";
+
+    /** Key for number of {@link Message} to load. */
     public static final String COUNT_KEY = "count";
 
-    /** Value for number of SMS to load. */
+    /** Value for number of {@link Message} to load. */
     public static final int COUNT_VALUE = 5;
 
     /**
@@ -35,12 +39,12 @@ public final class LoadingSMSAction extends SMSAction {
 
     /**
      * Constructor.
-     * 
+     *
      * @param conversation
      *            The {@link Conversation} that the {@link User} wants to load
      *            older {@link Message}s.
      */
-    public LoadingSMSAction(final Conversation conversation) {
+    public LoadingSMSAction(Conversation conversation) {
 	this.conversation = conversation;
     }
 
@@ -50,14 +54,14 @@ public final class LoadingSMSAction extends SMSAction {
      */
     @Override
     public void execute() {
-	JsonObjectBuilder jsonObjectBuilder = Json
-		.createObjectBuilder()
+	JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder()
 		.add(IAction.ACTION_KEY, LoadingSMSAction.ACTION_VALUE)
-		.add(SMSAction.CONVERSATION, this.conversation.getId())
-		.add(LoadingSMSAction.OLDEST, this.conversation.first().getId())
-		.add(LoadingSMSAction.COUNT_KEY, LoadingSMSAction.COUNT_VALUE);
+		.add(CONVERSATION, conversation.getId())
+		.add(OLDEST, conversation.first().getId())
+		.add(COUNT_KEY, COUNT_VALUE);
 	JsonObject jsonObject = jsonObjectBuilder.build();
 	String message = jsonObject.toString();
+
 	User.get().getXmppManager().send(message);
     }
 

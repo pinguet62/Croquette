@@ -60,12 +60,12 @@ public final class Theme {
 
     /**
      * Get the {@link Theme} from the key value.
-     * 
+     *
      * @param key
      *            The key.
      * @return The {@link Theme}.
      */
-    public static Theme fromKey(final String key) {
+    public static Theme fromKey(String key) {
 	if (key == null)
 	    return null;
 	for (Theme theme : Theme.AVAILABLES)
@@ -85,7 +85,7 @@ public final class Theme {
 
     /**
      * Constructor.
-     * 
+     *
      * @param key
      *            The key.
      * @param name
@@ -93,7 +93,7 @@ public final class Theme {
      * @param image
      *            The image.
      */
-    public Theme(final String key, final String name, final String image) {
+    public Theme(String key, String name, String image) {
 	this.key = key;
 	this.name = name;
 	this.image = image;
@@ -101,58 +101,58 @@ public final class Theme {
 
     /**
      * Gets the image.
-     * 
+     *
      * @return The image.
      */
     public String getImage() {
-	return this.image;
+	return image;
     }
 
     /**
      * Gets the key.
-     * 
+     *
      * @return The key.
      */
     public String getKey() {
-	return this.key;
+	return key;
     }
 
     /**
      * Gets the name.
-     * 
+     *
      * @return The name.
      */
     public String getName() {
-	return this.name;
+	return name;
     }
 
     /**
      * Sets the image.
-     * 
+     *
      * @param image
      *            The image to set.
      */
-    public void setImage(final String image) {
+    public void setImage(String image) {
 	this.image = image;
     }
 
     /**
      * Sets key.
-     * 
+     *
      * @param key
      *            The key to set.
      */
-    public void setKey(final String key) {
+    public void setKey(String key) {
 	this.key = key;
     }
 
     /**
      * Sets the name.
-     * 
+     *
      * @param name
      *            The name to set.
      */
-    public void setName(final String name) {
+    public void setName(String name) {
 	this.name = name;
     }
 
