@@ -72,8 +72,9 @@ public final class XMPPManager implements MessageListener {
      *            the {@link Message}.
      */
     @Override
-    public void processMessage(final Chat chat, final Message message) {
+    public void processMessage(Chat chat, Message message) {
 	String content = message.getBody();
+	System.out.println("XMPP message received: " + content); // Logger
 	InputStream inputStream = new ByteArrayInputStream(content.getBytes());
 	JsonReader jsonReader = Json.createReader(inputStream);
 	JsonObject jsonObject = jsonReader.readObject();
@@ -88,7 +89,8 @@ public final class XMPPManager implements MessageListener {
      * @param message
      *            The message.
      */
-    public void send(final String message) {
+    public void send(String message) {
+	System.out.println("XMPP message sending: " + message); // TODO Logger
 	try {
 	    chat.sendMessage(message);
 	} catch (XMPPException e) {

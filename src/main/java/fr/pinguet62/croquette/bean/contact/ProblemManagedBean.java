@@ -9,7 +9,7 @@ public final class ProblemManagedBean extends ContactManagedBean {
 
     @Override
     public void send() {
-	// TODO
+	// TODO contact > problem
 	confirmSending();
     }
 

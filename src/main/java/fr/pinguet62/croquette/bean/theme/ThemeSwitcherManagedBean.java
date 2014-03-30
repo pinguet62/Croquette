@@ -1,6 +1,5 @@
 package fr.pinguet62.croquette.bean.theme;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -10,7 +9,7 @@ import javax.faces.bean.SessionScoped;
 public final class ThemeSwitcherManagedBean {
 
     /** The current {@link Theme}. */
-    private Theme theme;
+    private Theme theme = Theme.fromKey("dark-hive");
 
     /**
      * Gets the current {@link Theme}.
@@ -28,12 +27,6 @@ public final class ThemeSwitcherManagedBean {
      */
     public Iterable<Theme> getThemes() {
 	return Theme.AVAILABLES;
-    }
-
-    /** Initialization of this bean. */
-    @PostConstruct
-    private void init() {
-	theme = Theme.fromKey("dark-hive"); // TODO delete
     }
 
     /**

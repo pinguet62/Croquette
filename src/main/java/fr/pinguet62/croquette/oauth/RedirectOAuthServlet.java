@@ -31,8 +31,8 @@ public final class RedirectOAuthServlet extends HttpServlet {
     /** Redirect URL after OAuth authentication. */
     public static final String REDIRECT_URL = "/index.xhtml";
 
-    /** Auto generated serial version UID. */
-    private static final long serialVersionUID = 7381061108303995228L;
+    /** Serial version UID. */
+    private static final long serialVersionUID = 1;
 
     /** URL of this {@link Servlet}. */
     public static final String URL = "/OAuth/redirect";

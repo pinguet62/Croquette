@@ -7,10 +7,10 @@ import java.util.TreeSet;
  * There are ordered by ascending date.
  */
 public final class Conversation extends TreeSet<Message> implements
-Comparable<Conversation> {
+	Comparable<Conversation> {
 
-    /** Auto generated serial version UID. */
-    private static final long serialVersionUID = -6466753476994997663L;
+    /** Serial version UID. */
+    private static final long serialVersionUID = 1;
 
     /** The sender or addressee {@link Contact}. */
     private Contact contact;

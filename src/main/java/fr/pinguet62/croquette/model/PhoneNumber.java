@@ -1,6 +1,5 @@
 package fr.pinguet62.croquette.model;
 
-
 /** Wraper for phone number. */
 public final class PhoneNumber {
 
@@ -48,7 +47,7 @@ public final class PhoneNumber {
 	return result;
     }
 
-    // TODO
+    // TODO format phone number
     @Override
     public String toString() {
 	return super.toString();

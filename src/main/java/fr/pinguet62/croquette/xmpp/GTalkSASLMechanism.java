@@ -16,18 +16,17 @@ public final class GTalkSASLMechanism extends SASLMechanism {
 
     /**
      * Constructor.
-     * 
+     *
      * @param saslAuthentication
      *            The authentication.
      */
-    public GTalkSASLMechanism(final SASLAuthentication saslAuthentication) {
+    public GTalkSASLMechanism(SASLAuthentication saslAuthentication) {
 	super(saslAuthentication);
     }
 
     @Override
     protected void authenticate() throws IOException, XMPPException {
-	String composedResponse = "\0" + this.authenticationId + "\0"
-		+ this.password;
+	String composedResponse = "\0" + authenticationId + "\0" + password;
 	byte response[] = composedResponse.getBytes("UTF-8");
 	String authenticationText = Base64.encodeBytes(response,
 		Base64.DONT_BREAK_LINES);
@@ -48,7 +47,7 @@ public final class GTalkSASLMechanism extends SASLMechanism {
 		return stanza.toString();
 	    }
 	};
-	this.getSASLAuthentication().send(packet);
+	getSASLAuthentication().send(packet);
     }
 
     @Override

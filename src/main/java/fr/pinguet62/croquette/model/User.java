@@ -11,8 +11,8 @@ import fr.pinguet62.croquette.xmpp.XMPPManager;
 /** Informations about user. */
 public final class User implements Serializable {
 
-    /** Auto generated serial version UID. */
-    private static final long serialVersionUID = 8792705815936052711L;
+    /** Serial version UID. */
+    private static final long serialVersionUID = 1;
 
     /**
      * Gets the session user.
@@ -44,7 +44,7 @@ public final class User implements Serializable {
     private String token;
 
     /** The XMPP Manager. */
-    private XMPPManager xmppManager;
+    private transient XMPPManager xmppManager;
 
     /**
      * Gets {@link Contact} by phone number.

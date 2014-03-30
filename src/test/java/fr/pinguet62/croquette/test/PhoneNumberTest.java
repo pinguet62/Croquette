@@ -10,10 +10,6 @@ import javax.json.JsonArrayBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.google.i18n.phonenumbers.NumberParseException;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
-
 import fr.pinguet62.croquette.action.IAction;
 import fr.pinguet62.croquette.action.sms.conversation.LoadedSMSAction;
 import fr.pinguet62.croquette.action.sms.conversation.LoadingSMSAction;
@@ -45,13 +41,7 @@ public final class PhoneNumberTest {
     }
 
     @Test
-    public void testLib() throws NumberParseException {
-	PhoneNumberUtil util = PhoneNumberUtil.getInstance();
-
-	util.parse("+33647618122", null);
-	Assert.assertEquals("+33647618122", util.format(
-		util.parse("+33647618122", null), PhoneNumberFormat.E164));
-
+    public void testLib() {
 	int conversationId = (int) (Math.random() * 25);
 	JsonArrayBuilder jsonMessages = Json.createArrayBuilder();
 	for (int i = 0; i < LoadingSMSAction.COUNT_VALUE; i++) {
@@ -65,12 +55,12 @@ public final class PhoneNumberTest {
 		    .add(LoadedSMSAction.MESSAGE_SENT,
 			    (Math.random() < 0.5 ? Boolean.TRUE.toString()
 				    : Boolean.FALSE.toString()))
-		    .add(LoadedSMSAction.MESSAGE_DATE,
-			    new SimpleDateFormat("YYYY-MM-dd'T'hh:mm:ss")
+				    .add(LoadedSMSAction.MESSAGE_DATE,
+					    new SimpleDateFormat("YYYY-MM-dd'T'hh:mm:ss")
 				    .format(new Date()))
-		    .add(LoadedSMSAction.MESSAGE_CONTENT,
-			    String.format("Conversation %d, message %d",
-				    conversationId, messageId)));
+				    .add(LoadedSMSAction.MESSAGE_CONTENT,
+					    String.format("Conversation %d, message %d",
+						    conversationId, messageId)));
 	}
 	String jsonMessage = Json.createObjectBuilder()
 		.add(IAction.ACTION_KEY, IAction.ACTION_KEY)

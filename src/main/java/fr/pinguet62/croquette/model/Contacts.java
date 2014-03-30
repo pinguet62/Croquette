@@ -9,10 +9,11 @@ import com.google.gdata.data.contacts.ContactEntry;
 import com.google.gdata.data.contacts.ContactFeed;
 import com.google.gdata.data.extensions.PhoneNumber;
 
+/** {@link Contacts} of {@link User}. */
 public final class Contacts extends TreeSet<Contact> {
 
-    /** Auto generated serial version UID. */
-    private static final long serialVersionUID = 3769558875221823124L;
+    /** Serial version UID. */
+    private static final long serialVersionUID = 1;
 
     /**
      * Download {@link ContactEntry} from Google account with the OAuth token. <br />

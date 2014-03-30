@@ -16,7 +16,7 @@ import org.springframework.core.type.filter.AssignableTypeFilter;
 public final class ActionFactory {
 
     /** {@link Map} who associate the action name and {@link Class}. */
-    private static final Map<String, Class<?>> actionClass = new HashMap<>();
+    private static final Map<String, Class<?>> ACTION_CLASS = new HashMap<>();
 
     /** Initialize this factory at the beginning of application. */
     static {
@@ -28,19 +28,20 @@ public final class ActionFactory {
 		.findCandidateComponents("fr.pinguet62.croquette.action"
 			.replace(".", "/"));
 
-	for (BeanDefinition component : components)
+	for (BeanDefinition component : components) {
+	    Class<?> findedClass = null;
 	    try {
-		// Get their action value
-		Class<?> findedClass = Class.forName(component
-			.getBeanClassName());
-		Action annotation = findedClass.getAnnotation(Action.class);
-		if (annotation == null)
-		    continue;
-
-		// Save into this factory
-		ActionFactory.actionClass.put(annotation.value(), findedClass);
+		findedClass = Class.forName(component.getBeanClassName());
 	    } catch (ClassNotFoundException e) {
+		continue;
 	    }
+
+	    Action annotation = findedClass.getAnnotation(Action.class);
+	    if (annotation == null)
+		continue;
+
+	    ActionFactory.ACTION_CLASS.put(annotation.value(), findedClass);
+	}
     }
 
     /**
@@ -63,15 +64,19 @@ public final class ActionFactory {
 	    return null;
 
 	try {
-	    Class<?> classe = ActionFactory.actionClass.get(actionKey);
+	    Class<?> classe = ActionFactory.ACTION_CLASS.get(actionKey);
 	    Constructor<?> constructor = classe
 		    .getConstructor(JsonObject.class);
+	    // TODO Logger
+	    System.out.println("Action class: " + classe.getName());
 	    IAction action = (IAction) constructor.newInstance(jsonMessage);
 	    return action;
 	} catch (NoSuchMethodException | SecurityException
 		| InstantiationException | IllegalAccessException
 		| IllegalArgumentException | InvocationTargetException e) {
 	}
+	// TODO Logger
+	System.out.println("Action \"" + actionKey + "\" not found.");
 	return null;
     }
 

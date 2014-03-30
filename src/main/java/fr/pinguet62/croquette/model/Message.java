@@ -6,12 +6,18 @@ import java.util.Date;
 /** Message exchanged with a {@link Contact}. */
 public final class Message implements Comparable<Message>, Serializable {
 
+    /** States of a {@link Message}. */
     public enum State {
-	ERROR, IN_PROGRESS, OK;
+	/** Error during sending */
+	ERROR, /**
+	 * Sending but not acknowledgment.
+	 */
+	IN_PROGRESS, /** Normal status. */
+	OK;
     }
 
-    /** Auto generated serial version UID. */
-    private static final long serialVersionUID = 5126051315118508362L;
+    /** Serial version UID. */
+    private static final long serialVersionUID = 1;
 
     // /** The {@link Contact}. */
     // private Contact contact = null;

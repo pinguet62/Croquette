@@ -8,8 +8,8 @@ import java.util.HashSet;
  */
 public final class Conversations extends HashSet<Conversation> {
 
-    /** Auto generated serial version UID. */
-    private static final long serialVersionUID = -8126077649445737099L;
+    /** Serial version UID. */
+    private static final long serialVersionUID = 1;
 
     /** If has old {@link Conversation}s. */
     private boolean hasOldConversations = true;

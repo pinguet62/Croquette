@@ -1,9 +1,10 @@
 package fr.pinguet62.croquette.action;
 
+/** Exception occurring during actions. */
 public class ActionException extends RuntimeException {
 
-    /** Auto generated serial version UID. */
-    private static final long serialVersionUID = 398636231809542755L;
+    /** Serial version UID. */
+    private static final long serialVersionUID = 1;
 
     /**
      * Constructor with initial Exception.
