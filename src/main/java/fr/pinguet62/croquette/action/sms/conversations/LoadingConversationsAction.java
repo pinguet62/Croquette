@@ -13,7 +13,7 @@ import fr.pinguet62.croquette.model.User;
 @Action(LoadingConversationsAction.ACTION_VALUE)
 public final class LoadingConversationsAction implements IAction {
 
-    /** The <code>action</code> value. */
+    /** The {@code action} value. */
     public static final String ACTION_VALUE = "SMS_CONVERSATIONS_LOADING";
 
     /** Key for number of {@link Conversation}s to load. */

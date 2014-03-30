@@ -14,7 +14,7 @@ import fr.pinguet62.croquette.model.User;
 @Action(LoadingSMSAction.ACTION_VALUE)
 public final class LoadingSMSAction implements IAction {
 
-    /** The <code>action</code> value. */
+    /** The {@code action} value. */
     public static final String ACTION_VALUE = "SMS_LOADING";
 
     /** Key for the id of {@link Conversation}. */

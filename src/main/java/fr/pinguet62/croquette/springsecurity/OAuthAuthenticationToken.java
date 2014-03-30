@@ -11,8 +11,8 @@ import fr.pinguet62.croquette.model.User;
 /**
  * Used to authenticate the user with OAuth. <br />
  * Simple extension of {@link AbstractAuthenticationToken}, where
- * <code>detail</code> contains the {@link User} object, and
- * {@link GrantedAuthority} is <code>ROLE_USER</code>.
+ * {@link AbstractAuthenticationToken#getDetails()} contains the {@link User}
+ * object, and {@link GrantedAuthority} is {@code ROLE_USER}.
  */
 public final class OAuthAuthenticationToken extends AbstractAuthenticationToken {
 

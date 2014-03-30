@@ -51,7 +51,7 @@ public final class User implements Serializable {
      *
      * @param phoneNumber
      *            The phone number
-     * @return The {@link Contact}, <code>null</code> if not find.
+     * @return The {@link Contact}, {@code null} if not find.
      */
     public Contact getContact(String phoneNumber) {
 	if (phoneNumber == null)

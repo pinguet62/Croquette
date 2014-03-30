@@ -19,7 +19,7 @@ import fr.pinguet62.croquette.model.User;
 @Action(ReceivedSMSAction.ACTION_VALUE)
 public final class ReceivedSMSAction extends ExchangeSMSAction {
 
-    /** The <code>action</code> value. */
+    /** The {@code action} value. */
     public static final String ACTION_VALUE = "SMS_RECEIVED";
 
     /** Key for the id of the {@link Message}. */

@@ -1,12 +1,13 @@
 package fr.pinguet62.croquette.model;
 
-import java.util.HashSet;
+import java.util.Collection;
+import java.util.TreeSet;
 
 /**
  * Contains list of {@link Conversation}s. <br />
  * There are ordered by descending date of the latest {@link Message}.
  */
-public final class Conversations extends HashSet<Conversation> {
+public final class Conversations extends TreeSet<Conversation> {
 
     /** Serial version UID. */
     private static final long serialVersionUID = 1;
@@ -15,20 +16,40 @@ public final class Conversations extends HashSet<Conversation> {
     private boolean hasOldConversations = true;
 
     /**
-     * Add new conversation to the list.<br />
-     * The conversation requires at less one {@link Message}.
+     * Add new {@link Conversation} to the list.<br />
+     * The {@link Conversation} requires at less one {@link Message}.
      *
      * @param conversation
      *            The {@link Conversation}.
-     * @return <code>true</code> if the {@link Conversation} has been insert,
-     *         <code>false</code> otherwise.
+     * @return {@code true} if the {@link Conversation} has been insert,
+     *         {@code false} otherwise.
      */
     @Override
     public boolean add(Conversation conversation) {
 	if (conversation.isEmpty())
 	    return false;
-	User.get().getContacts().add(conversation.getContact());
+	// User.get().getContacts().add(conversation.getContact());
 	return super.add(conversation);
+    }
+
+    /**
+     * Add all {@link Conversation}s to the list.<br />
+     * The {@link Conversation}s requires at less one {@link Message}.
+     *
+     * @param conversation
+     *            The {@link Conversation}.
+     * @return {@code true} if all {@link Conversation}s have been insert,
+     *         {@code false} otherwise.
+     */
+    @Override
+    public boolean addAll(Collection<? extends Conversation> conversations) {
+	boolean res = true;
+	for (Conversation conversation : conversations)
+	    if (conversation.isEmpty())
+		res = false;
+	    else
+		add(conversation);
+	return res;
     }
 
     /**
@@ -36,14 +57,14 @@ public final class Conversations extends HashSet<Conversation> {
      *
      * @param id
      *            The {@link Conversation} id.
-     * @return The corresponding {@link Conversation}, <code>null</code> if not
+     * @return The corresponding {@link Conversation}, {@code null} if not
      *         found.
      */
     public Conversation get(Integer id) {
 	if (id == null)
 	    return null;
 	for (Conversation conversation : this)
-	    if (conversation.getId() == id)
+	    if (conversation.getId().equals(id))
 		return conversation;
 	return null;
     }

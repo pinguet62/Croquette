@@ -31,7 +31,7 @@ public final class SmsManagedBean {
 
     /**
      * Default constructor. <br />
-     * Connect user to <code>GTalk</code>.
+     * Connect user to {@code GTalk}.
      */
     public SmsManagedBean() {
 	User.get().getXmppManager().connect();
@@ -39,7 +39,7 @@ public final class SmsManagedBean {
 
     /**
      * Destructor.<br />
-     * Disconnect user of <code>GTalk</code>.
+     * Disconnect user of {@code GTalk}.
      */
     @Override
     public void finalize() throws Throwable {

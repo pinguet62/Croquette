@@ -12,7 +12,7 @@ import fr.pinguet62.croquette.model.User;
 @Action(SendSMSAction.ACTION_VALUE)
 public final class SendSMSAction extends ExchangeSMSAction {
 
-    /** The <code>action</code> value. */
+    /** The {@code action} value. */
     public static final String ACTION_VALUE = "SMS_SEND";
 
     /** The {@link Message} to send. */
@@ -30,7 +30,7 @@ public final class SendSMSAction extends ExchangeSMSAction {
 
     /**
      * Create the JSON message from the {@link Message}. <br />
-     * Send to <code>GTalk</code> account.
+     * Send to {@code GTalk} account.
      */
     @Override
     public void execute() {

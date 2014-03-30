@@ -4,7 +4,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Annotation used to define the value of <code>action</code> key in the JSON
+ * Annotation used to define the value of {@code action} key in the JSON
  * message. <br />
  * The annotated classes are explored by {@link ActionFactory} to determinate
  * the action to perform.
@@ -12,7 +12,7 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Action {
 
-    /** Value of <code>action</code> key. */
+    /** Value of {@code action} key. */
     String value();
 
 }

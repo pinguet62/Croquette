@@ -4,6 +4,7 @@ import javax.el.ELContext;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 
+/** {@link javax.faces.bean.ManagedBean} utils. */
 public final class ManagedBean {
 
     /**
@@ -11,7 +12,7 @@ public final class ManagedBean {
      *
      * @param beanName
      *            The name of bean (without <code>#{</code> <code>}</code>).
-     * @return The bean, <code>null</code> if not found.
+     * @return The bean, {@code null} if not found.
      */
     public static Object getManagedBean(String beanName) {
 	Object bean;

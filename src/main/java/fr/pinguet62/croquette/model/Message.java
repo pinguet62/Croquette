@@ -44,16 +44,17 @@ public final class Message implements Comparable<Message>, Serializable {
     private State state;
 
     /**
-     * Method used to compare the current {@link Message} to an other.
-     *
+     * Method used to compare the current {@link Message} to an other.<br />
+     * Reverse chronological order.
+     * 
      * @param other
      *            The other {@link Message}.
-     * @return A negative integer if this current {@link Message} is oldest than
+     * @return A negative integer if this current {@link Message} is latest than
      *         the other, zero if there are equal, a positive integer otherwise.
      */
     @Override
     public int compareTo(Message other) {
-	return date.compareTo(other.date);
+	return -date.compareTo(other.date);
     }
 
     // /**

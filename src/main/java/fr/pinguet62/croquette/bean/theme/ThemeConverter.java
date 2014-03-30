@@ -7,7 +7,7 @@ import javax.faces.convert.FacesConverter;
 
 /**
  * The {@link Theme} converter.<br />
- * Uses the <code>key</code> as an identifier.
+ * Uses the {@code key} as an identifier.
  */
 @FacesConverter("themeConverter")
 public final class ThemeConverter implements Converter {
@@ -21,7 +21,7 @@ public final class ThemeConverter implements Converter {
      *            The component.
      * @param value
      *            The string value.
-     * @return The theme value, <code>null</code> if not find.
+     * @return The theme value, {@code null} if not find.
      */
     @Override
     public Object getAsObject(FacesContext context, UIComponent component,

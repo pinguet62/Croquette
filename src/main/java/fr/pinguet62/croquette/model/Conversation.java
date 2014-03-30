@@ -4,10 +4,10 @@ import java.util.TreeSet;
 
 /**
  * Contains list of {@link Message}s.<br />
- * There are ordered by ascending date.
+ * There are ordered by reverse chronological order.
  */
 public final class Conversation extends TreeSet<Message> implements
-	Comparable<Conversation> {
+Comparable<Conversation> {
 
     /** Serial version UID. */
     private static final long serialVersionUID = 1;
@@ -26,7 +26,7 @@ public final class Conversation extends TreeSet<Message> implements
      */
     private String input;
 
-    /** Change <code>read</code> flag of all {@link Message}s. */
+    /** Change {@link Message#read} flag of all {@link Message}s. */
     public void allRead() {
 	for (Message message : this)
 	    message.setRead(true);

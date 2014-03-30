@@ -18,8 +18,8 @@ public final class Contact implements Comparable<Contact>, Serializable {
     private String phoneNumber;
 
     /**
-     * Method used to sort {@link Contact}s by <code>name</code>.<br />
-     * Sort by <code>phone number</code> if they are the same <code>name</code>.
+     * Method used to sort {@link Contact}s by {@code name}.<br />
+     * Sort by {@code phone number} if they are the same {@code name}.
      *
      * @param other
      *            The other {@link Contact}.

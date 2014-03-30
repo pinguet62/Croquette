@@ -1,9 +1,10 @@
 package fr.pinguet62.croquette.test.action;
 
+import static org.junit.Assert.assertTrue;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import fr.pinguet62.croquette.action.ActionFactory;
@@ -20,7 +21,7 @@ public final class ActionFactoryTest {
 	JsonObject jsonMessage = Json.createObjectBuilder()
 		.add(IAction.ACTION_KEY, LoadedSMSAction.ACTION_VALUE).build();
 	IAction action = ActionFactory.getAction(jsonMessage);
-	Assert.assertTrue(action instanceof LoadedSMSAction);
+	assertTrue(action instanceof LoadedSMSAction);
     }
 
     /** Test for {@link ReceivedSMSAction}. */
@@ -30,7 +31,7 @@ public final class ActionFactoryTest {
 		.add(IAction.ACTION_KEY, ReceivedSMSAction.ACTION_VALUE)
 		.build();
 	IAction action = ActionFactory.getAction(jsonMessage);
-	Assert.assertTrue(action instanceof ReceivedSMSAction);
+	assertTrue(action instanceof ReceivedSMSAction);
     }
 
 }
