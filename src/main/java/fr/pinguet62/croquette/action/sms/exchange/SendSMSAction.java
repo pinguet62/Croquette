@@ -39,7 +39,8 @@ public final class SendSMSAction extends ExchangeSMSAction {
 		.add(ACTION_KEY, ACTION_VALUE)
 		.add(CONTENT, message.getContent())
 		.add(PHONE_NUMBER,
-			message.getConversation().getContact().getPhoneNumber());
+			message.getConversation().getContact().getPhoneNumber()
+				.toString());
 	JsonObject jsonObject = jsonObjectBuilder.build();
 	String message = jsonObject.toString();
 

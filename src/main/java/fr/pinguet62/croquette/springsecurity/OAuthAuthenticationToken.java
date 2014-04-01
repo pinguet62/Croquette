@@ -35,11 +35,21 @@ public final class OAuthAuthenticationToken extends AbstractAuthenticationToken 
 	setDetails(user);
     }
 
+    /**
+     * Not used.
+     *
+     * @return {@link null}.
+     */
     @Override
     public Object getCredentials() {
 	return null;
     }
 
+    /**
+     * Not used.
+     *
+     * @return {@link null}.
+     */
     @Override
     public Object getPrincipal() {
 	return null;

@@ -31,20 +31,18 @@ public final class GTalkSASLMechanism extends SASLMechanism {
 	String authenticationText = Base64.encodeBytes(response,
 		Base64.DONT_BREAK_LINES);
 
-	final StringBuilder stanza = new StringBuilder();
-	stanza.append("<auth ");
-	stanza.append("xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\"");
-	stanza.append("mechanism=\"X-OAUTH2\"");
-	stanza.append("auth:service=\"oauth2\"");
-	stanza.append("xmlns:auth= \"http://www.google.com/talk/protocol/auth\"");
-	stanza.append(">");
-	stanza.append(authenticationText);
-	stanza.append("</auth>");
+	String stanza = new StringBuilder("<auth ")
+		.append("xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\"")
+		.append("mechanism=\"X-OAUTH2\"")
+		.append("auth:service=\"oauth2\"")
+		.append("xmlns:auth= \"http://www.google.com/talk/protocol/auth\"")
+		.append(">").append(authenticationText).append("</auth>")
+		.toString();
 
 	Packet packet = new Packet() {
 	    @Override
 	    public String toXML() {
-		return stanza.toString();
+		return stanza;
 	    }
 	};
 	getSASLAuthentication().send(packet);

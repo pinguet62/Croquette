@@ -13,6 +13,7 @@ import fr.pinguet62.croquette.model.Contact;
 import fr.pinguet62.croquette.model.Conversation;
 import fr.pinguet62.croquette.model.Message;
 import fr.pinguet62.croquette.model.Message.State;
+import fr.pinguet62.croquette.model.PhoneNumber;
 import fr.pinguet62.croquette.model.User;
 
 /** SMS received. */
@@ -52,7 +53,7 @@ public final class ReceivedSMSAction extends ExchangeSMSAction {
 		conversation = User.get().getConversations()
 			.get(conversationId);
 
-		// If it's a updating of a sent message
+		// Search if it's a updating of a sent message
 		for (Message message : conversation)
 		    if ((message.getId() == null)
 			    && message.getContent().equals(
@@ -71,7 +72,7 @@ public final class ReceivedSMSAction extends ExchangeSMSAction {
 		if (contact == null) {
 		    contact = new Contact();
 		    contact.setName(phoneNumber);
-		    contact.setPhoneNumber(phoneNumber);
+		    contact.setPhoneNumber(new PhoneNumber(phoneNumber));
 		}
 		conversation = new Conversation();
 		conversation.setContact(contact);

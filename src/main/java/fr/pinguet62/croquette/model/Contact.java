@@ -14,8 +14,8 @@ public final class Contact implements Comparable<Contact>, Serializable {
     /** The name. */
     private String name;
 
-    /** The phone number. */
-    private String phoneNumber;
+    /** The {@link PhoneNumber}. */
+    private PhoneNumber phoneNumber;
 
     /**
      * Method used to sort {@link Contact}s by {@code name}.<br />
@@ -31,7 +31,7 @@ public final class Contact implements Comparable<Contact>, Serializable {
 	int nameCompare = name.compareTo(other.name);
 	if (nameCompare != 0)
 	    return nameCompare;
-	return phoneNumber.compareTo(other.phoneNumber);
+	return phoneNumber.get().compareTo(other.phoneNumber.get());
     }
 
     /**
@@ -53,11 +53,11 @@ public final class Contact implements Comparable<Contact>, Serializable {
     }
 
     /**
-     * Gets the phone number.
+     * Gets the {@link PhoneNumber}.
      *
-     * @return The phone number.
+     * @return The {@link PhoneNumber}.
      */
-    public String getPhoneNumber() {
+    public PhoneNumber getPhoneNumber() {
 	return phoneNumber;
     }
 
@@ -82,12 +82,12 @@ public final class Contact implements Comparable<Contact>, Serializable {
     }
 
     /**
-     * Sets the phone number.
+     * Sets the {@link PhoneNumber}.
      *
      * @param phoneNumber
-     *            The phone number to set.
+     *            The {@link PhoneNumber} to set.
      */
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(PhoneNumber phoneNumber) {
 	this.phoneNumber = phoneNumber;
     }
 

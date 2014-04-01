@@ -50,7 +50,7 @@ public final class PhoneNumber {
     // TODO format phone number
     @Override
     public String toString() {
-	return super.toString();
+	return value;
     }
 
 }

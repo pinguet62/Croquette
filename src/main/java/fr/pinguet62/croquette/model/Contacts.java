@@ -41,7 +41,8 @@ public final class Contacts extends TreeSet<Contact> {
 		    Contact contact = new Contact();
 		    contact.setName(contactEntry.getName().getFullName()
 			    .getValue());
-		    contact.setPhoneNumber(phoneNumber.getPhoneNumber());
+		    contact.setPhoneNumber(new fr.pinguet62.croquette.model.PhoneNumber(
+			    phoneNumber.getPhoneNumber()));
 		    add(contact);
 		}
 	} catch (Exception exception) {
