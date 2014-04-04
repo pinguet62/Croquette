@@ -27,9 +27,20 @@ import fr.pinguet62.croquette.model.User;
 @SessionScoped
 public final class TestManagedBean {
 
+    private String xmppMessage;
+
     /** Download Google contacts */
     public void downloadGoogleContacts() {
 	User.get().getContacts().downloadGoogle();
+    }
+
+    /**
+     * Gets the xmppMessage.
+     *
+     * @return The xmppMessage.
+     */
+    public String getXmppMessage() {
+	return xmppMessage;
     }
 
     /** Initialize application with test data. */
@@ -122,7 +133,17 @@ public final class TestManagedBean {
 
     /** Send XMPP message. */
     public void sendXmppMessage() {
-	User.get().getXmppManager().send("{\"key\": \"value\"}");
+	User.get().getXmppManager().send(xmppMessage);
+    }
+
+    /**
+     * Sets the xmppMessage.
+     *
+     * @param xmppMessage
+     *            The xmppMessage.
+     */
+    public void setXmppMessage(String xmppMessage) {
+	this.xmppMessage = xmppMessage;
     }
 
 }

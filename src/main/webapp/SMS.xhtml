@@ -141,23 +141,32 @@
 	<p:dialog header="Tests" position="top" resizable="false"
 		visible="true" widgetVar="testsDialog">
 		<p:commandButton onclick="scrollConversationBottom()"
-			value="scrollConversationBottom()" />
+			value="Scroll conversation to bottom" />
 		<br />
-		<p:commandButton actionListener="#{testManagedBean.downloadGoogle}"
-			value="testManagedBean.downloadGoogle()" />
+		<p:commandButton
+			actionListener="#{testManagedBean.downloadGoogleContacts}"
+			value="Download Google contacts" />
 		<br />
 		<p:commandButton actionListener="#{testManagedBean.initTestData}"
-			value="testManagedBean.initTestData()" />
+			value="Init data test" />
 		<br />
 		<p:commandButton actionListener="#{testManagedBean.receviedSMSAction}"
-			value="ReceveidSMSAction()" />
+			value="ReceveidSMSAction" />
 		<br />
 		<p:commandButton
 			actionListener="#{testManagedBean.loadedSMSAction(smsManagedBean.selectedConversation)}"
-			value="testManagedBean.loadedSMSAction(smsManagedBean.selectedConversation)" />
+			value="LoadedSMSAction" />
 		<br />
-		<p:commandButton actionListener="#{testManagedBean.sendXmppMessage}"
-			value="testManagedBean.sendXmppMessage())" />
+		<div>
+			<h:form>
+				<p:commandButton actionListener="#{testManagedBean.sendXmppMessage}"
+					value="Send XMPP message" />
+				<p:inputTextarea rows="5" style="vertical-align: middle"
+					value="#{testManagedBean.xmppMessage}">
+					<f:ajax event="change" />
+				</p:inputTextarea>
+			</h:form>
+		</div>
 	</p:dialog>
 </h:body>
 </html>

@@ -1,4 +1,4 @@
-package fr.pinguet62.croquette.test;
+package fr.pinguet62.croquette.test.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

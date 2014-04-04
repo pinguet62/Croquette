@@ -1,7 +1,6 @@
 package fr.pinguet62.croquette.xmpp;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.StringReader;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -75,12 +74,20 @@ public final class XMPPManager implements MessageListener {
     public void processMessage(Chat chat, Message message) {
 	String content = message.getBody();
 	System.out.println("XMPP message received: " + content); // Logger
-	InputStream inputStream = new ByteArrayInputStream(content.getBytes());
-	JsonReader jsonReader = Json.createReader(inputStream);
-	JsonObject jsonObject = jsonReader.readObject();
-	IAction action = ActionFactory.getAction(jsonObject);
-	if (action.fromSmartphone())
-	    action.execute();
+
+	try (JsonReader jsonReader = Json
+		.createReader(new StringReader(content))) {
+	    JsonObject jsonObject = jsonReader.readObject();
+	    IAction action = ActionFactory.getAction(jsonObject);
+	    if (action == null) {
+		System.out.println("Invalid JSON message."); // Logger
+		return;
+	    }
+	    if (action.fromSmartphone())
+		action.execute();
+	} catch (Exception exception) {
+	    System.out.println(exception.getMessage()); // Logger
+	}
     }
 
     /**
