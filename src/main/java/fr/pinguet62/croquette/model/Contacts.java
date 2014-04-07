@@ -7,7 +7,6 @@ import java.util.TreeSet;
 import com.google.gdata.client.contacts.ContactsService;
 import com.google.gdata.data.contacts.ContactEntry;
 import com.google.gdata.data.contacts.ContactFeed;
-import com.google.gdata.data.extensions.PhoneNumber;
 
 /** {@link Contacts} of {@link User}. */
 public final class Contacts extends TreeSet<Contact> {
@@ -30,7 +29,8 @@ public final class Contacts extends TreeSet<Contact> {
 		    ContactFeed.class);
 	    List<ContactEntry> contactEntries = resultFeed.getEntries();
 	    for (ContactEntry contactEntry : contactEntries)
-		for (PhoneNumber phoneNumber : contactEntry.getPhoneNumbers()) {
+		for (com.google.gdata.data.extensions.PhoneNumber phoneNumber : contactEntry
+			.getPhoneNumbers()) {
 		    if (!contactEntry.hasPhoneNumbers())
 			continue;
 		    else if (!contactEntry.hasName())
@@ -41,13 +41,29 @@ public final class Contacts extends TreeSet<Contact> {
 		    Contact contact = new Contact();
 		    contact.setName(contactEntry.getName().getFullName()
 			    .getValue());
-		    contact.setPhoneNumber(new fr.pinguet62.croquette.model.PhoneNumber(
-			    phoneNumber.getPhoneNumber()));
+		    contact.setPhoneNumber(new PhoneNumber(phoneNumber
+			    .getPhoneNumber()));
 		    add(contact);
 		}
 	} catch (Exception exception) {
 	    exception.printStackTrace();
 	}
+    }
+
+    /**
+     * Gets {@link Contact} by phone number.
+     *
+     * @param phoneNumber
+     *            The {@link PhoneNumber}
+     * @return The {@link Contact}, {@code null} if not find.
+     */
+    public Contact get(PhoneNumber phoneNumber) {
+	if (phoneNumber == null)
+	    return null;
+	for (Contact contact : this)
+	    if (phoneNumber.equals(contact.getPhoneNumber()))
+		return contact;
+	return null;
     }
 
 }

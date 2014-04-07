@@ -11,7 +11,6 @@ import org.primefaces.push.PushContextFactory;
 import fr.pinguet62.croquette.action.Action;
 import fr.pinguet62.croquette.action.ActionException;
 import fr.pinguet62.croquette.action.IAction;
-import fr.pinguet62.croquette.action.JsonDateUtil;
 import fr.pinguet62.croquette.bean.SmsManagedBean;
 import fr.pinguet62.croquette.model.Conversation;
 import fr.pinguet62.croquette.model.Message;
@@ -76,7 +75,7 @@ public final class LoadedSMSAction implements IAction {
 		Message message = new Message();
 		message.setContent(messageJson.getString(MESSAGE_CONTENT));
 		message.setConversation(conversation);
-		message.setDate(JsonDateUtil.fromString(messageJson
+		message.setDate(FORMATTER.parse(messageJson
 			.getString(MESSAGE_DATE)));
 		message.setId(messageJson.getInt(MESSAGE_ID));
 		message.setRead(true);

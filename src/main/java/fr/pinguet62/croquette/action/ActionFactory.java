@@ -59,12 +59,22 @@ public final class ActionFactory {
      * @return The {@link Action}.
      */
     public static IAction getAction(JsonObject jsonMessage) {
-	final String actionKey = jsonMessage.getString(IAction.ACTION_KEY);
-	if (actionKey == null)
+	String actionName;
+	try {
+	    actionName = jsonMessage.getString(IAction.ACTION_KEY);
+	} catch (NullPointerException e) {
+	    // TODO Logger
+	    System.out.println("Action key not found: " + IAction.ACTION_KEY);
 	    return null;
+	}
 
 	try {
-	    Class<?> classe = ActionFactory.ACTION_CLASS.get(actionKey);
+	    Class<?> classe = ActionFactory.ACTION_CLASS.get(actionName);
+	    if (classe == null) {
+		// TODO Logger
+		System.out.println("Action value not found: " + actionName);
+		return null;
+	    }
 	    Constructor<?> constructor = classe
 		    .getConstructor(JsonObject.class);
 	    // TODO Logger
@@ -76,7 +86,7 @@ public final class ActionFactory {
 		| IllegalArgumentException | InvocationTargetException e) {
 	}
 	// TODO Logger
-	System.out.println("Action \"" + actionKey + "\" not found.");
+	System.out.println("Action \"" + actionName + "\" not found.");
 	return null;
     }
 

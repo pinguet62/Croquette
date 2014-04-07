@@ -60,6 +60,9 @@ public final class RedirectOAuthServlet extends HttpServlet {
 
 	// Spring security authentication
 	Authentication authentication = new OAuthAuthenticationToken(token);
+	// For multi-threading
+	SecurityContextHolder
+		.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 	SecurityContextHolder.getContext().setAuthentication(authentication);
 	// Store security context into session
 	HttpSession session = request.getSession(true);

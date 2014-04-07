@@ -1,5 +1,7 @@
 package fr.pinguet62.croquette.action.sms.exchange;
 
+import java.text.ParseException;
+
 import javax.json.JsonObject;
 
 import org.primefaces.push.PushContext;
@@ -7,7 +9,6 @@ import org.primefaces.push.PushContextFactory;
 
 import fr.pinguet62.croquette.action.Action;
 import fr.pinguet62.croquette.action.ActionException;
-import fr.pinguet62.croquette.action.JsonDateUtil;
 import fr.pinguet62.croquette.bean.SmsManagedBean;
 import fr.pinguet62.croquette.model.Contact;
 import fr.pinguet62.croquette.model.Conversation;
@@ -21,7 +22,7 @@ import fr.pinguet62.croquette.model.User;
 public final class ReceivedSMSAction extends ExchangeSMSAction {
 
     /** The {@code action} value. */
-    public static final String ACTION_VALUE = "SMS_RECEIVED";
+    public static final String ACTION_VALUE = "SMS_EXCHANGE_RECEPTION";
 
     /** Key for the id of the {@link Message}. */
     public static final String ID = "id";
@@ -46,52 +47,46 @@ public final class ReceivedSMSAction extends ExchangeSMSAction {
     @Override
     public void execute() {
 	try {
-	    Conversation conversation = null;
-	    // Existing conversation
-	    if (jsonMessage.containsKey(CONVERSATION)) {
-		int conversationId = jsonMessage.getInt(CONVERSATION);
-		conversation = User.get().getConversations()
-			.get(conversationId);
+	    // Find conversation
+	    int conversationId = jsonMessage.getInt(CONVERSATION);
+	    Conversation conversation = User.get().getConversations()
+		    .get(conversationId);
 
-		// Search if it's a updating of a sent message
-		for (Message message : conversation)
-		    if ((message.getId() == null)
-			    && message.getContent().equals(
-				    jsonMessage.getString(CONTENT))) {
-			message.setDate(JsonDateUtil.fromString(jsonMessage
-				.getString(DATE)));
-			message.setId(jsonMessage.getInt(ID));
-			break;
-		    }
-	    }
 	    // New conversation
-	    else {
-		String phoneNumber = jsonMessage.getString(PHONE_NUMBER);
-		Contact contact = User.get().getContact(phoneNumber);
+	    if (conversation == null) {
+		// Find contact
+		PhoneNumber phoneNumber = new PhoneNumber(
+			jsonMessage.getString(PHONE_NUMBER));
+		Contact contact = User.get().getContacts().get(phoneNumber);
+
 		// New contact
 		if (contact == null) {
+		    // Build contact
 		    contact = new Contact();
-		    contact.setName(phoneNumber);
-		    contact.setPhoneNumber(new PhoneNumber(phoneNumber));
+		    contact.setName(phoneNumber.toString());
+		    contact.setPhoneNumber(phoneNumber);
+		    User.get().getContacts().add(contact);
 		}
+
+		// Build conversation
 		conversation = new Conversation();
 		conversation.setContact(contact);
+		conversation.setId(conversationId);
+		User.get().getConversations().add(conversation);
 	    }
 
 	    // Build message
 	    Message message = new Message();
 	    message.setContent(jsonMessage.getString(CONTENT));
 	    message.setConversation(conversation);
-	    message.setDate(JsonDateUtil.fromString(jsonMessage.getString(DATE)));
+	    message.setDate(FORMATTER.parse(jsonMessage.getString(DATE)));
 	    message.setId(jsonMessage.getInt(ID));
 	    message.setRead(false);
 	    message.setSent(false);
 	    message.setState(State.OK);
 	    conversation.add(message);
-
-	    User.get().getConversations().add(conversation);
-	} catch (Exception e) {
-	    throw new ActionException(e);
+	} catch (ParseException | NullPointerException exception) {
+	    throw new ActionException(exception);
 	}
 
 	PushContext pushContext = PushContextFactory.getDefault()

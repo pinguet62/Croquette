@@ -36,8 +36,8 @@ public final class Conversations extends TreeSet<Conversation> {
      * Add all {@link Conversation}s to the list.<br />
      * The {@link Conversation}s requires at less one {@link Message}.
      *
-     * @param conversation
-     *            The {@link Conversation}.
+     * @param conversations
+     *            The {@link Conversation}s.
      * @return {@code true} if all {@link Conversation}s have been insert,
      *         {@code false} otherwise.
      */
@@ -48,7 +48,7 @@ public final class Conversations extends TreeSet<Conversation> {
 	    if (conversation.isEmpty())
 		res = false;
 	    else
-		add(conversation);
+		add(conversation); // TODO error
 	return res;
     }
 

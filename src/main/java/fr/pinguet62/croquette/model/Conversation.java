@@ -1,5 +1,6 @@
 package fr.pinguet62.croquette.model;
 
+import java.util.Collection;
 import java.util.TreeSet;
 
 /**
@@ -25,6 +26,38 @@ Comparable<Conversation> {
      * The input text of the new {@link Message} into this {@link Conversation}.
      */
     private String input;
+
+    /**
+     * Add new {@link Message} to the list.
+     *
+     * @param message
+     *            The {@link Message}.
+     * @return {@code true} if the {@link Message} has been insert,
+     *         {@code false} otherwise.
+     */
+    @Override
+    public boolean add(Message message) {
+	if (!message.isRead())
+	    hasOldMessages = true;
+	return super.add(message);
+    }
+
+    /**
+     * Add all {@link Message}s to the list.
+     *
+     * @param messages
+     *            The {@link Message}s.
+     * @return {@code true} if all {@link Message}s have been insert,
+     *         {@code false} otherwise.
+     */
+    @Override
+    public boolean addAll(Collection<? extends Message> messages) {
+	boolean allInserted = true;
+	for (Message message : messages)
+	    if (!add(message))
+		allInserted = false;
+	return allInserted;
+    }
 
     /** Change {@link Message#read} flag of all {@link Message}s. */
     public void allRead() {

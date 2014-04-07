@@ -5,6 +5,7 @@ import java.io.StringReader;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.json.stream.JsonParsingException;
 
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ConnectionConfiguration;
@@ -85,8 +86,8 @@ public final class XMPPManager implements MessageListener {
 	    }
 	    if (action.fromSmartphone())
 		action.execute();
-	} catch (Exception exception) {
-	    System.out.println(exception.getMessage()); // Logger
+	} catch (JsonParsingException exception) {
+	    System.out.println("Not a valid JSON message."); // Logger
 	}
     }
 

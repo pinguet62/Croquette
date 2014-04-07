@@ -13,7 +13,7 @@ import fr.pinguet62.croquette.model.User;
 public final class SendSMSAction extends ExchangeSMSAction {
 
     /** The {@code action} value. */
-    public static final String ACTION_VALUE = "SMS_SEND";
+    public static final String ACTION_VALUE = "SMS_EXCHANGE_SENDIND";
 
     /** The {@link Message} to send. */
     private Message message = null;
@@ -40,7 +40,7 @@ public final class SendSMSAction extends ExchangeSMSAction {
 		.add(CONTENT, message.getContent())
 		.add(PHONE_NUMBER,
 			message.getConversation().getContact().getPhoneNumber()
-				.toString());
+			.toString());
 	JsonObject jsonObject = jsonObjectBuilder.build();
 	String message = jsonObject.toString();
 

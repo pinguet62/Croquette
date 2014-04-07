@@ -5,10 +5,13 @@ import java.util.List;
 
 import javax.json.JsonObject;
 
+import org.primefaces.push.PushContext;
+import org.primefaces.push.PushContextFactory;
+
 import fr.pinguet62.croquette.action.Action;
 import fr.pinguet62.croquette.action.ActionException;
 import fr.pinguet62.croquette.action.IAction;
-import fr.pinguet62.croquette.action.JsonDateUtil;
+import fr.pinguet62.croquette.bean.SmsManagedBean;
 import fr.pinguet62.croquette.model.Conversation;
 import fr.pinguet62.croquette.model.Message;
 import fr.pinguet62.croquette.model.Message.State;
@@ -83,7 +86,7 @@ public final class LoadedConversationsAction implements IAction {
 		    message.setContent(messageJson
 			    .getString(CONVERSATION_MESSAGE_CONTENT));
 		    message.setConversation(conversation);
-		    message.setDate(JsonDateUtil.fromString(messageJson
+		    message.setDate(FORMATTER.parse(messageJson
 			    .getString(CONVERSATION_MESSAGE_DATE)));
 		    message.setId(messageJson.getInt(CONVERSATION_MESSAGE_ID));
 		    message.setRead(true);
@@ -95,6 +98,10 @@ public final class LoadedConversationsAction implements IAction {
 	} catch (ParseException e) {
 	    throw new ActionException(e);
 	}
+
+	PushContext pushContext = PushContextFactory.getDefault()
+		.getPushContext();
+	pushContext.push(SmsManagedBean.CHANNEL, null);
     }
 
     @Override
