@@ -62,7 +62,7 @@ public final class ActionFactory {
 	String actionName;
 	try {
 	    actionName = jsonMessage.getString(IAction.ACTION_KEY);
-	} catch (NullPointerException e) {
+	} catch (NullPointerException exception) {
 	    // TODO Logger
 	    System.out.println("Action key not found: " + IAction.ACTION_KEY);
 	    return null;

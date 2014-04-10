@@ -26,8 +26,8 @@ public final class Conversations extends TreeSet<Conversation> {
      */
     @Override
     public boolean add(Conversation conversation) {
-	if (conversation.isEmpty())
-	    return false;
+	// if (conversation.isEmpty())
+	// return false;
 	// User.get().getContacts().add(conversation.getContact());
 	return super.add(conversation);
     }
@@ -45,10 +45,10 @@ public final class Conversations extends TreeSet<Conversation> {
     public boolean addAll(Collection<? extends Conversation> conversations) {
 	boolean res = true;
 	for (Conversation conversation : conversations)
-	    if (conversation.isEmpty())
-		res = false;
-	    else
-		add(conversation); // TODO error
+	    // if (conversation.isEmpty())
+	    // res = false;
+	    // else
+	    add(conversation); // TODO error
 	return res;
     }
 

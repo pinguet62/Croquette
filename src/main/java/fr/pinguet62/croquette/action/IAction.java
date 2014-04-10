@@ -11,7 +11,7 @@ public interface IAction {
 
     /** The ISO 8601 formatter. */
     public static final DateFormat FORMATTER = new SimpleDateFormat(
-	    "YYYY-MM-DDThh:mm:ss");
+	    "yyyy-MM-dd'T'HH:mm:ss");
 
     /** Execute the action. */
     void execute();

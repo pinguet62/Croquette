@@ -22,10 +22,10 @@ import fr.pinguet62.croquette.model.User;
 public final class LoadedSMSAction implements IAction {
 
     /** The {@code action} value. */
-    public static final String ACTION_VALUE = "SMS_LOADED";
+    public static final String ACTION_VALUE = "SMS_CONVERSATION_LOADED";
 
     /** Key for the id of {@link Conversation}. */
-    public static final String CONVERSATION_ID = "id";
+    public static final String CONVERSATION = "conversation";
 
     /** Key for the content of the {@link Message} of the {@link Conversation}. */
     public static final String MESSAGE_CONTENT = "content";
@@ -66,12 +66,13 @@ public final class LoadedSMSAction implements IAction {
     public void execute() {
 	try {
 	    Conversation conversation = User.get().getConversations()
-		    .get(jsonMessage.getInt(CONVERSATION_ID));
+		    .get(jsonMessage.getInt(CONVERSATION));
 
-	    // Get each message
+	    // Each message
 	    List<JsonObject> jsonMessages = jsonMessage.getJsonArray(MESSAGES)
 		    .getValuesAs(JsonObject.class);
 	    for (JsonObject messageJson : jsonMessages) {
+		// Build message
 		Message message = new Message();
 		message.setContent(messageJson.getString(MESSAGE_CONTENT));
 		message.setConversation(conversation);
@@ -87,8 +88,8 @@ public final class LoadedSMSAction implements IAction {
 	    // Number of message less that default count: not other messages
 	    if (jsonMessages.size() < LoadingSMSAction.COUNT_VALUE)
 		conversation.setHasOldMessages(false);
-	} catch (ParseException e) {
-	    throw new ActionException(e);
+	} catch (ParseException | NullPointerException exception) {
+	    throw new ActionException(exception);
 	}
 
 	PushContext pushContext = PushContextFactory.getDefault()

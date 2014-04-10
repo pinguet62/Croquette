@@ -1,7 +1,12 @@
 package fr.pinguet62.croquette.model;
 
+import java.io.Serializable;
+
 /** Wraper for phone number. */
-public final class PhoneNumber {
+public final class PhoneNumber implements Serializable {
+
+    /** Serial version UID. */
+    private static final long serialVersionUID = 1L;
 
     /** The value. */
     private final String value;

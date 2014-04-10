@@ -51,7 +51,7 @@ public final class Contacts extends TreeSet<Contact> {
     }
 
     /**
-     * Gets {@link Contact} by phone number.
+     * Gets {@link Contact} by {@link PhoneNumber}.
      *
      * @param phoneNumber
      *            The {@link PhoneNumber}

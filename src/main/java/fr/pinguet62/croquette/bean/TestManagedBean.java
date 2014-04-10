@@ -52,7 +52,7 @@ public final class TestManagedBean {
 	for (int conv = 8; conv <= 38; ++conv) {
 	    Conversation conversation = new Conversation();
 	    conversation
-	    .setHasOldMessages(((int) (2 * Math.random()) % 2) == 0);
+		    .setHasOldMessages(((int) (2 * Math.random()) % 2) == 0);
 	    conversation.setId(conv);
 	    // Contact
 	    Contact contact = new Contact();
@@ -96,16 +96,16 @@ public final class TestManagedBean {
 		    .add(LoadedSMSAction.MESSAGE_SENT,
 			    (Math.random() < 0.5 ? Boolean.TRUE.toString()
 				    : Boolean.FALSE.toString()))
-		    .add(LoadedSMSAction.MESSAGE_DATE,
-			    new SimpleDateFormat("YYYY-MM-dd'T'hh:mm:ss")
+				    .add(LoadedSMSAction.MESSAGE_DATE,
+					    new SimpleDateFormat("YYYY-MM-dd'T'hh:mm:ss")
 				    .format(new Date()))
-		    .add(LoadedSMSAction.MESSAGE_CONTENT,
-			    String.format("Conversation %d, message %d",
-				    conversationId, messageId)));
+				    .add(LoadedSMSAction.MESSAGE_CONTENT,
+					    String.format("Conversation %d, message %d",
+						    conversationId, messageId)));
 	}
 	String jsonMessage = Json.createObjectBuilder()
 		.add(IAction.ACTION_KEY, IAction.ACTION_KEY)
-		.add(LoadedSMSAction.CONVERSATION_ID, conversationId)
+		.add(LoadedSMSAction.CONVERSATION, conversationId)
 		.add(LoadedSMSAction.MESSAGES, jsonMessages).build().toString();
 	User.get().getXmppManager().send(jsonMessage);
     }
@@ -124,7 +124,7 @@ public final class TestManagedBean {
 		.add(ExchangeSMSAction.CONVERSATION, conversationId)
 		.add(ExchangeSMSAction.DATE,
 			new SimpleDateFormat("YYYY-MM-dd'T'hh:mm:ss")
-				.format(new Date()))
+		.format(new Date()))
 		.add(ExchangeSMSAction.CONTENT,
 			String.format("Conversation %d, message %d",
 				conversationId, messageId)).build().toString();

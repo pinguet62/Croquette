@@ -51,7 +51,7 @@ public final class XMPPManager implements MessageListener {
 	    chat = connection.getChatManager().createChat(
 		    User.get().getEmail(), this);
 	} catch (XMPPException e) {
-	    e.printStackTrace();
+	    e.printStackTrace(); // TODO ?
 	}
     }
 

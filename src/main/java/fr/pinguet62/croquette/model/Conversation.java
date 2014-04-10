@@ -76,6 +76,12 @@ Comparable<Conversation> {
      */
     @Override
     public int compareTo(Conversation other) {
+	if (isEmpty() && other.isEmpty())
+	    return getContact().compareTo(other.getContact());
+	else if (isEmpty())
+	    return +1; // TODO -1 ?
+	else if (other.isEmpty())
+	    return -1; // TODO +1 ?
 	return other.first().getDate().compareTo(first().getDate());
     }
 

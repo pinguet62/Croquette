@@ -84,6 +84,7 @@ public final class ReceivedSMSAction extends ExchangeSMSAction {
 	    message.setRead(false);
 	    message.setSent(false);
 	    message.setState(State.OK);
+
 	    conversation.add(message);
 	} catch (ParseException | NullPointerException exception) {
 	    throw new ActionException(exception);

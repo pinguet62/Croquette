@@ -19,7 +19,7 @@ public final class Contact implements Comparable<Contact>, Serializable {
 
     /**
      * Method used to sort {@link Contact}s by {@code name}.<br />
-     * Sort by {@code phone number} if they are the same {@code name}.
+     * Sort by {@link PhoneNumber} if they are the same {@code name}.
      *
      * @param other
      *            The other {@link Contact}.
