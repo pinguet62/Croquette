@@ -26,23 +26,26 @@ public final class LoadingConversationsAction implements IAction {
     public static final String OLDEST = "oldest";
 
     /** Value for the id of the oldest {@link Conversation}. */
-    private final int oldest;
+    private final Integer oldest;
 
     /**
      * Constructor.
      *
      * @param oldest
-     *            The id of the oldest {@link Conversation}.
+     *            The id of the oldest {@link Conversation}. {@code null} if no
+     *            {@link Conversation} known.
      */
-    public LoadingConversationsAction(int oldest) {
+    public LoadingConversationsAction(Integer oldest) {
 	this.oldest = oldest;
     }
 
     @Override
     public void execute() {
-	JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder()
-		.add(ACTION_KEY, ACTION_VALUE).add(OLDEST, oldest)
-		.add(COUNT_KEY, COUNT_VALUE);
+	JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder().add(
+		ACTION_KEY, ACTION_VALUE);
+	if (oldest != null)
+	    jsonObjectBuilder.add(OLDEST, oldest);
+	jsonObjectBuilder.add(COUNT_KEY, COUNT_VALUE);
 	JsonObject jsonObject = jsonObjectBuilder.build();
 	String message = jsonObject.toString();
 

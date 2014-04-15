@@ -21,7 +21,7 @@
 </h:head>
 <h:body>
 	<p:layout fullPage="true">
-		<p:layoutUnit position="north" size="105" style="padding: 10px;">
+		<p:layoutUnit position="north" size="106" style="padding: 10px;">
 			<h:form>
 				<h:outputLink value="index.xhtml">
 					<p:graphicImage height="50" library="img" name="logo.png" />
@@ -42,11 +42,8 @@
 				</p:themeSwitcher>
 				<p:menuButton value="pinguet62@gmail.com"
 					style="position: absolute; right: 0; top: 40px; margin-left: auto; margin-right: 0;">
-					<p:menuitem icon="ui-icon-person" value="Delete" />
-					<p:separator />
 					<p:menuitem actionListener="#{userManagedBean.logout}"
-						icon="ui-icon-close" url="/SMS.xhtml"
-						value="#{msg['login.logout']}" />
+						icon="ui-icon-close" value="#{msg['login.logout']}" />
 				</p:menuButton>
 			</h:form>
 		</p:layoutUnit>
@@ -71,7 +68,8 @@
 						<h:outputText value="#{conversation.contact.name}" />
 					</p:column>
 				</p:dataTable>
-				<p:commandLink value="#{msg['sms.conversations.loadOld']}" />
+				<p:commandLink action="#{smsManagedBean.loadOldConversations}"
+					value="#{msg['sms.conversations.loadOld']}" />
 			</h:form>
 		</p:layoutUnit>
 		<p:layoutUnit position="center">
@@ -140,6 +138,9 @@
 		style="position: absolute; left: 50%;" value="Tests" />
 	<p:dialog header="Tests" position="top" resizable="false"
 		visible="true" widgetVar="testsDialog">
+		<p:commandButton actionListener="#{testManagedBean.primePush}"
+			value="Prime Push" />
+		<br />
 		<p:commandButton onclick="scrollConversationBottom()"
 			value="Scroll conversation to bottom" />
 		<br />

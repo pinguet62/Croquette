@@ -9,6 +9,9 @@ import javax.faces.bean.SessionScoped;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 
+import org.primefaces.push.PushContext;
+import org.primefaces.push.PushContextFactory;
+
 import fr.pinguet62.croquette.action.Action;
 import fr.pinguet62.croquette.action.IAction;
 import fr.pinguet62.croquette.action.sms.conversation.LoadedSMSAction;
@@ -52,7 +55,7 @@ public final class TestManagedBean {
 	for (int conv = 8; conv <= 38; ++conv) {
 	    Conversation conversation = new Conversation();
 	    conversation
-		    .setHasOldMessages(((int) (2 * Math.random()) % 2) == 0);
+	    .setHasOldMessages(((int) (2 * Math.random()) % 2) == 0);
 	    conversation.setId(conv);
 	    // Contact
 	    Contact contact = new Contact();
@@ -108,6 +111,13 @@ public final class TestManagedBean {
 		.add(LoadedSMSAction.CONVERSATION, conversationId)
 		.add(LoadedSMSAction.MESSAGES, jsonMessages).build().toString();
 	User.get().getXmppManager().send(jsonMessage);
+    }
+
+    /** Test for Prime Push messages. */
+    public void primePush() {
+	PushContext pushContext = PushContextFactory.getDefault()
+		.getPushContext();
+	pushContext.push(SmsManagedBean.CHANNEL, null);
     }
 
     /**

@@ -31,7 +31,8 @@ public final class GTalkSASLMechanism extends SASLMechanism {
 	String authenticationText = Base64.encodeBytes(response,
 		Base64.DONT_BREAK_LINES);
 
-	String stanza = new StringBuilder("<auth ")
+	// TODO Java 8: remove final keyword
+	final String stanza = new StringBuilder("<auth ")
 		.append("xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\"")
 		.append("mechanism=\"X-OAUTH2\"")
 		.append("auth:service=\"oauth2\"")

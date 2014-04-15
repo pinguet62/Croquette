@@ -68,13 +68,14 @@ public final class ActionFactory {
 	    return null;
 	}
 
+	Class<?> classe = ActionFactory.ACTION_CLASS.get(actionName);
+	if (classe == null) {
+	    // TODO Logger
+	    System.out.println("Action value not found: " + actionName);
+	    return null;
+	}
+
 	try {
-	    Class<?> classe = ActionFactory.ACTION_CLASS.get(actionName);
-	    if (classe == null) {
-		// TODO Logger
-		System.out.println("Action value not found: " + actionName);
-		return null;
-	    }
 	    Constructor<?> constructor = classe
 		    .getConstructor(JsonObject.class);
 	    // TODO Logger
@@ -84,10 +85,10 @@ public final class ActionFactory {
 	} catch (NoSuchMethodException | SecurityException
 		| InstantiationException | IllegalAccessException
 		| IllegalArgumentException | InvocationTargetException e) {
+	    // TODO Logger
+	    System.out.println("Invalid action: " + classe.getName());
+	    return null;
 	}
-	// TODO Logger
-	System.out.println("Action \"" + actionName + "\" not found.");
-	return null;
     }
 
     /** Private constructor. */

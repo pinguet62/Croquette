@@ -1,7 +1,6 @@
 package fr.pinguet62.croquette.bean;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -11,11 +10,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import fr.pinguet62.croquette.action.IAction;
+import fr.pinguet62.croquette.action.sms.conversation.LoadingSMSAction;
+import fr.pinguet62.croquette.action.sms.conversations.LoadingConversationsAction;
 import fr.pinguet62.croquette.action.sms.exchange.SendSMSAction;
 import fr.pinguet62.croquette.model.Contact;
 import fr.pinguet62.croquette.model.Conversation;
+import fr.pinguet62.croquette.model.Conversations;
 import fr.pinguet62.croquette.model.Message;
-import fr.pinguet62.croquette.model.Message.State;
 import fr.pinguet62.croquette.model.User;
 
 /** Managed bean used to control the SMS view. */
@@ -90,25 +92,17 @@ public final class SmsManagedBean {
 	return selectedConversation;
     }
 
+    /** Load old {@link Conversation}s. */
+    public void loadOldConversations() {
+	Conversations conversations = User.get().getConversations();
+	IAction action = new LoadingConversationsAction(
+		conversations.isEmpty() ? null : conversations.last().getId());
+	action.execute();
+    }
+
     /** Load old {@link Message}s of the selected {@link Conversation}. */
     public void loadOldMessages() {
-	// TODO Delete this
-	int nbMessages = (int) (5 * Math.random());
-	for (int i = 0; i < nbMessages; i++) {
-	    Message message = new Message();
-	    message.setContent("SmsManagedBean.loadOldMessages()");
-	    message.setConversation(selectedConversation);
-	    Calendar calendar = Calendar.getInstance();
-	    calendar.setTime(selectedConversation.first().getDate());
-	    calendar.add(Calendar.DATE, -1);
-	    message.setDate(calendar.getTime());
-	    message.setRead(true);
-	    message.setSent(((int) (2 * Math.random()) % 2) == 0);
-	    message.setState(State.OK);
-	    selectedConversation
-	    .setHasOldMessages(((int) (2 * Math.random()) % 2) == 0);
-	    selectedConversation.add(message);
-	}
+	new LoadingSMSAction(selectedConversation).execute();
     }
 
     /**

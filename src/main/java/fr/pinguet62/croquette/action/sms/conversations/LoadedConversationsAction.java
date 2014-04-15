@@ -115,6 +115,8 @@ public final class LoadedConversationsAction implements IAction {
 		message.setSent(messageJson
 			.getBoolean(CONVERSATION_MESSAGE_SENT));
 		message.setState(State.OK);
+
+		conversation.add(message);
 	    }
 	} catch (ParseException | NullPointerException exception) {
 	    throw new ActionException(exception);

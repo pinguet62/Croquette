@@ -34,14 +34,13 @@ public final class SendSMSAction extends ExchangeSMSAction {
      */
     @Override
     public void execute() {
-
 	JsonObjectBuilder jsonObjectBuilder = Json
 		.createObjectBuilder()
 		.add(ACTION_KEY, ACTION_VALUE)
 		.add(CONVERSATION, message.getConversation().getId())
 		.add(PHONE_NUMBER,
 			message.getConversation().getContact().getPhoneNumber()
-			.toString()).add(CONTENT, message.getContent());
+				.toString()).add(CONTENT, message.getContent());
 	JsonObject jsonObject = jsonObjectBuilder.build();
 	String message = jsonObject.toString();
 
