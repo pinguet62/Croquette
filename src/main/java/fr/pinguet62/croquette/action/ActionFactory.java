@@ -64,14 +64,14 @@ public final class ActionFactory {
 	    actionName = jsonMessage.getString(IAction.ACTION_KEY);
 	} catch (NullPointerException exception) {
 	    // TODO Logger
-	    System.out.println("Action key not found: " + IAction.ACTION_KEY);
+	    System.err.println("Action key not found: " + IAction.ACTION_KEY);
 	    return null;
 	}
 
 	Class<?> classe = ActionFactory.ACTION_CLASS.get(actionName);
 	if (classe == null) {
 	    // TODO Logger
-	    System.out.println("Action value not found: " + actionName);
+	    System.err.println("Action value not found: " + actionName);
 	    return null;
 	}
 
@@ -86,7 +86,7 @@ public final class ActionFactory {
 		| InstantiationException | IllegalAccessException
 		| IllegalArgumentException | InvocationTargetException e) {
 	    // TODO Logger
-	    System.out.println("Invalid action: " + classe.getName());
+	    System.err.println("Invalid action class: " + classe.getName());
 	    return null;
 	}
     }

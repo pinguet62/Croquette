@@ -1,5 +1,6 @@
 package fr.pinguet62.croquette.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeSet;
 
@@ -86,6 +87,16 @@ public final class Conversations extends TreeSet<Conversation> {
      */
     public void setHasOldMessages(boolean hasOldConversations) {
 	this.hasOldConversations = hasOldConversations;
+    }
+
+    /**
+     * Sort {@link Conversation}s after adding {@link Message} or creating of [
+     * {@link Conversation}.
+     */
+    public void sort() {
+	Collection<Conversation> tmp = new ArrayList<>(this);
+	clear();
+	addAll(tmp);
     }
 
 }

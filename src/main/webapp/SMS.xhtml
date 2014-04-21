@@ -14,8 +14,7 @@
 	<title>TODO title</title>
 	<script type="text/javascript">
 		function scrollConversationBottom() {
-			var conversationContent = $(PrimeFaces.escapeClientId('messages'));
-			conversationContent.scrollTop = conversationContent.scrollHeight;
+			window.location.hash = "bottom"
 		}
 	</script>
 </h:head>
@@ -76,8 +75,7 @@
 			<p:layout>
 				<p:layoutUnit position="center" style="display: block;">
 					<h:form id="selectedConversation" prependId="false">
-						<p:outputPanel id="messages"
-							style="display: block; text-align: center;">
+						<p:outputPanel id="messages" style="text-align: center;">
 							<c:if
 								test="#{smsManagedBean.selectedConversation.hasOldMessages}">
 								<p:commandLink action="#{smsManagedBean.loadOldMessages}"
@@ -96,6 +94,7 @@
 								</div>
 								<br />
 							</c:forEach>
+							<div id="bottom" />
 						</p:outputPanel>
 					</h:form>
 				</p:layoutUnit>

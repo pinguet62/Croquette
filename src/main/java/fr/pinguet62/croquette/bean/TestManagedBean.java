@@ -49,13 +49,13 @@ public final class TestManagedBean {
     /** Initialize application with test data. */
     public void initTestData() {
 	Calendar calendar = Calendar.getInstance();
+	calendar.setTimeInMillis(0);
 	calendar.set(2012, 0, 0);
 	User user = User.get();
 	// Conversation
-	for (int conv = 8; conv <= 38; ++conv) {
+	for (int conv = 1; conv <= 40; ++conv) {
 	    Conversation conversation = new Conversation();
-	    conversation
-	    .setHasOldMessages(((int) (2 * Math.random()) % 2) == 0);
+	    conversation.setHasOldMessages(Math.random() < 0.5);
 	    conversation.setId(conv);
 	    // Contact
 	    Contact contact = new Contact();
@@ -69,8 +69,9 @@ public final class TestManagedBean {
 		message.setConversation(null); // TODO
 		message.setDate(calendar.getTime());
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		message.setId((100 * conv) + mess);
 		message.setRead((conv < 35) || (mess < 15));
-		message.setSent(((int) (2 * Math.random()) % 2) == 0);
+		message.setSent(Math.random() < 0.5);
 		message.setState(State.OK);
 		conversation.add(message);
 	    }

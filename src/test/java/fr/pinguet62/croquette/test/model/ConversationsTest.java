@@ -11,6 +11,7 @@ import org.junit.Test;
 import fr.pinguet62.croquette.model.Conversation;
 import fr.pinguet62.croquette.model.Conversations;
 import fr.pinguet62.croquette.model.Message;
+import fr.pinguet62.croquette.test.DateUtil;
 
 /** Tests for {@link Conversations} manipulation. */
 public final class ConversationsTest {
@@ -77,6 +78,40 @@ public final class ConversationsTest {
 
 	assertEquals(cLatestId, conversations.first().getId());
 	assertEquals(cOldestId, conversations.last().getId());
+    }
+
+    /** Test for {@link Conversations#sort()}. */
+    @Test
+    public void sort() {
+	Conversations conversations = new Conversations();
+
+	// New conversation
+	Conversation conversation1 = new Conversation(1, null);
+	conversation1.add(new Message(11, DateUtil.generateDate(2014, 0, 1),
+		"11"));
+	conversations.add(conversation1);
+	assertEquals(1, conversations.first().getId().intValue());
+	assertEquals(1, conversations.last().getId().intValue());
+	// New conversation
+	Conversation conversation2 = new Conversation(2, null);
+	conversation2.add(new Message(21, DateUtil.generateDate(2014, 0, 2),
+		"21"));
+	conversations.add(conversation2);
+	assertEquals(2, conversations.first().getId().intValue());
+	assertEquals(1, conversations.last().getId().intValue());
+
+	// Update existing conversation
+	conversation1.add(new Message(12, DateUtil.generateDate(2014, 0, 3),
+		"12"));
+	conversations.sort();
+	assertEquals(1, conversations.first().getId().intValue());
+	assertEquals(2, conversations.last().getId().intValue());
+	// Update existing conversation
+	conversation2.add(new Message(22, DateUtil.generateDate(2014, 0, 4),
+		"22"));
+	conversations.sort();
+	assertEquals(2, conversations.first().getId().intValue());
+	assertEquals(1, conversations.last().getId().intValue());
     }
 
 }

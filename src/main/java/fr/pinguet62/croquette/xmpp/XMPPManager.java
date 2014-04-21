@@ -51,7 +51,7 @@ public final class XMPPManager implements MessageListener {
 	    chat = connection.getChatManager().createChat(
 		    User.get().getEmail(), this);
 	} catch (XMPPException e) {
-	    e.printStackTrace(); // TODO ?
+	    System.err.println("Error during XMPP connection."); // TODO Logger
 	}
     }
 
@@ -74,20 +74,20 @@ public final class XMPPManager implements MessageListener {
     @Override
     public void processMessage(Chat chat, Message message) {
 	String content = message.getBody();
-	System.out.println("XMPP message received: " + content); // Logger
+	System.out.println("XMPP message received: " + content); // TODOLogger
 
 	try (JsonReader jsonReader = Json
 		.createReader(new StringReader(content))) {
 	    JsonObject jsonObject = jsonReader.readObject();
 	    IAction action = ActionFactory.getAction(jsonObject);
 	    if (action == null) {
-		System.out.println("Invalid JSON message."); // Logger
+		System.err.println("Invalid JSON message."); // TODO Logger
 		return;
 	    }
 	    if (action.fromSmartphone())
 		action.execute();
 	} catch (JsonParsingException exception) {
-	    System.out.println("Not a valid JSON message."); // Logger
+	    System.err.println("Invalid JSON message."); // TODO Logger
 	}
     }
 
@@ -102,7 +102,7 @@ public final class XMPPManager implements MessageListener {
 	try {
 	    chat.sendMessage(message);
 	} catch (XMPPException e) {
-	    e.printStackTrace();
+	    System.err.println("Error during XMPP sending."); // TODO Logger
 	}
     }
 

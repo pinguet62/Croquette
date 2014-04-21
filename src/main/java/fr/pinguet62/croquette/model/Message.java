@@ -1,17 +1,17 @@
 package fr.pinguet62.croquette.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /** Message exchanged with a {@link Contact}. */
+// TODO Remove default constructor & setters + set final keyword attributes
 public final class Message implements Comparable<Message>, Serializable {
 
     /** States of a {@link Message}. */
     public enum State {
 	/** Error during sending */
-	ERROR, /**
-	 * Sending but not acknowledgment.
-	 */
+	ERROR, /** Sending but not acknowledgment. */
 	IN_PROGRESS, /** Normal status. */
 	OK;
     }
@@ -19,11 +19,11 @@ public final class Message implements Comparable<Message>, Serializable {
     /** Serial version UID. */
     private static final long serialVersionUID = 1;
 
-    // /** The {@link Contact}. */
-    // private Contact contact = null;
-
     /** The content. */
     private String content;
+
+    // /** The {@link Contact}. */
+    // private Contact contact = null;
 
     /** The {@link Conversation}. */
     private Conversation conversation;
@@ -32,7 +32,7 @@ public final class Message implements Comparable<Message>, Serializable {
     private Date date;
 
     /** The id. */
-    private Integer id;
+    private Integer id; // TODO int
 
     /** If it was read. */
     private boolean read;
@@ -41,12 +41,32 @@ public final class Message implements Comparable<Message>, Serializable {
     private Boolean sent;
 
     /** The {@link State}. */
-    private State state;
+    private State state = State.OK;
+
+    /** Default constructor. */
+    public Message() {
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param id
+     *            The id.
+     * @param date
+     *            The date of issue or receiving.
+     * @param content
+     *            The content.
+     */
+    public Message(int id, Date date, String content) {
+	this.id = id;
+	this.date = date;
+	this.content = content;
+    }
 
     /**
      * Method used to compare the current {@link Message} to an other.<br />
      * Reverse chronological order.
-     * 
+     *
      * @param other
      *            The other {@link Message}.
      * @return A negative integer if this current {@link Message} is latest than
@@ -54,7 +74,7 @@ public final class Message implements Comparable<Message>, Serializable {
      */
     @Override
     public int compareTo(Message other) {
-	return -date.compareTo(other.date);
+	return date.compareTo(other.date);
     }
 
     // /**
@@ -216,6 +236,12 @@ public final class Message implements Comparable<Message>, Serializable {
      */
     public void setState(State state) {
 	this.state = state;
+    }
+
+    @Override
+    public String toString() {
+	return String.format("%d-%s-\"%s\"", id, new SimpleDateFormat(
+		"dd/MM/yyyy").format(date), content);
     }
 
 }

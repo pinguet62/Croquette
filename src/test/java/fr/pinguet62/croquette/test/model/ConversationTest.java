@@ -3,13 +3,11 @@ package fr.pinguet62.croquette.test.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import org.junit.Test;
 
 import fr.pinguet62.croquette.model.Conversation;
 import fr.pinguet62.croquette.model.Message;
+import fr.pinguet62.croquette.test.DateUtil;
 
 /** Tests for {@link Conversation} manipulation. */
 public final class ConversationTest {
@@ -25,26 +23,16 @@ public final class ConversationTest {
 	Conversation conversation = new Conversation();
 	assertEquals(0, conversation.size());
 
-	Message mOldest = new Message();
-	Calendar calendar = Calendar.getInstance();
-	calendar.add(Calendar.DAY_OF_YEAR, -1);
-	mOldest.setDate(calendar.getTime());
-	Integer mOldestId = 2;
-	mOldest.setId(mOldestId);
-	boolean res1 = conversation.add(mOldest);
-	assertTrue(res1);
+	Message mOldest = new Message(2, DateUtil.generateDate(2014, 0, 2), "2");
+	assertTrue(conversation.add(mOldest));
 	assertEquals(1, conversation.size());
 
-	Message mLatest = new Message();
-	mLatest.setDate(new Date());
-	Integer mLatestId = 1;
-	mLatest.setId(mLatestId);
-	boolean res2 = conversation.add(mLatest);
-	assertTrue(res2);
+	Message mLatest = new Message(1, DateUtil.generateDate(2014, 0, 1), "1");
+	assertTrue(conversation.add(mLatest));
 	assertEquals(2, conversation.size());
 
-	assertEquals(mLatestId, conversation.first().getId());
-	assertEquals(mOldestId, conversation.last().getId());
+	assertEquals(1, conversation.first().getId().intValue());
+	assertEquals(2, conversation.last().getId().intValue());
     }
 
     /** Insert oldest {@link Message} into {@link Conversation}. */
@@ -53,26 +41,16 @@ public final class ConversationTest {
 	Conversation conversation = new Conversation();
 	assertEquals(0, conversation.size());
 
-	Message mLatest = new Message();
-	mLatest.setDate(new Date());
-	Integer mLatestId = 1;
-	mLatest.setId(mLatestId);
-	boolean res1 = conversation.add(mLatest);
-	assertTrue(res1);
+	Message mLatest = new Message(1, DateUtil.generateDate(2014, 0, 1), "1");
+	assertTrue(conversation.add(mLatest));
 	assertEquals(1, conversation.size());
 
-	Message mOldest = new Message();
-	Calendar calendar = Calendar.getInstance();
-	calendar.add(Calendar.DAY_OF_YEAR, -1);
-	mOldest.setDate(calendar.getTime());
-	Integer mOldestId = 2;
-	mOldest.setId(mOldestId);
-	boolean res2 = conversation.add(mOldest);
-	assertTrue(res2);
+	Message mOldest = new Message(2, DateUtil.generateDate(2014, 0, 2), "2");
+	assertTrue(conversation.add(mOldest));
 	assertEquals(2, conversation.size());
 
-	assertEquals(mLatestId, conversation.first().getId());
-	assertEquals(mOldestId, conversation.last().getId());
+	assertEquals(1, conversation.first().getId().intValue());
+	assertEquals(2, conversation.last().getId().intValue());
     }
 
 }

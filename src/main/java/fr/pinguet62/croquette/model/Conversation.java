@@ -7,8 +7,9 @@ import java.util.TreeSet;
  * Contains list of {@link Message}s.<br />
  * There are ordered by reverse chronological order.
  */
+// TODO Remove default constructor & setters + set final keyword attributes
 public final class Conversation extends TreeSet<Message> implements
-Comparable<Conversation> {
+	Comparable<Conversation> {
 
     /** Serial version UID. */
     private static final long serialVersionUID = 1;
@@ -20,12 +21,30 @@ Comparable<Conversation> {
     private boolean hasOldMessages = true;
 
     /** The id. */
-    private Integer id;
+    private Integer id; // TODO int
 
     /**
      * The input text of the new {@link Message} into this {@link Conversation}.
      */
     private String input;
+
+    /** Default constructor. */
+    // TODO Remove default and set final keyword attributes
+    public Conversation() {
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param id
+     *            The id.
+     * @param contact
+     *            The {@link Contact}.
+     */
+    public Conversation(int id, Contact contact) {
+	this.id = id;
+	this.contact = contact;
+    }
 
     /**
      * Add new {@link Message} to the list.
@@ -39,7 +58,9 @@ Comparable<Conversation> {
     public boolean add(Message message) {
 	if (!message.isRead())
 	    hasOldMessages = true;
-	return super.add(message);
+	boolean res = super.add(message);
+	// User.get().getConversations().sort(); // TODO
+	return res;
     }
 
     /**
@@ -74,6 +95,7 @@ Comparable<Conversation> {
      *         {@link Conversation} is latest than the latest {@link Message} of
      *         the other, zero if there are equal, a positive integer otherwise.
      */
+    // TODO bad
     @Override
     public int compareTo(Conversation other) {
 	if (isEmpty() && other.isEmpty())
@@ -82,7 +104,7 @@ Comparable<Conversation> {
 	    return +1; // TODO -1 ?
 	else if (other.isEmpty())
 	    return -1; // TODO +1 ?
-	return other.first().getDate().compareTo(first().getDate());
+	return other.last().getDate().compareTo(last().getDate());
     }
 
     /**
@@ -172,6 +194,11 @@ Comparable<Conversation> {
      */
     public void setInput(String input) {
 	this.input = input;
+    }
+
+    @Override
+    public String toString() {
+	return "Conv " + id + ":" + super.toString();
     }
 
 }
