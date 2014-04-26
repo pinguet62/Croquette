@@ -32,7 +32,7 @@ public final class GTalkSASLMechanism extends SASLMechanism {
 		Base64.DONT_BREAK_LINES);
 
 	// TODO Java 8: remove final keyword
-	final String stanza = new StringBuilder("<auth ")
+	String stanza = new StringBuilder("<auth ")
 		.append("xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\"")
 		.append("mechanism=\"X-OAUTH2\"")
 		.append("auth:service=\"oauth2\"")

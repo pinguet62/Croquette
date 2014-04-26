@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
@@ -27,6 +28,10 @@ import fr.pinguet62.croquette.springsecurity.OAuthAuthenticationToken;
 /** Used when the OAuth server redirect user after her authentication. */
 @WebServlet(urlPatterns = RedirectOAuthServlet.URL)
 public final class RedirectOAuthServlet extends HttpServlet {
+
+    /** Logger. */
+    private static final Logger LOGGER = Logger
+	    .getLogger(LoginOAuthServlet.class);
 
     /** Redirect URL after OAuth authentication. */
     public static final String REDIRECT_URL = "/index.xhtml";
@@ -45,12 +50,14 @@ public final class RedirectOAuthServlet extends HttpServlet {
 	// Get code
 	String error = request.getParameter("error");
 	if (error != null) {
+	    LOGGER.error("OAuth redirect error: " + error);
 	    response.sendRedirect(request.getContextPath()
 		    + RedirectOAuthServlet.REDIRECT_URL);
 	    return;
 	}
 	String code = request.getParameter("code");
 	if (code == null) {
+	    LOGGER.error("OAuth redirect error: no error or code.");
 	    response.sendRedirect(request.getContextPath()
 		    + RedirectOAuthServlet.REDIRECT_URL);
 	    return;
@@ -62,7 +69,7 @@ public final class RedirectOAuthServlet extends HttpServlet {
 	Authentication authentication = new OAuthAuthenticationToken(token);
 	// For multi-threading
 	SecurityContextHolder
-		.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+	.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 	SecurityContextHolder.getContext().setAuthentication(authentication);
 	// Store security context into session
 	HttpSession session = request.getSession(true);
@@ -87,14 +94,17 @@ public final class RedirectOAuthServlet extends HttpServlet {
      *             Exception.
      */
     private String getEmail(String token) throws IOException {
-	URL url = new URL("https://www.googleapis.com/oauth2/v1/userinfo"
-		+ ("?access_token=" + token));
+	String strUrl = "https://www.googleapis.com/oauth2/v1/userinfo"
+		+ ("?access_token=" + token);
+	LOGGER.debug("HTTP request for getting email: " + strUrl);
+	URL url = new URL(strUrl);
 	HttpsURLConnection connection = (HttpsURLConnection) url
 		.openConnection();
 
 	JsonReader reader = Json.createReader(connection.getInputStream());
 	JsonObject jsonResponse = reader.readObject();
 	String email = jsonResponse.getString("email");
+	LOGGER.info("OAuth email: " + email);
 
 	return email;
     }
@@ -109,7 +119,9 @@ public final class RedirectOAuthServlet extends HttpServlet {
      *             Exception.
      */
     private String getToken(String code) throws IOException {
-	URL url = new URL("https://accounts.google.com/o/oauth2/token");
+	String strUrl = "https://accounts.google.com/o/oauth2/token";
+	LOGGER.debug("HTTP request for getting token: URL=" + strUrl);
+	URL url = new URL(strUrl);
 	HttpsURLConnection connection = (HttpsURLConnection) url
 		.openConnection();
 	connection.setRequestMethod("POST");
@@ -121,6 +133,7 @@ public final class RedirectOAuthServlet extends HttpServlet {
 		+ "&client_secret=tGxcnt4qjzJ7c39pL87UG_Ek"
 		+ "&grant_type=authorization_code"
 		+ ("&redirect_uri=http://localhost:8081/Croquette" + RedirectOAuthServlet.URL);
+	LOGGER.debug("HTTP request for getting token: Parameters=" + parameters);
 	dataOutputStream.writeBytes(parameters);
 	dataOutputStream.flush();
 	dataOutputStream.close();
@@ -128,6 +141,7 @@ public final class RedirectOAuthServlet extends HttpServlet {
 	JsonReader reader = Json.createReader(connection.getInputStream());
 	JsonObject jsonResponse = reader.readObject();
 	String token = jsonResponse.getString("access_token");
+	LOGGER.info("OAuth token: " + token);
 
 	return token;
     }

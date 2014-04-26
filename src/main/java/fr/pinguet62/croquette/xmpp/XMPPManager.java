@@ -7,6 +7,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.stream.JsonParsingException;
 
+import org.apache.log4j.Logger;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.MessageListener;
@@ -24,6 +25,9 @@ import fr.pinguet62.croquette.model.User;
  * messages.
  */
 public final class XMPPManager implements MessageListener {
+
+    /** The logger. */
+    private static final Logger LOGGER = Logger.getLogger(XMPPManager.class);
 
     /** The XMPP chat. */
     private Chat chat = null;
@@ -50,8 +54,8 @@ public final class XMPPManager implements MessageListener {
 	    connection.login(User.get().getEmail(), User.get().getToken());
 	    chat = connection.getChatManager().createChat(
 		    User.get().getEmail(), this);
-	} catch (XMPPException e) {
-	    System.err.println("Error during XMPP connection."); // TODO Logger
+	} catch (XMPPException exception) {
+	    LOGGER.error("Error during XMPP connection.", exception);
 	}
     }
 
@@ -73,21 +77,23 @@ public final class XMPPManager implements MessageListener {
      */
     @Override
     public void processMessage(Chat chat, Message message) {
+	// TODO Test: sender = current user
+
 	String content = message.getBody();
-	System.out.println("XMPP message received: " + content); // TODOLogger
+	LOGGER.info("XMPP message received: " + content);
 
 	try (JsonReader jsonReader = Json
 		.createReader(new StringReader(content))) {
 	    JsonObject jsonObject = jsonReader.readObject();
 	    IAction action = ActionFactory.getAction(jsonObject);
 	    if (action == null) {
-		System.err.println("Invalid JSON message."); // TODO Logger
+		LOGGER.error("Action not found.");
 		return;
 	    }
 	    if (action.fromSmartphone())
 		action.execute();
 	} catch (JsonParsingException exception) {
-	    System.err.println("Invalid JSON message."); // TODO Logger
+	    LOGGER.error("Invalid JSON message.");
 	}
     }
 
@@ -98,11 +104,11 @@ public final class XMPPManager implements MessageListener {
      *            The message.
      */
     public void send(String message) {
-	System.out.println("XMPP message sending: " + message); // TODO Logger
+	LOGGER.info("XMPP message sending: " + message);
 	try {
 	    chat.sendMessage(message);
 	} catch (XMPPException e) {
-	    System.err.println("Error during XMPP sending."); // TODO Logger
+	    LOGGER.error("Error during XMPP sending.");
 	}
     }
 

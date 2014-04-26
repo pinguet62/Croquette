@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.json.JsonObject;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AssignableTypeFilter;
@@ -17,6 +18,9 @@ public final class ActionFactory {
 
     /** {@link Map} who associate the action name and {@link Class}. */
     private static final Map<String, Class<?>> ACTION_CLASS = new HashMap<>();
+
+    /** The logger. */
+    private static final Logger LOGGER = Logger.getLogger(ActionFactory.class);
 
     /** Initialize this factory at the beginning of application. */
     static {
@@ -63,30 +67,26 @@ public final class ActionFactory {
 	try {
 	    actionName = jsonMessage.getString(IAction.ACTION_KEY);
 	} catch (NullPointerException exception) {
-	    // TODO Logger
-	    System.err.println("Action key not found: " + IAction.ACTION_KEY);
+	    LOGGER.error("Action key not found: " + IAction.ACTION_KEY);
 	    return null;
 	}
 
 	Class<?> classe = ActionFactory.ACTION_CLASS.get(actionName);
 	if (classe == null) {
-	    // TODO Logger
-	    System.err.println("Action value not found: " + actionName);
+	    LOGGER.error("Action value not found: " + actionName);
 	    return null;
 	}
 
 	try {
 	    Constructor<?> constructor = classe
 		    .getConstructor(JsonObject.class);
-	    // TODO Logger
-	    System.out.println("Action class: " + classe.getName());
+	    LOGGER.info("Action class: " + classe.getName());
 	    IAction action = (IAction) constructor.newInstance(jsonMessage);
 	    return action;
 	} catch (NoSuchMethodException | SecurityException
 		| InstantiationException | IllegalAccessException
-		| IllegalArgumentException | InvocationTargetException e) {
-	    // TODO Logger
-	    System.err.println("Invalid action class: " + classe.getName());
+		| IllegalArgumentException | InvocationTargetException exception) {
+	    LOGGER.error("Invalid action class: " + classe.getName(), exception);
 	    return null;
 	}
     }

@@ -9,9 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 /** {@link Servlet} used to redirect to Google OAuth.<br /> */
 @WebServlet(urlPatterns = "/OAuth/login")
 public final class LoginOAuthServlet extends HttpServlet {
+
+    /** Logger. */
+    private static final Logger LOGGER = Logger
+	    .getLogger(LoginOAuthServlet.class);
 
     /** Serial version UID. */
     private static final long serialVersionUID = 1;
@@ -29,6 +35,7 @@ public final class LoginOAuthServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request,
 	    HttpServletResponse response) throws ServletException, IOException {
+	LOGGER.info(LoginOAuthServlet.TARGET_URL);
 	response.sendRedirect(LoginOAuthServlet.TARGET_URL);
     }
 
