@@ -17,7 +17,7 @@ public final class ThemeSwitcherManagedBean {
      * @return The current {@link Theme}.
      */
     public Theme getTheme() {
-	return theme;
+        return theme;
     }
 
     /**
@@ -26,7 +26,7 @@ public final class ThemeSwitcherManagedBean {
      * @return The list of {@link Theme}s.
      */
     public Iterable<Theme> getThemes() {
-	return Theme.AVAILABLES;
+        return Theme.AVAILABLES;
     }
 
     /**
@@ -36,9 +36,9 @@ public final class ThemeSwitcherManagedBean {
      *            The new {@link Theme}.
      */
     public void setTheme(Theme theme) {
-	if (theme == null)
-	    return;
-	this.theme = theme;
+        if (theme == null)
+            return;
+        this.theme = theme;
     }
 
 }

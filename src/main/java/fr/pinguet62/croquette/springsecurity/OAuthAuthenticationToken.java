@@ -26,13 +26,13 @@ public final class OAuthAuthenticationToken extends AbstractAuthenticationToken 
      *            The user token.
      */
     public OAuthAuthenticationToken(String token) {
-	super(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
+        super(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
 
-	setAuthenticated(true);
+        setAuthenticated(true);
 
-	User user = new User();
-	user.setToken(token);
-	setDetails(user);
+        User user = new User();
+        user.setToken(token);
+        setDetails(user);
     }
 
     /**
@@ -42,7 +42,7 @@ public final class OAuthAuthenticationToken extends AbstractAuthenticationToken 
      */
     @Override
     public Object getCredentials() {
-	return null;
+        return null;
     }
 
     /**
@@ -52,7 +52,7 @@ public final class OAuthAuthenticationToken extends AbstractAuthenticationToken 
      */
     @Override
     public Object getPrincipal() {
-	return null;
+        return null;
     }
 
 }

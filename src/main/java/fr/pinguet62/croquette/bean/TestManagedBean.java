@@ -30,11 +30,17 @@ import fr.pinguet62.croquette.model.User;
 @SessionScoped
 public final class TestManagedBean {
 
+    private String attribute;
+
     private String xmppMessage;
 
     /** Download Google contacts */
     public void downloadGoogleContacts() {
-	User.get().getContacts().downloadGoogle();
+        User.get().getContacts().downloadGoogle();
+    }
+
+    public String getAttribute() {
+        return attribute;
     }
 
     /**
@@ -43,40 +49,40 @@ public final class TestManagedBean {
      * @return The xmppMessage.
      */
     public String getXmppMessage() {
-	return xmppMessage;
+        return xmppMessage;
     }
 
     /** Initialize application with test data. */
     public void initTestData() {
-	Calendar calendar = Calendar.getInstance();
-	calendar.setTimeInMillis(0);
-	calendar.set(2012, 0, 0);
-	User user = User.get();
-	// Conversation
-	for (int conv = 1; conv <= 40; ++conv) {
-	    Conversation conversation = new Conversation();
-	    conversation.setHasOldMessages(Math.random() < 0.5);
-	    conversation.setId(conv);
-	    // Contact
-	    Contact contact = new Contact();
-	    contact.setName("Contact " + conv);
-	    contact.setPhoneNumber(new PhoneNumber("phoneNumber " + conv));
-	    conversation.setContact(contact);
-	    // Messages
-	    for (int mess = 1; mess <= 20; ++mess) {
-		final Message message = new Message();
-		message.setContent("Contact " + conv + " - Message " + mess);
-		message.setConversation(null); // TODO
-		message.setDate(calendar.getTime());
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		message.setId((100 * conv) + mess);
-		message.setRead((conv < 35) || (mess < 15));
-		message.setSent(Math.random() < 0.5);
-		message.setState(State.OK);
-		conversation.add(message);
-	    }
-	    user.getConversations().add(conversation);
-	}
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(0);
+        calendar.set(2012, 0, 0);
+        User user = User.get();
+        // Conversation
+        for (int conv = 1; conv <= 40; ++conv) {
+            Conversation conversation = new Conversation();
+            conversation.setHasOldMessages(Math.random() < 0.5);
+            conversation.setId(conv);
+            // Contact
+            Contact contact = new Contact();
+            contact.setName("Contact " + conv);
+            contact.setPhoneNumber(new PhoneNumber("phoneNumber " + conv));
+            conversation.setContact(contact);
+            // Messages
+            for (int mess = 1; mess <= 20; ++mess) {
+                final Message message = new Message();
+                message.setContent("Contact " + conv + " - Message " + mess);
+                message.setConversation(null); // TODO
+                message.setDate(calendar.getTime());
+                calendar.add(Calendar.DAY_OF_YEAR, 1);
+                message.setId((100 * conv) + mess);
+                message.setRead((conv < 35) || (mess < 15));
+                message.setSent(Math.random() < 0.5);
+                message.setState(State.OK);
+                conversation.add(message);
+            }
+            user.getConversations().add(conversation);
+        }
     }
 
     /**
@@ -87,38 +93,38 @@ public final class TestManagedBean {
      *            The contact.
      */
     public void loadedSMSAction(final Conversation conversation) {
-	int conversationId = (int) (Math.random() * 25);
-	JsonArrayBuilder jsonMessages = Json.createArrayBuilder();
-	for (int i = 0; i < LoadingSMSAction.COUNT_VALUE; i++) {
-	    int messageId = (int) (Math.random() * 100);
-	    Calendar calendar = Calendar.getInstance();
-	    calendar.add(Calendar.DAY_OF_YEAR, -(int) (Math.random() * 365));
-	    System.out.println(calendar.getTime());
-	    jsonMessages.add(Json
-		    .createObjectBuilder()
-		    .add(LoadedSMSAction.MESSAGE_ID, messageId)
-		    .add(LoadedSMSAction.MESSAGE_SENT,
-			    (Math.random() < 0.5 ? Boolean.TRUE.toString()
-				    : Boolean.FALSE.toString()))
-				    .add(LoadedSMSAction.MESSAGE_DATE,
-					    new SimpleDateFormat("YYYY-MM-dd'T'hh:mm:ss")
-				    .format(new Date()))
-				    .add(LoadedSMSAction.MESSAGE_CONTENT,
-					    String.format("Conversation %d, message %d",
-						    conversationId, messageId)));
-	}
-	String jsonMessage = Json.createObjectBuilder()
-		.add(IAction.ACTION_KEY, IAction.ACTION_KEY)
-		.add(LoadedSMSAction.CONVERSATION, conversationId)
-		.add(LoadedSMSAction.MESSAGES, jsonMessages).build().toString();
-	User.get().getXmppManager().send(jsonMessage);
+        int conversationId = (int) (Math.random() * 25);
+        JsonArrayBuilder jsonMessages = Json.createArrayBuilder();
+        for (int i = 0; i < LoadingSMSAction.COUNT_VALUE; i++) {
+            int messageId = (int) (Math.random() * 100);
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_YEAR, -(int) (Math.random() * 365));
+            System.out.println(calendar.getTime());
+            jsonMessages.add(Json
+                    .createObjectBuilder()
+                    .add(LoadedSMSAction.MESSAGE_ID, messageId)
+                    .add(LoadedSMSAction.MESSAGE_SENT,
+                            (Math.random() < 0.5 ? Boolean.TRUE.toString()
+                                    : Boolean.FALSE.toString()))
+                    .add(LoadedSMSAction.MESSAGE_DATE,
+                            new SimpleDateFormat("YYYY-MM-dd'T'hh:mm:ss")
+                                    .format(new Date()))
+                    .add(LoadedSMSAction.MESSAGE_CONTENT,
+                            String.format("Conversation %d, message %d",
+                                    conversationId, messageId)));
+        }
+        String jsonMessage = Json.createObjectBuilder()
+                .add(IAction.ACTION_KEY, IAction.ACTION_KEY)
+                .add(LoadedSMSAction.CONVERSATION, conversationId)
+                .add(LoadedSMSAction.MESSAGES, jsonMessages).build().toString();
+        User.get().getXmppManager().send(jsonMessage);
     }
 
     /** Test for Prime Push messages. */
     public void primePush() {
-	PushContext pushContext = PushContextFactory.getDefault()
-		.getPushContext();
-	pushContext.push(SmsManagedBean.CHANNEL, null);
+        PushContext pushContext = PushContextFactory.getDefault()
+                .getPushContext();
+        pushContext.push(SmsManagedBean.CHANNEL, null);
     }
 
     /**
@@ -126,25 +132,29 @@ public final class TestManagedBean {
      * The {@link Contact} is chosen randomly.
      */
     public void receviedSMSAction() {
-	int messageId = (int) Math.random() * 100;
-	int conversationId = (int) Math.random() * 25;
-	String jsonMessage = Json
-		.createObjectBuilder()
-		.add(IAction.ACTION_KEY, ReceivedSMSAction.ACTION_VALUE)
-		.add(ReceivedSMSAction.ID, messageId)
-		.add(ExchangeSMSAction.CONVERSATION, conversationId)
-		.add(ExchangeSMSAction.DATE,
-			new SimpleDateFormat("YYYY-MM-dd'T'hh:mm:ss")
-		.format(new Date()))
-		.add(ExchangeSMSAction.CONTENT,
-			String.format("Conversation %d, message %d",
-				conversationId, messageId)).build().toString();
-	User.get().getXmppManager().send(jsonMessage);
+        int messageId = (int) Math.random() * 100;
+        int conversationId = (int) Math.random() * 25;
+        String jsonMessage = Json
+                .createObjectBuilder()
+                .add(IAction.ACTION_KEY, ReceivedSMSAction.ACTION_VALUE)
+                .add(ReceivedSMSAction.ID, messageId)
+                .add(ExchangeSMSAction.CONVERSATION, conversationId)
+                .add(ExchangeSMSAction.DATE,
+                        new SimpleDateFormat("YYYY-MM-dd'T'hh:mm:ss")
+                                .format(new Date()))
+                .add(ExchangeSMSAction.CONTENT,
+                        String.format("Conversation %d, message %d",
+                                conversationId, messageId)).build().toString();
+        User.get().getXmppManager().send(jsonMessage);
     }
 
     /** Send XMPP message. */
     public void sendXmppMessage() {
-	User.get().getXmppManager().send(xmppMessage);
+        User.get().getXmppManager().send(xmppMessage);
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
     }
 
     /**
@@ -154,7 +164,7 @@ public final class TestManagedBean {
      *            The xmppMessage.
      */
     public void setXmppMessage(String xmppMessage) {
-	this.xmppMessage = xmppMessage;
+        this.xmppMessage = xmppMessage;
     }
 
 }

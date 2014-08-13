@@ -63,73 +63,73 @@ public final class LoadedConversationsAction implements IAction {
      *            The JSON message.
      */
     public LoadedConversationsAction(JsonObject jsonMessage) {
-	this.jsonMessage = jsonMessage;
+        this.jsonMessage = jsonMessage;
     }
 
     @Override
     public void execute() {
-	try {
-	    // Each conversation
-	    List<JsonObject> jsonConversations = jsonMessage.getJsonArray(
-		    CONVERSATIONS).getValuesAs(JsonObject.class);
-	    for (JsonObject conversationJson : jsonConversations) {
-		// Find conversation
-		int conversationId = conversationJson.getInt(CONVERSATION);
-		Conversation conversation = User.get().getConversations()
-			.get(conversationId);
+        try {
+            // Each conversation
+            List<JsonObject> jsonConversations = jsonMessage.getJsonArray(
+                    CONVERSATIONS).getValuesAs(JsonObject.class);
+            for (JsonObject conversationJson : jsonConversations) {
+                // Find conversation
+                int conversationId = conversationJson.getInt(CONVERSATION);
+                Conversation conversation = User.get().getConversations()
+                        .get(conversationId);
 
-		// New conversation
-		if (conversation == null) {
-		    // Find contact
-		    PhoneNumber phoneNumber = new PhoneNumber(
-			    conversationJson.getString(PHONE_NUMBER));
-		    Contact contact = User.get().getContacts().get(phoneNumber);
+                // New conversation
+                if (conversation == null) {
+                    // Find contact
+                    PhoneNumber phoneNumber = new PhoneNumber(
+                            conversationJson.getString(PHONE_NUMBER));
+                    Contact contact = User.get().getContacts().get(phoneNumber);
 
-		    // New contact
-		    if (contact == null) {
-			// Build contact
-			contact = new Contact();
-			contact.setName(phoneNumber.toString());
-			contact.setPhoneNumber(phoneNumber);
-			User.get().getContacts().add(contact);
-		    }
+                    // New contact
+                    if (contact == null) {
+                        // Build contact
+                        contact = new Contact();
+                        contact.setName(phoneNumber.toString());
+                        contact.setPhoneNumber(phoneNumber);
+                        User.get().getContacts().add(contact);
+                    }
 
-		    // Build conversation
-		    conversation = new Conversation();
-		    conversation.setContact(contact);
-		    conversation.setId(conversationId);
-		    User.get().getConversations().add(conversation);
-		}
+                    // Build conversation
+                    conversation = new Conversation();
+                    conversation.setContact(contact);
+                    conversation.setId(conversationId);
+                    User.get().getConversations().add(conversation);
+                }
 
-		// Build message
-		JsonObject messageJson = conversationJson
-			.getJsonObject(CONVERSATION_MESSAGE);
-		Message message = new Message();
-		message.setContent(messageJson
-			.getString(CONVERSATION_MESSAGE_CONTENT));
-		message.setConversation(conversation);
-		message.setDate(FORMATTER.parse(messageJson
-			.getString(CONVERSATION_MESSAGE_DATE)));
-		message.setId(messageJson.getInt(CONVERSATION_MESSAGE_ID));
-		message.setRead(true);
-		message.setSent(messageJson
-			.getBoolean(CONVERSATION_MESSAGE_SENT));
-		message.setState(State.OK);
+                // Build message
+                JsonObject messageJson = conversationJson
+                        .getJsonObject(CONVERSATION_MESSAGE);
+                Message message = new Message();
+                message.setContent(messageJson
+                        .getString(CONVERSATION_MESSAGE_CONTENT));
+                message.setConversation(conversation);
+                message.setDate(FORMATTER.parse(messageJson
+                        .getString(CONVERSATION_MESSAGE_DATE)));
+                message.setId(messageJson.getInt(CONVERSATION_MESSAGE_ID));
+                message.setRead(true);
+                message.setSent(messageJson
+                        .getBoolean(CONVERSATION_MESSAGE_SENT));
+                message.setState(State.OK);
 
-		conversation.add(message);
-	    }
-	} catch (ParseException | NullPointerException exception) {
-	    throw new ActionException(exception);
-	}
+                conversation.add(message);
+            }
+        } catch (ParseException | NullPointerException exception) {
+            throw new ActionException(exception);
+        }
 
-	PushContext pushContext = PushContextFactory.getDefault()
-		.getPushContext();
-	pushContext.push(SmsManagedBean.CHANNEL, null);
+        PushContext pushContext = PushContextFactory.getDefault()
+                .getPushContext();
+        pushContext.push(SmsManagedBean.CHANNEL, null);
     }
 
     @Override
     public boolean fromSmartphone() {
-	return true;
+        return true;
     }
 
 }

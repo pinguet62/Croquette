@@ -45,7 +45,7 @@ public final class LoadingSMSAction implements IAction {
      *            older {@link Message}s.
      */
     public LoadingSMSAction(Conversation conversation) {
-	this.conversation = conversation;
+        this.conversation = conversation;
     }
 
     /**
@@ -54,20 +54,20 @@ public final class LoadingSMSAction implements IAction {
      */
     @Override
     public void execute() {
-	JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder()
-		.add(IAction.ACTION_KEY, LoadingSMSAction.ACTION_VALUE)
-		.add(CONVERSATION, conversation.getId())
-		.add(OLDEST, conversation.first().getId())
-		.add(COUNT_KEY, COUNT_VALUE);
-	JsonObject jsonObject = jsonObjectBuilder.build();
-	String message = jsonObject.toString();
+        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder()
+                .add(IAction.ACTION_KEY, LoadingSMSAction.ACTION_VALUE)
+                .add(CONVERSATION, conversation.getId())
+                .add(OLDEST, conversation.first().getId())
+                .add(COUNT_KEY, COUNT_VALUE);
+        JsonObject jsonObject = jsonObjectBuilder.build();
+        String message = jsonObject.toString();
 
-	User.get().getXmppManager().send(message);
+        User.get().getXmppManager().send(message);
     }
 
     @Override
     public boolean fromSmartphone() {
-	return false;
+        return false;
     }
 
 }

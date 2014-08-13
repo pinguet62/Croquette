@@ -9,7 +9,7 @@ import java.util.TreeSet;
  */
 // TODO Remove default constructor & setters + set final keyword attributes
 public final class Conversation extends TreeSet<Message> implements
-	Comparable<Conversation> {
+Comparable<Conversation> {
 
     /** Serial version UID. */
     private static final long serialVersionUID = 1;
@@ -42,8 +42,8 @@ public final class Conversation extends TreeSet<Message> implements
      *            The {@link Contact}.
      */
     public Conversation(int id, Contact contact) {
-	this.id = id;
-	this.contact = contact;
+        this.id = id;
+        this.contact = contact;
     }
 
     /**
@@ -56,11 +56,11 @@ public final class Conversation extends TreeSet<Message> implements
      */
     @Override
     public boolean add(Message message) {
-	if (!message.isRead())
-	    hasOldMessages = true;
-	boolean res = super.add(message);
-	// User.get().getConversations().sort(); // TODO
-	return res;
+        if (!message.isRead())
+            hasOldMessages = true;
+        boolean res = super.add(message);
+        // User.get().getConversations().sort(); // TODO
+        return res;
     }
 
     /**
@@ -73,17 +73,17 @@ public final class Conversation extends TreeSet<Message> implements
      */
     @Override
     public boolean addAll(Collection<? extends Message> messages) {
-	boolean allInserted = true;
-	for (Message message : messages)
-	    if (!add(message))
-		allInserted = false;
-	return allInserted;
+        boolean allInserted = true;
+        for (Message message : messages)
+            if (!add(message))
+                allInserted = false;
+        return allInserted;
     }
 
     /** Change {@link Message#read} flag of all {@link Message}s. */
     public void allRead() {
-	for (Message message : this)
-	    message.setRead(true);
+        for (Message message : this)
+            message.setRead(true);
     }
 
     /**
@@ -98,13 +98,13 @@ public final class Conversation extends TreeSet<Message> implements
     // TODO bad
     @Override
     public int compareTo(Conversation other) {
-	if (isEmpty() && other.isEmpty())
-	    return getContact().compareTo(other.getContact());
-	else if (isEmpty())
-	    return +1; // TODO -1 ?
-	else if (other.isEmpty())
-	    return -1; // TODO +1 ?
-	return other.last().getDate().compareTo(last().getDate());
+        if (isEmpty() && other.isEmpty())
+            return getContact().compareTo(other.getContact());
+        else if (isEmpty())
+            return +1; // TODO -1 ?
+        else if (other.isEmpty())
+            return -1; // TODO +1 ?
+        return other.last().getDate().compareTo(last().getDate());
     }
 
     /**
@@ -113,7 +113,7 @@ public final class Conversation extends TreeSet<Message> implements
      * @return The {@link Contact}.
      */
     public Contact getContact() {
-	return contact;
+        return contact;
     }
 
     /**
@@ -122,7 +122,7 @@ public final class Conversation extends TreeSet<Message> implements
      * @return Result.
      */
     public boolean getHasOldMessages() {
-	return hasOldMessages;
+        return hasOldMessages;
     }
 
     /**
@@ -131,7 +131,7 @@ public final class Conversation extends TreeSet<Message> implements
      * @return The id.
      */
     public Integer getId() {
-	return id;
+        return id;
     }
 
     /**
@@ -140,7 +140,7 @@ public final class Conversation extends TreeSet<Message> implements
      * @return The input.
      */
     public String getInput() {
-	return input;
+        return input;
     }
 
     /**
@@ -149,11 +149,11 @@ public final class Conversation extends TreeSet<Message> implements
      * @return The count.
      */
     public int getUnreadCount() {
-	int count = 0;
-	for (Message message : this)
-	    if (!message.isRead())
-		count++;
-	return count;
+        int count = 0;
+        for (Message message : this)
+            if (!message.isRead())
+                count++;
+        return count;
     }
 
     /**
@@ -163,7 +163,7 @@ public final class Conversation extends TreeSet<Message> implements
      *            The {@link Contact}.
      */
     public void setContact(Contact contact) {
-	this.contact = contact;
+        this.contact = contact;
     }
 
     /**
@@ -173,7 +173,7 @@ public final class Conversation extends TreeSet<Message> implements
      *            If has old {@link Message}s.
      */
     public void setHasOldMessages(boolean hasOldMessages) {
-	this.hasOldMessages = hasOldMessages;
+        this.hasOldMessages = hasOldMessages;
     }
 
     /**
@@ -183,7 +183,7 @@ public final class Conversation extends TreeSet<Message> implements
      *            The id.
      */
     public void setId(Integer id) {
-	this.id = id;
+        this.id = id;
     }
 
     /**
@@ -193,12 +193,12 @@ public final class Conversation extends TreeSet<Message> implements
      *            The input to set.
      */
     public void setInput(String input) {
-	this.input = input;
+        this.input = input;
     }
 
     @Override
     public String toString() {
-	return "Conv " + id + ":" + super.toString();
+        return "Conv " + id + ":" + super.toString();
     }
 
 }

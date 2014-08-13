@@ -28,10 +28,10 @@ public final class Contact implements Comparable<Contact>, Serializable {
      */
     @Override
     public int compareTo(Contact other) {
-	int nameCompare = name.compareTo(other.name);
-	if (nameCompare != 0)
-	    return nameCompare;
-	return phoneNumber.get().compareTo(other.phoneNumber.get());
+        int nameCompare = name.compareTo(other.name);
+        if (nameCompare != 0)
+            return nameCompare;
+        return phoneNumber.get().compareTo(other.phoneNumber.get());
     }
 
     /**
@@ -40,7 +40,7 @@ public final class Contact implements Comparable<Contact>, Serializable {
      * @return The {@link Conversation}.
      */
     public Conversation getConversation() {
-	return conversation;
+        return conversation;
     }
 
     /**
@@ -49,7 +49,7 @@ public final class Contact implements Comparable<Contact>, Serializable {
      * @return The name.
      */
     public String getName() {
-	return name;
+        return name;
     }
 
     /**
@@ -58,7 +58,7 @@ public final class Contact implements Comparable<Contact>, Serializable {
      * @return The {@link PhoneNumber}.
      */
     public PhoneNumber getPhoneNumber() {
-	return phoneNumber;
+        return phoneNumber;
     }
 
     /**
@@ -68,7 +68,7 @@ public final class Contact implements Comparable<Contact>, Serializable {
      *            The {@link Conversation} to set.
      */
     public void setConversation(Conversation conversation) {
-	this.conversation = conversation;
+        this.conversation = conversation;
     }
 
     /**
@@ -78,7 +78,7 @@ public final class Contact implements Comparable<Contact>, Serializable {
      *            The name to set.
      */
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     /**
@@ -88,7 +88,7 @@ public final class Contact implements Comparable<Contact>, Serializable {
      *            The {@link PhoneNumber} to set.
      */
     public void setPhoneNumber(PhoneNumber phoneNumber) {
-	this.phoneNumber = phoneNumber;
+        this.phoneNumber = phoneNumber;
     }
 
 }

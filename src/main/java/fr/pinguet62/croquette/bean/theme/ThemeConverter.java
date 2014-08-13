@@ -25,8 +25,8 @@ public final class ThemeConverter implements Converter {
      */
     @Override
     public Object getAsObject(FacesContext context, UIComponent component,
-	    String value) {
-	return Theme.fromKey(value);
+            String value) {
+        return Theme.fromKey(value);
     }
 
     /**
@@ -42,9 +42,9 @@ public final class ThemeConverter implements Converter {
      */
     @Override
     public String getAsString(FacesContext context, UIComponent component,
-	    Object value) {
-	Theme theme = (Theme) value;
-	return theme.getKey();
+            Object value) {
+        Theme theme = (Theme) value;
+        return theme.getKey();
     }
 
 }

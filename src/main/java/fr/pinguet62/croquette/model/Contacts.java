@@ -19,35 +19,35 @@ public final class Contacts extends TreeSet<Contact> {
      * Pop list of {@link Contact}s of the {@link User}.
      */
     public void downloadGoogle() {
-	try {
-	    ContactsService contactsService = new ContactsService("Croquette");
-	    contactsService.setHeader("Authorization", "Bearer "
-		    + User.get().getToken());
-	    URL feedUrl = new URL(
-		    "https://www.google.com/m8/feeds/contacts/default/full");
-	    ContactFeed resultFeed = contactsService.getFeed(feedUrl,
-		    ContactFeed.class);
-	    List<ContactEntry> contactEntries = resultFeed.getEntries();
-	    for (ContactEntry contactEntry : contactEntries)
-		for (com.google.gdata.data.extensions.PhoneNumber phoneNumber : contactEntry
-			.getPhoneNumbers()) {
-		    if (!contactEntry.hasPhoneNumbers())
-			continue;
-		    else if (!contactEntry.hasName())
-			continue;
-		    else if (!contactEntry.getName().hasFullName())
-			continue;
+        try {
+            ContactsService contactsService = new ContactsService("Croquette");
+            contactsService.setHeader("Authorization", "Bearer "
+                    + User.get().getToken());
+            URL feedUrl = new URL(
+                    "https://www.google.com/m8/feeds/contacts/default/full");
+            ContactFeed resultFeed = contactsService.getFeed(feedUrl,
+                    ContactFeed.class);
+            List<ContactEntry> contactEntries = resultFeed.getEntries();
+            for (ContactEntry contactEntry : contactEntries)
+                for (com.google.gdata.data.extensions.PhoneNumber phoneNumber : contactEntry
+                        .getPhoneNumbers()) {
+                    if (!contactEntry.hasPhoneNumbers())
+                        continue;
+                    else if (!contactEntry.hasName())
+                        continue;
+                    else if (!contactEntry.getName().hasFullName())
+                        continue;
 
-		    Contact contact = new Contact();
-		    contact.setName(contactEntry.getName().getFullName()
-			    .getValue());
-		    contact.setPhoneNumber(new PhoneNumber(phoneNumber
-			    .getPhoneNumber()));
-		    add(contact);
-		}
-	} catch (Exception exception) {
-	    exception.printStackTrace();
-	}
+                    Contact contact = new Contact();
+                    contact.setName(contactEntry.getName().getFullName()
+                            .getValue());
+                    contact.setPhoneNumber(new PhoneNumber(phoneNumber
+                            .getPhoneNumber()));
+                    add(contact);
+                }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     /**
@@ -58,12 +58,12 @@ public final class Contacts extends TreeSet<Contact> {
      * @return The {@link Contact}, {@code null} if not find.
      */
     public Contact get(PhoneNumber phoneNumber) {
-	if (phoneNumber == null)
-	    return null;
-	for (Contact contact : this)
-	    if (phoneNumber.equals(contact.getPhoneNumber()))
-		return contact;
-	return null;
+        if (phoneNumber == null)
+            return null;
+        for (Contact contact : this)
+            if (phoneNumber.equals(contact.getPhoneNumber()))
+                return contact;
+        return null;
     }
 
 }

@@ -55,7 +55,7 @@ public final class LoadedSMSAction implements IAction {
      *            The JSON message.
      */
     public LoadedSMSAction(JsonObject jsonMessage) {
-	this.jsonMessage = jsonMessage;
+        this.jsonMessage = jsonMessage;
     }
 
     /**
@@ -64,42 +64,42 @@ public final class LoadedSMSAction implements IAction {
      */
     @Override
     public void execute() {
-	try {
-	    Conversation conversation = User.get().getConversations()
-		    .get(jsonMessage.getInt(CONVERSATION));
+        try {
+            Conversation conversation = User.get().getConversations()
+                    .get(jsonMessage.getInt(CONVERSATION));
 
-	    // Each message
-	    List<JsonObject> jsonMessages = jsonMessage.getJsonArray(MESSAGES)
-		    .getValuesAs(JsonObject.class);
-	    for (JsonObject messageJson : jsonMessages) {
-		// Build message
-		Message message = new Message();
-		message.setContent(messageJson.getString(MESSAGE_CONTENT));
-		message.setConversation(conversation);
-		message.setDate(FORMATTER.parse(messageJson
-			.getString(MESSAGE_DATE)));
-		message.setId(messageJson.getInt(MESSAGE_ID));
-		message.setRead(true);
-		message.setSent(messageJson.getBoolean(MESSAGE_SENT));
-		message.setState(State.OK);
-		conversation.add(message);
-	    }
+            // Each message
+            List<JsonObject> jsonMessages = jsonMessage.getJsonArray(MESSAGES)
+                    .getValuesAs(JsonObject.class);
+            for (JsonObject messageJson : jsonMessages) {
+                // Build message
+                Message message = new Message();
+                message.setContent(messageJson.getString(MESSAGE_CONTENT));
+                message.setConversation(conversation);
+                message.setDate(FORMATTER.parse(messageJson
+                        .getString(MESSAGE_DATE)));
+                message.setId(messageJson.getInt(MESSAGE_ID));
+                message.setRead(true);
+                message.setSent(messageJson.getBoolean(MESSAGE_SENT));
+                message.setState(State.OK);
+                conversation.add(message);
+            }
 
-	    // Number of message less that default count: not other messages
-	    if (jsonMessages.size() < LoadingSMSAction.COUNT_VALUE)
-		conversation.setHasOldMessages(false);
-	} catch (ParseException | NullPointerException exception) {
-	    throw new ActionException(exception);
-	}
+            // Number of message less that default count: not other messages
+            if (jsonMessages.size() < LoadingSMSAction.COUNT_VALUE)
+                conversation.setHasOldMessages(false);
+        } catch (ParseException | NullPointerException exception) {
+            throw new ActionException(exception);
+        }
 
-	PushContext pushContext = PushContextFactory.getDefault()
-		.getPushContext();
-	pushContext.push(SmsManagedBean.CHANNEL, null);
+        PushContext pushContext = PushContextFactory.getDefault()
+                .getPushContext();
+        pushContext.push(SmsManagedBean.CHANNEL, null);
     }
 
     @Override
     public boolean fromSmartphone() {
-	return true;
+        return true;
     }
 
 }

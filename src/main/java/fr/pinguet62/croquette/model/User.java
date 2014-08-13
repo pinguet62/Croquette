@@ -20,15 +20,15 @@ public final class User implements Serializable {
      * @return The session user.
      */
     public static User get() {
-	Authentication authentication = SecurityContextHolder.getContext()
-		.getAuthentication();
-	if ((authentication == null)
-		|| !(authentication instanceof OAuthAuthenticationToken)
-		|| !authentication.isAuthenticated())
-	    return null;
-	else
-	    return (User) SecurityContextHolder.getContext()
-		    .getAuthentication().getDetails();
+        Authentication authentication = SecurityContextHolder.getContext()
+                .getAuthentication();
+        if ((authentication == null)
+                || !(authentication instanceof OAuthAuthenticationToken)
+                || !authentication.isAuthenticated())
+            return null;
+        else
+            return (User) SecurityContextHolder.getContext()
+                    .getAuthentication().getDetails();
     }
 
     /** The {@link Contact}s. */
@@ -54,12 +54,12 @@ public final class User implements Serializable {
      * @return The {@link Contact}, {@code null} if not find.
      */
     public Contact getContact(String phoneNumber) {
-	if (phoneNumber == null)
-	    return null;
-	for (Contact contact : contacts)
-	    if (phoneNumber.equals(contact.getPhoneNumber()))
-		return contact;
-	return null;
+        if (phoneNumber == null)
+            return null;
+        for (Contact contact : contacts)
+            if (phoneNumber.equals(contact.getPhoneNumber()))
+                return contact;
+        return null;
     }
 
     /**
@@ -68,7 +68,7 @@ public final class User implements Serializable {
      * @return The list of {@link Contact}s.
      */
     public Contacts getContacts() {
-	return contacts;
+        return contacts;
     }
 
     /**
@@ -77,7 +77,7 @@ public final class User implements Serializable {
      * @return The list of {@link Conversation}s.
      */
     public Conversations getConversations() {
-	return conversations;
+        return conversations;
     }
 
     /**
@@ -86,7 +86,7 @@ public final class User implements Serializable {
      * @return The email.
      */
     public String getEmail() {
-	return email;
+        return email;
     }
 
     /**
@@ -95,7 +95,7 @@ public final class User implements Serializable {
      * @return The OAuth token.
      */
     public String getToken() {
-	return token;
+        return token;
     }
 
     /**
@@ -104,9 +104,9 @@ public final class User implements Serializable {
      * @return The XMPP manager.
      */
     public XMPPManager getXmppManager() {
-	if ((xmppManager == null) && (token != null))
-	    xmppManager = new XMPPManager();
-	return xmppManager;
+        if ((xmppManager == null) && (token != null))
+            xmppManager = new XMPPManager();
+        return xmppManager;
     }
 
     /**
@@ -116,7 +116,7 @@ public final class User implements Serializable {
      *            The email.
      */
     public void setEmail(String email) {
-	this.email = email;
+        this.email = email;
     }
 
     /**
@@ -126,7 +126,7 @@ public final class User implements Serializable {
      *            The OAuth token to set.
      */
     public void setToken(String token) {
-	this.token = token;
+        this.token = token;
     }
 
     /**
@@ -136,7 +136,7 @@ public final class User implements Serializable {
      *            The XMPP manager.
      */
     public void setXmppManager(XMPPManager xmppManager) {
-	this.xmppManager = xmppManager;
+        this.xmppManager = xmppManager;
     }
 
 }

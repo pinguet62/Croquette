@@ -18,20 +18,20 @@ public final class PhoneNumber implements Serializable {
      *            The value.
      */
     public PhoneNumber(String value) {
-	this.value = value;
+        this.value = value;
     }
 
     @Override
     public boolean equals(Object obj) {
-	if (obj == null)
-	    return false;
-	if (this == obj)
-	    return true;
-	if (!(obj instanceof PhoneNumber))
-	    return false;
+        if (obj == null)
+            return false;
+        if (this == obj)
+            return true;
+        if (!(obj instanceof PhoneNumber))
+            return false;
 
-	PhoneNumber other = (PhoneNumber) obj;
-	return PhoneNumberUtils.compare(value, other.value);
+        PhoneNumber other = (PhoneNumber) obj;
+        return PhoneNumberUtils.compare(value, other.value);
     }
 
     /**
@@ -40,22 +40,22 @@ public final class PhoneNumber implements Serializable {
      * @return The value.
      */
     public String get() {
-	return value;
+        return value;
     }
 
     /* Generate by Eclipse. */
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = (prime * result) + ((value == null) ? 0 : value.hashCode());
-	return result;
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((value == null) ? 0 : value.hashCode());
+        return result;
     }
 
     // TODO format phone number
     @Override
     public String toString() {
-	return value;
+        return value;
     }
 
 }

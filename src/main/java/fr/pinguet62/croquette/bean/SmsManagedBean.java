@@ -36,7 +36,7 @@ public final class SmsManagedBean {
      * Connect user to {@code GTalk}.
      */
     public SmsManagedBean() {
-	User.get().getXmppManager().connect();
+        User.get().getXmppManager().connect();
     }
 
     /**
@@ -45,8 +45,8 @@ public final class SmsManagedBean {
      */
     @Override
     public void finalize() throws Throwable {
-	// TODO Implement
-	super.finalize();
+        // TODO Implement
+        super.finalize();
     }
 
     /**
@@ -55,7 +55,7 @@ public final class SmsManagedBean {
      * @return The channel.
      */
     public String getChannel() {
-	return SmsManagedBean.CHANNEL;
+        return SmsManagedBean.CHANNEL;
     }
 
     /**
@@ -64,10 +64,10 @@ public final class SmsManagedBean {
      * @return The list of {@link Contact}s.
      */
     public Iterable<Conversation> getConversations() {
-	List<Conversation> conversations = new ArrayList<Conversation>(User
-		.get().getConversations());
-	Collections.sort(conversations);
-	return conversations;
+        List<Conversation> conversations = new ArrayList<Conversation>(User
+                .get().getConversations());
+        Collections.sort(conversations);
+        return conversations;
     }
 
     /**
@@ -76,9 +76,9 @@ public final class SmsManagedBean {
      * @return The input.
      */
     public String getInput() {
-	if (selectedConversation == null)
-	    return null;
-	return selectedConversation.getInput();
+        if (selectedConversation == null)
+            return null;
+        return selectedConversation.getInput();
     }
 
     /**
@@ -87,22 +87,22 @@ public final class SmsManagedBean {
      * @return The selected {@link Conversation}.
      */
     public Conversation getSelectedConversation() {
-	if (selectedConversation != null)
-	    selectedConversation.allRead();
-	return selectedConversation;
+        if (selectedConversation != null)
+            selectedConversation.allRead();
+        return selectedConversation;
     }
 
     /** Load old {@link Conversation}s. */
     public void loadOldConversations() {
-	Conversations conversations = User.get().getConversations();
-	IAction action = new LoadingConversationsAction(
-		conversations.isEmpty() ? null : conversations.last().getId());
-	action.execute();
+        Conversations conversations = User.get().getConversations();
+        IAction action = new LoadingConversationsAction(
+                conversations.isEmpty() ? null : conversations.last().getId());
+        action.execute();
     }
 
     /** Load old {@link Message}s of the selected {@link Conversation}. */
     public void loadOldMessages() {
-	new LoadingSMSAction(selectedConversation).execute();
+        new LoadingSMSAction(selectedConversation).execute();
     }
 
     /**
@@ -110,27 +110,27 @@ public final class SmsManagedBean {
      * Generate and execute the {@link SendSMSAction}.
      */
     public void send() {
-	if (selectedConversation == null)
-	    return;
-	if ((getInput() == null) || getInput().isEmpty())
-	    return;
+        if (selectedConversation == null)
+            return;
+        if ((getInput() == null) || getInput().isEmpty())
+            return;
 
-	Message message = new Message();
-	message.setContent(selectedConversation.getInput());
-	message.setConversation(selectedConversation);
-	message.setDate(new Date());
-	message.setSent(true);
+        Message message = new Message();
+        message.setContent(selectedConversation.getInput());
+        message.setConversation(selectedConversation);
+        message.setDate(new Date());
+        message.setSent(true);
 
-	SendSMSAction action = new SendSMSAction(message);
-	action.execute();
+        SendSMSAction action = new SendSMSAction(message);
+        action.execute();
 
-	selectedConversation.add(message);
-	selectedConversation.setInput(null);
+        selectedConversation.add(message);
+        selectedConversation.setInput(null);
 
-	FacesContext.getCurrentInstance().addMessage(
-		null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO,
-			"SMS send success", message.getContent()));
+        FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "SMS send success", message.getContent()));
     }
 
     /**
@@ -140,9 +140,9 @@ public final class SmsManagedBean {
      *            The input to set.
      */
     public void setInput(final String input) {
-	if (selectedConversation == null)
-	    return;
-	selectedConversation.setInput(input);
+        if (selectedConversation == null)
+            return;
+        selectedConversation.setInput(input);
     }
 
     /**
@@ -152,7 +152,7 @@ public final class SmsManagedBean {
      *            The selected {@link Conversation} to set.
      */
     public void setSelectedConversation(final Conversation selectedConversation) {
-	this.selectedConversation = selectedConversation;
+        this.selectedConversation = selectedConversation;
     }
 
 }

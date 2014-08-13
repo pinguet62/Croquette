@@ -18,20 +18,20 @@ public final class ActionFactoryTest {
     /** Test for {@link LoadedSMSAction}. */
     @Test
     public void testLoadedSMSAction() {
-	JsonObject jsonMessage = Json.createObjectBuilder()
-		.add(IAction.ACTION_KEY, LoadedSMSAction.ACTION_VALUE).build();
-	IAction action = ActionFactory.getAction(jsonMessage);
-	assertTrue(action instanceof LoadedSMSAction);
+        JsonObject jsonMessage = Json.createObjectBuilder()
+                .add(IAction.ACTION_KEY, LoadedSMSAction.ACTION_VALUE).build();
+        IAction action = ActionFactory.getAction(jsonMessage);
+        assertTrue(action instanceof LoadedSMSAction);
     }
 
     /** Test for {@link ReceivedSMSAction}. */
     @Test
     public void testReceivedSMSAction() {
-	JsonObject jsonMessage = Json.createObjectBuilder()
-		.add(IAction.ACTION_KEY, ReceivedSMSAction.ACTION_VALUE)
-		.build();
-	IAction action = ActionFactory.getAction(jsonMessage);
-	assertTrue(action instanceof ReceivedSMSAction);
+        JsonObject jsonMessage = Json.createObjectBuilder()
+                .add(IAction.ACTION_KEY, ReceivedSMSAction.ACTION_VALUE)
+                .build();
+        IAction action = ActionFactory.getAction(jsonMessage);
+        assertTrue(action instanceof ReceivedSMSAction);
     }
 
 }

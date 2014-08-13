@@ -7,10 +7,13 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public final class SuggestionManagedBean extends ContactManagedBean {
 
+    /** Serial version UID. */
+    private static final long serialVersionUID = 1;
+
     @Override
     public void send() {
-	// TODO contact > suggestion
-	confirmSending();
+        // TODO contact > suggestion
+        confirmSending();
     }
 
 }

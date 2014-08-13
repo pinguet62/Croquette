@@ -24,28 +24,28 @@ public final class ActionFactory {
 
     /** Initialize this factory at the beginning of application. */
     static {
-	// Find classes who inherit from IAction
-	ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(
-		true);
-	provider.addIncludeFilter(new AssignableTypeFilter(IAction.class));
-	Set<BeanDefinition> components = provider
-		.findCandidateComponents("fr.pinguet62.croquette.action"
-			.replace(".", "/"));
+        // Find classes who inherit from IAction
+        ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(
+                true);
+        provider.addIncludeFilter(new AssignableTypeFilter(IAction.class));
+        Set<BeanDefinition> components = provider
+                .findCandidateComponents("fr.pinguet62.croquette.action"
+                        .replace(".", "/"));
 
-	for (BeanDefinition component : components) {
-	    Class<?> findedClass = null;
-	    try {
-		findedClass = Class.forName(component.getBeanClassName());
-	    } catch (ClassNotFoundException e) {
-		continue;
-	    }
+        for (BeanDefinition component : components) {
+            Class<?> findedClass = null;
+            try {
+                findedClass = Class.forName(component.getBeanClassName());
+            } catch (ClassNotFoundException e) {
+                continue;
+            }
 
-	    Action annotation = findedClass.getAnnotation(Action.class);
-	    if (annotation == null)
-		continue;
+            Action annotation = findedClass.getAnnotation(Action.class);
+            if (annotation == null)
+                continue;
 
-	    ActionFactory.ACTION_CLASS.put(annotation.value(), findedClass);
-	}
+            ActionFactory.ACTION_CLASS.put(annotation.value(), findedClass);
+        }
     }
 
     /**
@@ -63,32 +63,32 @@ public final class ActionFactory {
      * @return The {@link Action}.
      */
     public static IAction getAction(JsonObject jsonMessage) {
-	String actionName;
-	try {
-	    actionName = jsonMessage.getString(IAction.ACTION_KEY);
-	} catch (NullPointerException exception) {
-	    LOGGER.error("Action key not found: " + IAction.ACTION_KEY);
-	    return null;
-	}
+        String actionName;
+        try {
+            actionName = jsonMessage.getString(IAction.ACTION_KEY);
+        } catch (NullPointerException exception) {
+            LOGGER.error("Action key not found: " + IAction.ACTION_KEY);
+            return null;
+        }
 
-	Class<?> classe = ActionFactory.ACTION_CLASS.get(actionName);
-	if (classe == null) {
-	    LOGGER.error("Action value not found: " + actionName);
-	    return null;
-	}
+        Class<?> classe = ActionFactory.ACTION_CLASS.get(actionName);
+        if (classe == null) {
+            LOGGER.error("Action value not found: " + actionName);
+            return null;
+        }
 
-	try {
-	    Constructor<?> constructor = classe
-		    .getConstructor(JsonObject.class);
-	    LOGGER.info("Action class: " + classe.getName());
-	    IAction action = (IAction) constructor.newInstance(jsonMessage);
-	    return action;
-	} catch (NoSuchMethodException | SecurityException
-		| InstantiationException | IllegalAccessException
-		| IllegalArgumentException | InvocationTargetException exception) {
-	    LOGGER.error("Invalid action class: " + classe.getName(), exception);
-	    return null;
-	}
+        try {
+            Constructor<?> constructor = classe
+                    .getConstructor(JsonObject.class);
+            LOGGER.info("Action class: " + classe.getName());
+            IAction action = (IAction) constructor.newInstance(jsonMessage);
+            return action;
+        } catch (NoSuchMethodException | SecurityException
+                | InstantiationException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException exception) {
+            LOGGER.error("Invalid action class: " + classe.getName(), exception);
+            return null;
+        }
     }
 
     /** Private constructor. */

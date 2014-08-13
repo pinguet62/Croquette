@@ -17,26 +17,26 @@ public final class LoginOAuthServlet extends HttpServlet {
 
     /** Logger. */
     private static final Logger LOGGER = Logger
-	    .getLogger(LoginOAuthServlet.class);
+            .getLogger(LoginOAuthServlet.class);
 
     /** Serial version UID. */
     private static final long serialVersionUID = 1;
 
     /** URL for Google OAuth. */
     private static final String TARGET_URL = "https://accounts.google.com/o/oauth2/auth"
-	    + "?client_id=79632324639.apps.googleusercontent.com"
-	    + ("&redirect_uri=http://localhost:8081/Croquette" + RedirectOAuthServlet.URL)
-	    + "&response_type=code"
-	    + ("&scope=https://www.googleapis.com/auth/userinfo.email" /* Email */
-		    + "+https://www.google.com/m8/feeds" /* Contacts */
-		    + "+https://www.googleapis.com/auth/googletalk" /* GTalk */);
+            + "?client_id=79632324639.apps.googleusercontent.com"
+            + ("&redirect_uri=http://localhost:8081/Croquette" + RedirectOAuthServlet.URL)
+            + "&response_type=code"
+            + ("&scope=https://www.googleapis.com/auth/userinfo.email" /* Email */
+                    + "+https://www.google.com/m8/feeds" /* Contacts */
+                    + "+https://www.googleapis.com/auth/googletalk" /* GTalk */);
 
     /** Redirect user to Google OAuth authentication. */
     @Override
     protected void doGet(HttpServletRequest request,
-	    HttpServletResponse response) throws ServletException, IOException {
-	LOGGER.info(LoginOAuthServlet.TARGET_URL);
-	response.sendRedirect(LoginOAuthServlet.TARGET_URL);
+            HttpServletResponse response) throws ServletException, IOException {
+        LOGGER.info(LoginOAuthServlet.TARGET_URL);
+        response.sendRedirect(LoginOAuthServlet.TARGET_URL);
     }
 
 }

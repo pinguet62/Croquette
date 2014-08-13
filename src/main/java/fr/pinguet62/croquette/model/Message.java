@@ -10,10 +10,10 @@ public final class Message implements Comparable<Message>, Serializable {
 
     /** States of a {@link Message}. */
     public enum State {
-	/** Error during sending */
-	ERROR, /** Sending but not acknowledgment. */
-	IN_PROGRESS, /** Normal status. */
-	OK;
+        /** Error during sending */
+        ERROR, /** Sending but not acknowledgment. */
+        IN_PROGRESS, /** Normal status. */
+        OK;
     }
 
     /** Serial version UID. */
@@ -58,9 +58,9 @@ public final class Message implements Comparable<Message>, Serializable {
      *            The content.
      */
     public Message(int id, Date date, String content) {
-	this.id = id;
-	this.date = date;
-	this.content = content;
+        this.id = id;
+        this.date = date;
+        this.content = content;
     }
 
     /**
@@ -74,7 +74,7 @@ public final class Message implements Comparable<Message>, Serializable {
      */
     @Override
     public int compareTo(Message other) {
-	return date.compareTo(other.date);
+        return date.compareTo(other.date);
     }
 
     // /**
@@ -92,7 +92,7 @@ public final class Message implements Comparable<Message>, Serializable {
      * @return The content.
      */
     public String getContent() {
-	return content;
+        return content;
     }
 
     /**
@@ -101,7 +101,7 @@ public final class Message implements Comparable<Message>, Serializable {
      * @return The {@link Conversation}.
      */
     public Conversation getConversation() {
-	return conversation;
+        return conversation;
     }
 
     /**
@@ -110,7 +110,7 @@ public final class Message implements Comparable<Message>, Serializable {
      * @return The date.
      */
     public Date getDate() {
-	return date;
+        return date;
     }
 
     /**
@@ -119,7 +119,7 @@ public final class Message implements Comparable<Message>, Serializable {
      * @return The id.
      */
     public Integer getId() {
-	return id;
+        return id;
     }
 
     /**
@@ -128,7 +128,7 @@ public final class Message implements Comparable<Message>, Serializable {
      * @return Result.
      */
     public Boolean getSent() {
-	return sent;
+        return sent;
     }
 
     /**
@@ -137,7 +137,7 @@ public final class Message implements Comparable<Message>, Serializable {
      * @return The {@link State}.
      */
     public State getState() {
-	return state;
+        return state;
     }
 
     /**
@@ -146,7 +146,7 @@ public final class Message implements Comparable<Message>, Serializable {
      * @return Result.
      */
     public boolean isRead() {
-	return read;
+        return read;
     }
 
     // /**
@@ -165,7 +165,7 @@ public final class Message implements Comparable<Message>, Serializable {
      * @return Result.
      */
     public Boolean isSent() {
-	return sent;
+        return sent;
     }
 
     /**
@@ -175,7 +175,7 @@ public final class Message implements Comparable<Message>, Serializable {
      *            The content to set.
      */
     public void setContent(String content) {
-	this.content = content;
+        this.content = content;
     }
 
     /**
@@ -185,7 +185,7 @@ public final class Message implements Comparable<Message>, Serializable {
      *            The {@link Conversation} to set.
      */
     public void setConversation(Conversation conversation) {
-	this.conversation = conversation;
+        this.conversation = conversation;
     }
 
     /**
@@ -195,7 +195,7 @@ public final class Message implements Comparable<Message>, Serializable {
      *            The date to set.
      */
     public void setDate(Date date) {
-	this.date = date;
+        this.date = date;
     }
 
     /**
@@ -205,7 +205,7 @@ public final class Message implements Comparable<Message>, Serializable {
      *            The id.
      */
     public void setId(Integer id) {
-	this.id = id;
+        this.id = id;
     }
 
     /**
@@ -215,7 +215,7 @@ public final class Message implements Comparable<Message>, Serializable {
      *            If it was read.
      */
     public void setRead(boolean read) {
-	this.read = read;
+        this.read = read;
     }
 
     /**
@@ -225,7 +225,7 @@ public final class Message implements Comparable<Message>, Serializable {
      *            If sent by user.
      */
     public void setSent(Boolean sent) {
-	this.sent = sent;
+        this.sent = sent;
     }
 
     /**
@@ -235,13 +235,13 @@ public final class Message implements Comparable<Message>, Serializable {
      *            The {@link State}.
      */
     public void setState(State state) {
-	this.state = state;
+        this.state = state;
     }
 
     @Override
     public String toString() {
-	return String.format("%d-%s-\"%s\"", id, new SimpleDateFormat(
-		"dd/MM/yyyy").format(date), content);
+        return String.format("%d-%s-\"%s\"", id, new SimpleDateFormat(
+                "dd/MM/yyyy").format(date), content);
     }
 
 }

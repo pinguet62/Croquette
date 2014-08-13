@@ -15,21 +15,21 @@ public final class ManagedBean {
      * @return The bean, {@code null} if not found.
      */
     public static Object getManagedBean(String beanName) {
-	Object bean;
-	try {
-	    ELContext elContext = FacesContext.getCurrentInstance()
-		    .getELContext();
-	    bean = elContext.getELResolver()
-		    .getValue(elContext, null, beanName);
-	} catch (RuntimeException e) {
-	    throw new FacesException(e.getMessage(), e);
-	}
-	if (bean == null)
-	    throw new FacesException(
-		    "Managed bean with name '"
-			    + beanName
-			    + "' was not found. Check your faces-config.xml or @ManagedBean annotation.");
-	return bean;
+        Object bean;
+        try {
+            ELContext elContext = FacesContext.getCurrentInstance()
+                    .getELContext();
+            bean = elContext.getELResolver()
+                    .getValue(elContext, null, beanName);
+        } catch (RuntimeException e) {
+            throw new FacesException(e.getMessage(), e);
+        }
+        if (bean == null)
+            throw new FacesException(
+                    "Managed bean with name '"
+                            + beanName
+                            + "' was not found. Check your faces-config.xml or @ManagedBean annotation.");
+        return bean;
     }
 
     /** Constructor. */

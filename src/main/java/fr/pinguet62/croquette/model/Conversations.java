@@ -27,10 +27,10 @@ public final class Conversations extends TreeSet<Conversation> {
      */
     @Override
     public boolean add(Conversation conversation) {
-	// if (conversation.isEmpty())
-	// return false;
-	// User.get().getContacts().add(conversation.getContact());
-	return super.add(conversation);
+        // if (conversation.isEmpty())
+        // return false;
+        // User.get().getContacts().add(conversation.getContact());
+        return super.add(conversation);
     }
 
     /**
@@ -44,13 +44,13 @@ public final class Conversations extends TreeSet<Conversation> {
      */
     @Override
     public boolean addAll(Collection<? extends Conversation> conversations) {
-	boolean res = true;
-	for (Conversation conversation : conversations)
-	    // if (conversation.isEmpty())
-	    // res = false;
-	    // else
-	    add(conversation); // TODO error
-	return res;
+        boolean res = true;
+        for (Conversation conversation : conversations)
+            // if (conversation.isEmpty())
+            // res = false;
+            // else
+            add(conversation); // TODO error
+        return res;
     }
 
     /**
@@ -62,12 +62,12 @@ public final class Conversations extends TreeSet<Conversation> {
      *         found.
      */
     public Conversation get(Integer id) {
-	if (id == null)
-	    return null;
-	for (Conversation conversation : this)
-	    if (conversation.getId().equals(id))
-		return conversation;
-	return null;
+        if (id == null)
+            return null;
+        for (Conversation conversation : this)
+            if (conversation.getId().equals(id))
+                return conversation;
+        return null;
     }
 
     /**
@@ -76,7 +76,7 @@ public final class Conversations extends TreeSet<Conversation> {
      * @return Result.
      */
     public boolean getHasOldMessages() {
-	return hasOldConversations;
+        return hasOldConversations;
     }
 
     /**
@@ -86,7 +86,7 @@ public final class Conversations extends TreeSet<Conversation> {
      *            If has old {@link Conversation}s.
      */
     public void setHasOldMessages(boolean hasOldConversations) {
-	this.hasOldConversations = hasOldConversations;
+        this.hasOldConversations = hasOldConversations;
     }
 
     /**
@@ -94,9 +94,9 @@ public final class Conversations extends TreeSet<Conversation> {
      * {@link Conversation}.
      */
     public void sort() {
-	Collection<Conversation> tmp = new ArrayList<>(this);
-	clear();
-	addAll(tmp);
+        Collection<Conversation> tmp = new ArrayList<>(this);
+        clear();
+        addAll(tmp);
     }
 
 }

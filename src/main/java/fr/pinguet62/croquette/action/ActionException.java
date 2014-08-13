@@ -13,7 +13,7 @@ public class ActionException extends RuntimeException {
      *            The cause.
      */
     public ActionException(Throwable cause) {
-	super(cause);
+        super(cause);
     }
 
 }

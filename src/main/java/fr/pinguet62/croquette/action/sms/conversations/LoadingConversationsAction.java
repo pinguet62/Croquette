@@ -36,25 +36,25 @@ public final class LoadingConversationsAction implements IAction {
      *            {@link Conversation} known.
      */
     public LoadingConversationsAction(Integer oldest) {
-	this.oldest = oldest;
+        this.oldest = oldest;
     }
 
     @Override
     public void execute() {
-	JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder().add(
-		ACTION_KEY, ACTION_VALUE);
-	if (oldest != null)
-	    jsonObjectBuilder.add(OLDEST, oldest);
-	jsonObjectBuilder.add(COUNT_KEY, COUNT_VALUE);
-	JsonObject jsonObject = jsonObjectBuilder.build();
-	String message = jsonObject.toString();
+        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder().add(
+                ACTION_KEY, ACTION_VALUE);
+        if (oldest != null)
+            jsonObjectBuilder.add(OLDEST, oldest);
+        jsonObjectBuilder.add(COUNT_KEY, COUNT_VALUE);
+        JsonObject jsonObject = jsonObjectBuilder.build();
+        String message = jsonObject.toString();
 
-	User.get().getXmppManager().send(message);
+        User.get().getXmppManager().send(message);
     }
 
     @Override
     public boolean fromSmartphone() {
-	return false;
+        return false;
     }
 
 }
