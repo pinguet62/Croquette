@@ -11,16 +11,14 @@ import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 
-/** Asynchronous method who gets user token. */
+/** Asynchronous function used to get user's OAuth token. */
 public final class GoogleAuthToken extends AsyncTask<Void, Void, String> {
 
     /** The {@link Log} tag. */
-    private static final String LOG_TAG = GoogleAuthToken.class
-            .getSimpleName();
+    private static final String LOG_TAG = GoogleAuthToken.class.getSimpleName();
 
     private static final String SCOPE = "oauth2:https://www.googleapis.com/auth/googletalk";
 
-    /** The account name. */
     private final String accountName;
 
     /** The {@link Context}. */
@@ -34,10 +32,9 @@ public final class GoogleAuthToken extends AsyncTask<Void, Void, String> {
      * @param accountName
      *            The account name.
      */
-    public GoogleAuthToken(final Activity activity) {
+    public GoogleAuthToken(Activity activity, String accountName) {
         this.activity = activity;
-        accountName = "floflo62rs@gmail.com";
-        Log.i(LOG_TAG, "Account name: " + accountName);
+        this.accountName = accountName;
     }
 
     /**
@@ -52,6 +49,7 @@ public final class GoogleAuthToken extends AsyncTask<Void, Void, String> {
             String token = GoogleAuthUtil
                     .getToken(activity, accountName, SCOPE);
             Log.i(GoogleAuthToken.LOG_TAG, "Token: " + token);
+
             return token;
         } catch (UserRecoverableAuthException e) {
             Log.e(LOG_TAG, e.getMessage());
