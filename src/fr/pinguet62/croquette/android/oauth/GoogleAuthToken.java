@@ -61,4 +61,17 @@ public final class GoogleAuthToken extends AsyncTask<Void, Void, String> {
         return null;
     }
 
+    /**
+     * Connect user to XMPP server.
+     *
+     * @param token
+     *            The OAuth token returned by {@link #doInBackground(Void...)}.
+     */
+    @Override
+    protected void onPostExecute(String token) {
+        super.onPostExecute(token);
+
+        new XMPPManager(accountName, token).execute();
+    }
+
 }
