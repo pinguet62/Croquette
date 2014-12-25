@@ -20,17 +20,20 @@ public class MainActivity extends Activity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
+    public static final int USER_RECOVERABLE_AUTH = 2;
+
     /** Get the user account and run the function to get OAuth token. */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if ((requestCode == AUTH_REQUEST_CODE) && (resultCode == RESULT_OK)) {
-            String accountName = data
-                    .getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-            Log.i(LOG_TAG, "Account name: " + accountName);
 
-            new GoogleAuthToken(this, accountName).execute();
-        }
+        String login = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+        Log.i(LOG_TAG, "Account name: " + login);
+
+        if ((requestCode == AUTH_REQUEST_CODE) && (resultCode == RESULT_OK))
+            requestToken(login);
+        else if (resultCode == USER_RECOVERABLE_AUTH)
+            requestToken(login);
     }
 
     @Override
@@ -45,6 +48,10 @@ public class MainActivity extends Activity {
                 selectAccountToUse();
             }
         });
+    }
+
+    private void requestToken(String login) {
+        new GoogleAuthToken(this, login).execute();
     }
 
     /**

@@ -11,6 +11,7 @@ import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 
+import fr.pinguet62.croquette.android.MainActivity;
 import fr.pinguet62.croquette.android.xmpp.XMPPManager;
 
 /** Asynchronous function used to get user's OAuth token. */
@@ -48,17 +49,21 @@ public final class GoogleAuthToken extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(final Void... args) {
         try {
+            // Token
             String token = GoogleAuthUtil
                     .getToken(activity, accountName, SCOPE);
             Log.i(GoogleAuthToken.LOG_TAG, "Token: " + token);
-
             return token;
         } catch (UserRecoverableAuthException e) {
             Log.e(LOG_TAG, e.getMessage());
+            // Request permission
+            Log.i(LOG_TAG, "Request permission...");
+            activity.startActivityForResult(e.getIntent(),
+                    MainActivity.USER_RECOVERABLE_AUTH);
         } catch (IOException e) {
-            Log.e(LOG_TAG, e.getMessage());
+            throw new RuntimeException(e);
         } catch (GoogleAuthException e) {
-            Log.e(LOG_TAG, e.getMessage());
+            throw new RuntimeException(e);
         }
         return null;
     }
