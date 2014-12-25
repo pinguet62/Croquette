@@ -1,4 +1,4 @@
-package fr.pinguet62.croquette.android.oauth;
+package fr.pinguet62.croquette.android.xmpp.smack;
 
 import java.io.IOException;
 
@@ -12,10 +12,13 @@ import org.jivesoftware.smack.util.Base64;
 
 import android.util.Log;
 
-/** Implementation of {@link SASLMechanism} for OAuth 2.0 authentication. */
-public class GoogleOAuth2SASLMechanism extends SASLMechanism {
+/**
+ * Implementation of {@link SASLMechanism} for OAuth 2.0 authentication on
+ * GTalk.
+ */
+public class GTalkOAuth2SASLMechanism extends SASLMechanism {
 
-    private static final String LOG = GoogleOAuth2SASLMechanism.class
+    private static final String LOG = GTalkOAuth2SASLMechanism.class
             .getSimpleName();
 
     public static final String NAME = "X-OAUTH2";
@@ -23,7 +26,7 @@ public class GoogleOAuth2SASLMechanism extends SASLMechanism {
     /** The OAuth token used for authentication. */
     private String token;
 
-    public GoogleOAuth2SASLMechanism(SASLAuthentication saslAuthentication) {
+    public GTalkOAuth2SASLMechanism(SASLAuthentication saslAuthentication) {
         super(saslAuthentication);
     }
 

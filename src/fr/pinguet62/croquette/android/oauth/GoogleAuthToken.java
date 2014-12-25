@@ -11,6 +11,8 @@ import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 
+import fr.pinguet62.croquette.android.xmpp.XMPPManager;
+
 /** Asynchronous function used to get user's OAuth token. */
 public final class GoogleAuthToken extends AsyncTask<Void, Void, String> {
 

@@ -1,4 +1,4 @@
-package fr.pinguet62.croquette.android.oauth;
+package fr.pinguet62.croquette.android.xmpp.smack;
 
 import java.io.IOException;
 
@@ -6,6 +6,7 @@ import org.apache.harmony.javax.security.auth.callback.Callback;
 import org.apache.harmony.javax.security.auth.callback.CallbackHandler;
 import org.apache.harmony.javax.security.auth.callback.UnsupportedCallbackException;
 
+/** {@link CallbackHandler} used to store the token into {@link TextInputCallback} */
 public final class TokenCallbackHandler implements CallbackHandler {
 
     private final String token;

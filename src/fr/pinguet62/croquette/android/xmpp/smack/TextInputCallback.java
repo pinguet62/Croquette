@@ -1,4 +1,4 @@
-package fr.pinguet62.croquette.android.oauth;
+package fr.pinguet62.croquette.android.xmpp.smack;
 
 import java.io.Serializable;
 

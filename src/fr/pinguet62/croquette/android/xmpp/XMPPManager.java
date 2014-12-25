@@ -1,4 +1,4 @@
-package fr.pinguet62.croquette.android.oauth;
+package fr.pinguet62.croquette.android.xmpp;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
@@ -7,6 +7,8 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Presence;
 
+import fr.pinguet62.croquette.android.xmpp.smack.GTalkOAuth2SASLMechanism;
+import fr.pinguet62.croquette.android.xmpp.smack.TokenCallbackHandler;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -16,10 +18,10 @@ public final class XMPPManager extends AsyncTask<Void, Void, Void> {
 
     static {
         SASLAuthentication
-                .registerSASLMechanism(GoogleOAuth2SASLMechanism.NAME,
-                        GoogleOAuth2SASLMechanism.class);
+                .registerSASLMechanism(GTalkOAuth2SASLMechanism.NAME,
+                        GTalkOAuth2SASLMechanism.class);
         // 0 means google sasl mechanism is the prefered one
-        SASLAuthentication.supportSASLMechanism(GoogleOAuth2SASLMechanism.NAME,
+        SASLAuthentication.supportSASLMechanism(GTalkOAuth2SASLMechanism.NAME,
                 0);
     }
 
