@@ -2,6 +2,7 @@ package fr.pinguet62.croquette.android.xmpp.smack;
 
 import java.io.IOException;
 
+import org.apache.harmony.javax.security.auth.callback.Callback;
 import org.apache.harmony.javax.security.auth.callback.CallbackHandler;
 import org.apache.harmony.javax.security.auth.callback.UnsupportedCallbackException;
 import org.jivesoftware.smack.SASLAuthentication;
@@ -15,6 +16,9 @@ import android.util.Log;
 /**
  * Implementation of {@link SASLMechanism} for OAuth 2.0 authentication on
  * GTalk.
+ *
+ * @see TokenCallback
+ * @see TokenCallbackHandler
  */
 public class GTalkOAuth2SASLMechanism extends SASLMechanism {
 
@@ -55,21 +59,24 @@ public class GTalkOAuth2SASLMechanism extends SASLMechanism {
     /**
      * Used to initialize the mechanize.<br>
      * Initialize the {@link #token}.
+     * <p>
+     * Call {@link #authenticate()} after getting token.
      */
     @Override
     public void authenticate(String authenticationId, String hostname,
             CallbackHandler callbackHandler) throws IOException, XMPPException {
+        // not used
         this.authenticationId = authenticationId;
         this.hostname = hostname;
 
-        // retrieve the access token with the callback handler
-        TextInputCallback[] cbs = { new TextInputCallback("accessToken") };
+        // Retrieve the token with the callback handler
+        TokenCallback tokenCallback = new TokenCallback();
         try {
-            callbackHandler.handle(cbs);
+            callbackHandler.handle(new Callback[] { tokenCallback });
         } catch (UnsupportedCallbackException e) {
             throw new IOException("Unsupported Callback", e);
         }
-        token = cbs[0].getText();
+        token = tokenCallback.getToken();
 
         if (token != null)
             authenticate();
