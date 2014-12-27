@@ -11,8 +11,6 @@ import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.sasl.SASLMechanism;
 import org.jivesoftware.smack.util.Base64;
 
-import android.util.Log;
-
 /**
  * Implementation of {@link SASLMechanism} for OAuth 2.0 authentication on
  * GTalk.
@@ -81,7 +79,7 @@ public class GTalkOAuth2SASLMechanism extends SASLMechanism {
         if (token != null)
             authenticate();
         else
-            Log.i(LOG, "Token is null");
+            throw new RuntimeException("Token is null");
     }
 
     /**
@@ -101,4 +99,5 @@ public class GTalkOAuth2SASLMechanism extends SASLMechanism {
     protected String getName() {
         return NAME;
     }
+
 }

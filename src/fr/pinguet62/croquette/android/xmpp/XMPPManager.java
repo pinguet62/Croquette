@@ -7,19 +7,18 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Presence;
 
-import fr.pinguet62.croquette.android.xmpp.smack.GTalkOAuth2SASLMechanism;
-import fr.pinguet62.croquette.android.xmpp.smack.TokenCallbackHandler;
 import android.os.AsyncTask;
 import android.util.Log;
+import fr.pinguet62.croquette.android.xmpp.smack.GTalkOAuth2SASLMechanism;
+import fr.pinguet62.croquette.android.xmpp.smack.TokenCallbackHandler;
 
 public final class XMPPManager extends AsyncTask<Void, Void, Void> {
 
     private static final String LOG = XMPPManager.class.getSimpleName();
 
     static {
-        SASLAuthentication
-                .registerSASLMechanism(GTalkOAuth2SASLMechanism.NAME,
-                        GTalkOAuth2SASLMechanism.class);
+        SASLAuthentication.registerSASLMechanism(GTalkOAuth2SASLMechanism.NAME,
+                GTalkOAuth2SASLMechanism.class);
         // 0 means google sasl mechanism is the prefered one
         SASLAuthentication.supportSASLMechanism(GTalkOAuth2SASLMechanism.NAME,
                 0);
@@ -65,8 +64,11 @@ public final class XMPPManager extends AsyncTask<Void, Void, Void> {
         Presence presence = new Presence(Presence.Type.available);
         connection.sendPacket(presence);
 
+        connection.getChatManager().createChat("pinguet62@gmail.com",
+                new MessageListenerImpl());
+
         // TODO delete me
-        connection.disconnect();
+        // connection.disconnect();
 
         return null;
     }
