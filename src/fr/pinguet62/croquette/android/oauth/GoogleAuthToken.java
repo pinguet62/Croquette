@@ -78,7 +78,8 @@ public final class GoogleAuthToken extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String token) {
         super.onPostExecute(token);
 
-        new XMPPManager(accountName, token).execute();
+        XMPPManager.init(accountName, token);
+        // new XMPPManager(accountName, token).execute();
     }
 
 }

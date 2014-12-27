@@ -1,5 +1,6 @@
 package fr.pinguet62.croquette.android.xmpp;
 
+import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
 import org.jivesoftware.smack.SASLAuthentication;
@@ -7,12 +8,14 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Presence;
 
-import android.os.AsyncTask;
 import android.util.Log;
 import fr.pinguet62.croquette.android.xmpp.smack.GTalkOAuth2SASLMechanism;
 import fr.pinguet62.croquette.android.xmpp.smack.TokenCallbackHandler;
 
-public final class XMPPManager extends AsyncTask<Void, Void, Void> {
+/** Singleton used to keep connection to XMPP account of user. */
+public final class XMPPManager {
+
+    private static XMPPManager INSTANCE;
 
     private static final String LOG = XMPPManager.class.getSimpleName();
 
@@ -24,23 +27,37 @@ public final class XMPPManager extends AsyncTask<Void, Void, Void> {
                 0);
     }
 
-    private final String login;
-
-    private final String token;
-
-    public XMPPManager(String login, String token) {
-        this.login = login;
-        this.token = token;
+    public static XMPPManager getInstance() {
+        return INSTANCE;
     }
 
-    @Override
-    protected Void doInBackground(Void... params) {
+    /**
+     * Disconnect the existing client if it exists.<br>
+     * Create new connection to the XMPP account of user.
+     */
+    public static void init(String login, String token) {
+        if (INSTANCE != null)
+            INSTANCE.connection.disconnect();
+        INSTANCE = new XMPPManager(login, token);
+    }
+
+    private final XMPPConnection connection;
+
+    /**
+     * <ul>
+     * <li>Create new {@link XMPPConnection} to GTalk;</li>
+     * <li>Authenticate user with OAuth token;</li>
+     * <li>Set {@link Presence} to {@link Presence.Type#available};</li>
+     * <li>Create {@link Chat} with own account.</li>
+     * </ul>
+     */
+    private XMPPManager(String login, String token) {
         // Connection
         ConnectionConfiguration config = new ConnectionConfiguration(
                 "talk.google.com", 5222, "gmail.com");
         config.setSASLAuthenticationEnabled(true);
         config.setSecurityMode(SecurityMode.enabled);
-        XMPPConnection connection = new XMPPConnection(config);
+        connection = new XMPPConnection(config);
         try {
             Log.d(LOG, "Connection...");
             connection.connect();
@@ -64,13 +81,8 @@ public final class XMPPManager extends AsyncTask<Void, Void, Void> {
         Presence presence = new Presence(Presence.Type.available);
         connection.sendPacket(presence);
 
+        // Chat
         connection.getChatManager().createChat("pinguet62@gmail.com",
                 new MessageListenerImpl());
-
-        // TODO delete me
-        // connection.disconnect();
-
-        return null;
     }
-
 }
