@@ -24,7 +24,8 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <activity
+
+        <activity
             android:name="fr.pinguet62.croquette.android.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
@@ -33,6 +34,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name="fr.pinguet62.croquette.android.sms.SmsReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
