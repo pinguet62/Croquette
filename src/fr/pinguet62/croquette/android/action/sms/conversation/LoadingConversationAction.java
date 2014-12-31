@@ -1,6 +1,8 @@
 package fr.pinguet62.croquette.android.action.sms.conversation;
 
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 import android.util.Log;
 
@@ -8,7 +10,10 @@ import com.google.gson.Gson;
 
 import fr.pinguet62.croquette.android.action.IAction;
 import fr.pinguet62.croquette.android.action.sms.MessageDto;
+import fr.pinguet62.croquette.android.sms.database.Sms;
+import fr.pinguet62.croquette.android.sms.database.SmsService;
 
+/** @see LoadingConversationDto */
 public final class LoadingConversationAction implements IAction {
 
     public static final String ACTION_VALUE = "SMS_CONVERSATION_LOADING";
@@ -26,17 +31,26 @@ public final class LoadingConversationAction implements IAction {
     public void execute() {
         Log.d(LOG, "Action: " + ACTION_VALUE);
 
-        // Action 1: Read SMS
+        // Read SMSs
         LoadingConversationDto inDto = new Gson().fromJson(json.toString(),
                 LoadingConversationDto.class);
-        // TODO Read SMS
+        List<Sms> smss = SmsService.getByThread(inDto.getId(),
+                inDto.getCount(), inDto.getOldest());
 
+        // Convert data
         LoadedConversationDto outDto = new LoadedConversationDto();
         outDto.setConversation(inDto.getId());
         outDto.setMessages(new LinkedList<MessageDto>());
-        // outDto.getMessages().add(); TODO add messages
+        for (Sms sms : smss) {
+            MessageDto messageDto = new MessageDto();
+            messageDto.setContent(sms.getBody());
+            messageDto.setDate(new Date(sms.getDate()));
+            messageDto.setId(sms.getId());
+            // TODO messageDto.setSent();
+            outDto.getMessages().add(messageDto);
+        }
 
-        // Action 2: Send conversation
+        // Send DTO to Smartphone
         new LoadedConversationAction(outDto).execute();
     }
 

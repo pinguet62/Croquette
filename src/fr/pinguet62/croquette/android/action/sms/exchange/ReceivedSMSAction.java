@@ -1,13 +1,18 @@
 package fr.pinguet62.croquette.android.action.sms.exchange;
 
-import android.os.Message;
+import java.util.Date;
+
 import android.telephony.SmsMessage;
 import android.util.Log;
 
 import com.google.gson.Gson;
 
 import fr.pinguet62.croquette.android.action.IAction;
+import fr.pinguet62.croquette.android.sms.database.Sms;
+import fr.pinguet62.croquette.android.sms.database.SmsService;
+import fr.pinguet62.croquette.android.xmpp.XMPPManager;
 
+/** @see ReceivedSmsDto */
 public final class ReceivedSMSAction implements IAction {
 
     public static final String ACTION_VALUE = "SMS_EXCHANGE_RECEPTION";
@@ -18,31 +23,30 @@ public final class ReceivedSMSAction implements IAction {
 
     /**
      * @param message
-     *            The SMS received.
+     *            The {@link SmsMessage} received.
      */
     public ReceivedSMSAction(SmsMessage message) {
         this.message = message;
     }
 
-    /**
-     * Create the {@link Message} from the JSON message. <br />
-     * Add to {@link Conversation} and update the view.
-     */
     @Override
     public void execute() {
         Log.d(LOG, "Action: " + ACTION_VALUE);
 
+        // Find corresponding SMS into database
+        Sms sms = SmsService.getByAddressAndBody(
+                message.getOriginatingAddress(), message.getMessageBody());
+
+        // Convert data
         ReceivedSmsDto dto = new ReceivedSmsDto();
-        // TODO dto: SmsMessage.conversation
-        dto.setConversation(null);
-        dto.setPhoneNumber(message.getOriginatingAddress());
-        // TODO dto: SmsMessage.id
-        dto.setId(null); // TODO
-        // TODO dto: SmsMessage.date
-        dto.setDate(null);
-        dto.setContent(message.getMessageBody());
+        dto.setConversation(sms.getThreadId());
+        dto.setPhoneNumber(sms.getAddress());
+        dto.setId(sms.getId());
+        dto.setDate(new Date(sms.getDate()));
+        dto.setContent(sms.getBody());
 
-        new Gson().toJson(dto);
+        // Send DTO to Smartphone
+        String json = new Gson().toJson(dto);
+        XMPPManager.getInstance().send(json);
     }
-
 }

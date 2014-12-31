@@ -1,8 +1,13 @@
 package fr.pinguet62.croquette.android.action.sms.conversation;
 
 import android.util.Log;
-import fr.pinguet62.croquette.android.action.IAction;
 
+import com.google.gson.Gson;
+
+import fr.pinguet62.croquette.android.action.IAction;
+import fr.pinguet62.croquette.android.xmpp.XMPPManager;
+
+/** @see LoadedConversationDto */
 public final class LoadedConversationAction implements IAction {
 
     public static final String ACTION_VALUE = "SMS_CONVERSATION_LOADED";
@@ -19,8 +24,9 @@ public final class LoadedConversationAction implements IAction {
     @Override
     public void execute() {
         Log.d(LOG, "Action: " + ACTION_VALUE);
-        
-        // TODO Send by XMPP
+
+        String json = new Gson().toJson(dto);
+        XMPPManager.getInstance().send(json);
     }
 
 }
