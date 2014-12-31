@@ -26,11 +26,11 @@ public final class SmsReceiver extends BroadcastReceiver {
         Log.i(LOG, "SMS received");
 
         Bundle bundle = intent.getExtras();
-        byte[][] pdus = (byte[][]) bundle.get("pdus");
-        // Convert
+        Object[] pdus = (Object[]) bundle.get("pdus");
+        // Read SMS
         SmsMessage[] smsMessages = new SmsMessage[pdus.length];
         for (int i = 0; i < pdus.length; i++)
-            smsMessages[i] = SmsMessage.createFromPdu(pdus[i]);
+            smsMessages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
 
         // Execute
         IAction action = new ReceivedSMSAction(smsMessages[0]);
