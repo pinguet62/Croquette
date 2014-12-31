@@ -41,14 +41,17 @@ public final class XMPPManager {
         INSTANCE = new XMPPManager(login, token);
     }
 
+    private final Chat chat;
+
     private final XMPPConnection connection;
 
     /**
+     * Create and initialize the XMPP client:
      * <ul>
-     * <li>Create new {@link XMPPConnection} to GTalk;</li>
-     * <li>Authenticate user with OAuth token;</li>
-     * <li>Set {@link Presence} to {@link Presence.Type#available};</li>
-     * <li>Create {@link Chat} with own account.</li>
+     * <li>create new {@link XMPPConnection} to GTalk;</li>
+     * <li>authenticate user with OAuth token;</li>
+     * <li>set {@link Presence} to {@link Presence.Type#available available};</li>
+     * <li>create {@link Chat} with own account.</li>
      * </ul>
      */
     private XMPPManager(String login, String token) {
@@ -82,7 +85,18 @@ public final class XMPPManager {
         connection.sendPacket(presence);
 
         // Chat
-        connection.getChatManager().createChat("pinguet62@gmail.com",
+        // TODO test replace by login
+        chat = connection.getChatManager().createChat("pinguet62@gmail.com",
                 new MessageListenerImpl());
     }
+
+    /** Send message to own account. */
+    public void send(String message) {
+        try {
+            chat.sendMessage(message);
+        } catch (XMPPException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
