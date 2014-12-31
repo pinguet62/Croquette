@@ -18,9 +18,7 @@ import fr.pinguet62.croquette.android.xmpp.XMPPManager;
 public final class GoogleAuthToken extends AsyncTask<Void, Void, String> {
 
     /** The {@link Log} tag. */
-    private static final String LOG_TAG = GoogleAuthToken.class.getSimpleName();
-
-    private static final String SCOPE = "oauth2:https://www.googleapis.com/auth/googletalk";
+    private static final String LOG = GoogleAuthToken.class.getSimpleName();
 
     private final String accountName;
 
@@ -50,16 +48,16 @@ public final class GoogleAuthToken extends AsyncTask<Void, Void, String> {
     protected String doInBackground(final Void... args) {
         try {
             // Token
-            String token = GoogleAuthUtil
-                    .getToken(activity, accountName, SCOPE);
-            Log.i(GoogleAuthToken.LOG_TAG, "Token: " + token);
+            String token = GoogleAuthUtil.getToken(activity, accountName,
+                    "oauth2:https://www.googleapis.com/auth/googletalk");
+            Log.i(GoogleAuthToken.LOG, "Token: " + token);
             return token;
         } catch (UserRecoverableAuthException e) {
-            Log.e(LOG_TAG, e.getMessage());
+            Log.e(LOG, e.getMessage());
             // Request permission
-            Log.i(LOG_TAG, "Request permission...");
+            Log.i(LOG, "Request permission...");
             activity.startActivityForResult(e.getIntent(),
-                    MainActivity.USER_RECOVERABLE_AUTH);
+                    MainActivity.REQUEST_OAUTH_AUTHORIZATION);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (GoogleAuthException e) {
@@ -79,7 +77,6 @@ public final class GoogleAuthToken extends AsyncTask<Void, Void, String> {
         super.onPostExecute(token);
 
         XMPPManager.init(accountName, token);
-        // new XMPPManager(accountName, token).execute();
     }
 
 }

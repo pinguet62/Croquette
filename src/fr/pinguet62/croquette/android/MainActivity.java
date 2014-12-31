@@ -14,14 +14,14 @@ import fr.pinguet62.croquette.android.oauth.GoogleAuthToken;
 /** The main {@link Activity} */
 public class MainActivity extends Activity {
 
-    private static final int AUTH_REQUEST_CODE = 1;
-
     // TODO evol
     public static Context CONTEXT;
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    public static final int USER_RECOVERABLE_AUTH = 2;
+    private static final int REQUEST_OAUTH = 1;
+
+    public static final int REQUEST_OAUTH_AUTHORIZATION = 2;
 
     // TODO evol
     public MainActivity() {
@@ -36,9 +36,9 @@ public class MainActivity extends Activity {
         String login = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
         Log.i(LOG_TAG, "Account name: " + login);
 
-        if ((requestCode == AUTH_REQUEST_CODE) && (resultCode == RESULT_OK))
+        if ((requestCode == REQUEST_OAUTH) && (resultCode == RESULT_OK))
             requestToken(login);
-        else if (resultCode == USER_RECOVERABLE_AUTH)
+        else if (resultCode == REQUEST_OAUTH_AUTHORIZATION)
             requestToken(login);
     }
 
@@ -61,7 +61,7 @@ public class MainActivity extends Activity {
     private void selectAccountToUse() {
         Intent intent = AccountPicker.newChooseAccountIntent(null, null,
                 new String[] { "com.google" }, false, null, null, null, null);
-        startActivityForResult(intent, AUTH_REQUEST_CODE);
+        startActivityForResult(intent, REQUEST_OAUTH);
     }
 
     // TODO test
