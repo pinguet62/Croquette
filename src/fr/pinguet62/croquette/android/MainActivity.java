@@ -2,12 +2,10 @@ package fr.pinguet62.croquette.android;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 
 import com.google.android.gms.common.AccountPicker;
 
@@ -18,9 +16,17 @@ public class MainActivity extends Activity {
 
     private static final int AUTH_REQUEST_CODE = 1;
 
+    // TODO evol
+    public static Context CONTEXT;
+
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     public static final int USER_RECOVERABLE_AUTH = 2;
+
+    // TODO evol
+    public MainActivity() {
+        CONTEXT = this;
+    }
 
     /** Get the user account and run the function to get OAuth token. */
     @Override
@@ -40,14 +46,6 @@ public class MainActivity extends Activity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Button connectionButton = (Button) findViewById(R.id.connectionButton);
-        connectionButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                selectAccountToUse();
-            }
-        });
     }
 
     private void requestToken(String login) {
@@ -64,6 +62,11 @@ public class MainActivity extends Activity {
         Intent intent = AccountPicker.newChooseAccountIntent(null, null,
                 new String[] { "com.google" }, false, null, null, null, null);
         startActivityForResult(intent, AUTH_REQUEST_CODE);
+    }
+
+    // TODO test
+    public void test() {
+        selectAccountToUse();
     }
 
 }
