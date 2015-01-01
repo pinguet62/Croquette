@@ -1,26 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<artifactId>Croquette-Webapp</artifactId>
-	<groupId>fr.pinguet62.croquette</groupId>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<name>Croquette</name>
-	<packaging>war</packaging>
-	<url>http://maven.apache.org</url>
+
+	<groupId>fr.pinguet62.croquette</groupId>
+	<artifactId>Croquette-WebApp</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<properties>
-        <java-version>1.8</java-version>
-		<spring.version>3.1.4.RELEASE</spring.version>
-	</properties>
-	<repositories>
-		<repository>
-			<!-- PrimeFaces -->
-			<id>prime-repo</id>
-			<name>PrimeFaces Maven Repository</name>
-			<url>http://repository.primefaces.org</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
+	<packaging>war</packaging>
 	<dependencies>
 		<!-- ===== Others ===== -->
 		<!-- Google contacts -->
@@ -138,8 +124,20 @@
 			<version>${spring.version}</version>
 		</dependency>
 	</dependencies>
+	<properties>
+		<java-version>1.8</java-version>
+		<spring.version>3.1.4.RELEASE</spring.version>
+	</properties>
+
 	<build>
 		<finalName>Croquette</finalName>
+		<testResources>
+			<testResource>
+				<directory>${project.basedir}/src/test/resources</directory>
+			</testResource>
+		</testResources>
+
+		<!-- Plugins -->
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -151,4 +149,44 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<name>Croquette</name>
+	<description>
+		Web application used to communicate with a Smartphone
+	</description>
+	<url>http://localhost:8081/Croquette</url>
+	<licenses>
+		<license>
+			<name>
+				Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+				International
+				Public License
+			</name>
+			<url>http://creativecommons.org/licenses/by-nc-sa/4.0/</url>
+			<comments>CC BY-NC-SA 4.0</comments>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>pinguet62</id>
+			<name>PINGUET Julien</name>
+			<email>pinguet62@gmail.com</email>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
+	<repositories>
+		<repository>
+			<!-- PrimeFaces -->
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+
 </project>
