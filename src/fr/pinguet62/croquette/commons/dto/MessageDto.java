@@ -1,4 +1,4 @@
-package fr.pinguet62.croquette.android.action.sms;
+package fr.pinguet62.croquette.commons.dto;
 
 import java.util.Date;
 

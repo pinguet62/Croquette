@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import fr.pinguet62.croquette.android.action.IAction;
 import fr.pinguet62.croquette.android.sms.SmsSender;
+import fr.pinguet62.croquette.commons.dto.SendSmsDto;
 
 /**
  * @see SendSmsDto

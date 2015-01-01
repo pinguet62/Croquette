@@ -1,6 +1,8 @@
-package fr.pinguet62.croquette.android.action.sms.conversations;
+package fr.pinguet62.croquette.commons.dto;
 
 import java.util.List;
+
+import fr.pinguet62.croquette.android.action.sms.conversations.LoadedConversationsAction;
 
 public final class LoadedConversationsDto {
 

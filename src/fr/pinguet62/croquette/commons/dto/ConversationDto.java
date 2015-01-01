@@ -1,10 +1,8 @@
-package fr.pinguet62.croquette.android.action.sms.conversations;
+package fr.pinguet62.croquette.commons.dto;
 
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
-
-import fr.pinguet62.croquette.android.action.sms.MessageDto;
 
 public final class ConversationDto {
 

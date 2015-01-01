@@ -9,9 +9,11 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import fr.pinguet62.croquette.android.action.IAction;
-import fr.pinguet62.croquette.android.action.sms.MessageDto;
 import fr.pinguet62.croquette.android.sms.database.Sms;
 import fr.pinguet62.croquette.android.sms.database.SmsService;
+import fr.pinguet62.croquette.commons.dto.LoadedConversationDto;
+import fr.pinguet62.croquette.commons.dto.LoadingConversationDto;
+import fr.pinguet62.croquette.commons.dto.MessageDto;
 
 /** @see LoadingConversationDto */
 public final class LoadingConversationAction implements IAction {

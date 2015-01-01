@@ -1,20 +1,16 @@
-package fr.pinguet62.croquette.android.action.sms.exchange;
-
-import java.util.Date;
+package fr.pinguet62.croquette.commons.dto;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class ReceivedSmsDto {
+import fr.pinguet62.croquette.android.action.sms.exchange.SendSMSAction;
 
-    private final String action = ReceivedSMSAction.ACTION_VALUE;
+public final class SendSmsDto {
+
+    private final String action = SendSMSAction.ACTION_VALUE;
 
     private String content;
 
     private Integer conversation;
-
-    private Date date;
-
-    private Integer id;
 
     @SerializedName("phone number")
     private String phoneNumber;
@@ -31,14 +27,6 @@ public final class ReceivedSmsDto {
         return conversation;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -49,14 +37,6 @@ public final class ReceivedSmsDto {
 
     public void setConversation(Integer conversation) {
         this.conversation = conversation;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public void setPhoneNumber(String phoneNumber) {
