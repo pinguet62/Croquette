@@ -52,7 +52,7 @@ public final class LoadingConversationAction implements IAction {
             outDto.getMessages().add(messageDto);
         }
 
-        // Send DTO to Smartphone
+        // Send DTO to WebApp
         new LoadedConversationAction(outDto).execute();
     }
 

@@ -46,7 +46,7 @@ public final class ReceivedSMSAction implements IAction {
         dto.setDate(new Date(sms.getDate()));
         dto.setContent(sms.getBody());
 
-        // Send DTO to Smartphone
+        // Send DTO to WebApp
         String json = new Gson().toJson(dto);
         XMPPManager.getInstance().send(json);
     }
