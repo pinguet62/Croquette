@@ -1,37 +1,55 @@
 package fr.pinguet62.croquette.webapp.action;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import javax.json.Json;
-import javax.json.JsonObject;
+import java.util.Arrays;
 
 import org.junit.Test;
 
-import fr.pinguet62.croquette.webapp.action.ActionFactory;
-import fr.pinguet62.croquette.webapp.action.IAction;
+import fr.pinguet62.croquette.commons.dto.LoadedConversationDto;
+import fr.pinguet62.croquette.commons.dto.LoadedConversationsDto;
+import fr.pinguet62.croquette.commons.dto.LoadingConversationDto;
+import fr.pinguet62.croquette.commons.dto.LoadingConversationsDto;
+import fr.pinguet62.croquette.commons.dto.ReceivedSmsDto;
+import fr.pinguet62.croquette.commons.dto.SendSmsDto;
 import fr.pinguet62.croquette.webapp.action.sms.conversation.LoadedSMSAction;
+import fr.pinguet62.croquette.webapp.action.sms.conversations.LoadedConversationsAction;
 import fr.pinguet62.croquette.webapp.action.sms.exchange.ReceivedSMSAction;
 
-/** Tests for {@link ActionFactory}. */
+/** @see ActionFactory */
 public final class ActionFactoryTest {
 
-    /** Test for {@link LoadedSMSAction}. */
     @Test
-    public void testLoadedSMSAction() {
-        JsonObject jsonMessage = Json.createObjectBuilder()
-                .add(IAction.ACTION_KEY, LoadedSMSAction.ACTION_VALUE).build();
-        IAction action = ActionFactory.getAction(jsonMessage);
+    public void test_IllegalArgumentException() {
+        for (String key : Arrays.asList(SendSmsDto.KEY,
+                LoadingConversationDto.KEY, LoadingConversationsDto.KEY))
+            try {
+                String json = "{\"action\": \"" + key + "\"}";
+                ActionFactory.getAction(json);
+                fail();
+            } catch (IllegalArgumentException e) {
+            }
+    }
+
+    @Test
+    public void test_LoadedConversationsAction() {
+        String json = "{\"action\": \"" + LoadedConversationsDto.KEY + "\"}";
+        IAction action = ActionFactory.getAction(json);
+        assertTrue(action instanceof LoadedConversationsAction);
+    }
+
+    @Test
+    public void test_LoadedSMSAction() {
+        String json = "{\"action\": \"" + LoadedConversationDto.KEY + "\"}";
+        IAction action = ActionFactory.getAction(json);
         assertTrue(action instanceof LoadedSMSAction);
     }
 
-    /** Test for {@link ReceivedSMSAction}. */
     @Test
-    public void testReceivedSMSAction() {
-        JsonObject jsonMessage = Json.createObjectBuilder()
-                .add(IAction.ACTION_KEY, ReceivedSMSAction.ACTION_VALUE)
-                .build();
-        IAction action = ActionFactory.getAction(jsonMessage);
+    public void test_ReceivedSMSAction() {
+        String json = "{\"action\": \"" + ReceivedSmsDto.KEY + "\"}";
+        IAction action = ActionFactory.getAction(json);
         assertTrue(action instanceof ReceivedSMSAction);
     }
-
 }

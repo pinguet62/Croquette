@@ -13,11 +13,11 @@ import org.primefaces.push.PushContextFactory;
 import com.google.gson.Gson;
 
 import fr.pinguet62.croquette.commons.dto.LoadedConversationDto;
+import fr.pinguet62.croquette.commons.dto.LoadingConversationDto;
 import fr.pinguet62.croquette.commons.dto.MessageDto;
 import fr.pinguet62.croquette.commons.dto.ReceivedSmsDto;
 import fr.pinguet62.croquette.webapp.action.Action;
 import fr.pinguet62.croquette.webapp.action.sms.conversation.LoadedSMSAction;
-import fr.pinguet62.croquette.webapp.action.sms.conversation.LoadingSMSAction;
 import fr.pinguet62.croquette.webapp.action.sms.exchange.ReceivedSMSAction;
 import fr.pinguet62.croquette.webapp.model.Contact;
 import fr.pinguet62.croquette.webapp.model.Conversation;
@@ -97,7 +97,7 @@ public final class TestManagedBean {
         LoadedConversationDto conversationDto = new LoadedConversationDto();
         int conversationId = (int) (Math.random() * 25);
         conversationDto.setConversation(conversationId);
-        for (int i = 0; i < LoadingSMSAction.COUNT_VALUE; i++) {
+        for (int i = 0; i < LoadingConversationDto.COUNT; i++) {
             int messageId = (int) (Math.random() * 100);
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DAY_OF_YEAR, -(int) (Math.random() * 365));
