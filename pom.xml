@@ -4,10 +4,17 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>fr.pinguet62.croquette</groupId>
-	<artifactId>Croquette-WebApp</artifactId>
+	<artifactId>Croquette-Webapp</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<dependencies>
+		<!-- ===== Common ===== -->
+		<dependency>
+			<groupId>fr.pinguet62.croquette</groupId>
+			<artifactId>Croquette-Common</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
 		<!-- ===== Others ===== -->
 		<!-- Google contacts -->
 		<dependency>
@@ -150,7 +157,7 @@
 		</plugins>
 	</build>
 
-	<name>Croquette</name>
+	<name>Croquette-Webapp</name>
 	<description>
 		Web application used to communicate with a Smartphone
 	</description>
