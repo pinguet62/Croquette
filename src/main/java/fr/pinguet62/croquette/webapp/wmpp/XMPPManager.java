@@ -1,12 +1,5 @@
 package fr.pinguet62.croquette.webapp.wmpp;
 
-import java.io.StringReader;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.stream.JsonParsingException;
-
 import org.apache.log4j.Logger;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ConnectionConfiguration;
@@ -82,19 +75,21 @@ public final class XMPPManager implements MessageListener {
         String content = message.getBody();
         LOGGER.info("XMPP message received: " + content);
 
-        try (JsonReader jsonReader = Json
-                .createReader(new StringReader(content))) {
-            JsonObject jsonObject = jsonReader.readObject();
-            IAction action = ActionFactory.getAction(jsonObject);
-            if (action == null) {
-                LOGGER.error("Action not found.");
-                return;
-            }
-            if (action.fromSmartphone())
-                action.execute();
-        } catch (JsonParsingException exception) {
-            LOGGER.error("Invalid JSON message.");
+        // Factory
+        IAction action;
+        try {
+            action = ActionFactory.getAction(content);
+        } catch (IllegalArgumentException e) {
+            LOGGER.info("Action not found.", e);
+            return;
         }
+        // Broadcast
+        if (action == null) {
+            LOGGER.debug("Brodcast message; ignored");
+            return;
+        }
+        // Execute
+        action.execute();
     }
 
     /**

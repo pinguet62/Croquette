@@ -1,19 +1,16 @@
 package fr.pinguet62.croquette.webapp.action.sms.exchange;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
+import com.google.gson.Gson;
 
+import fr.pinguet62.croquette.commons.dto.SendSmsDto;
 import fr.pinguet62.croquette.webapp.action.Action;
+import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.model.Message;
 import fr.pinguet62.croquette.webapp.model.User;
 
 /** Send a SMS. */
-@Action(SendSMSAction.ACTION_VALUE)
-public final class SendSMSAction extends ExchangeSMSAction {
-
-    /** The {@code action} value. */
-    public static final String ACTION_VALUE = "SMS_EXCHANGE_SENDIND";
+@Action(SendSmsDto.KEY)
+public final class SendSMSAction implements IAction {
 
     /** The {@link Message} to send. */
     private Message message = null;
@@ -29,22 +26,23 @@ public final class SendSMSAction extends ExchangeSMSAction {
     }
 
     /**
-     * Create the JSON message from the {@link Message}. <br />
-     * Send to {@code GTalk} account.
+     * <ul>
+     * <li>Convert {@link Message} to {@link SendSmsDto}</li>
+     * <li>Send DTO to Smartphone</li>
+     * </ul>
      */
     @Override
     public void execute() {
-        JsonObjectBuilder jsonObjectBuilder = Json
-                .createObjectBuilder()
-                .add(ACTION_KEY, ACTION_VALUE)
-                .add(CONVERSATION, message.getConversation().getId())
-                .add(PHONE_NUMBER,
-                        message.getConversation().getContact().getPhoneNumber()
-                        .toString()).add(CONTENT, message.getContent());
-        JsonObject jsonObject = jsonObjectBuilder.build();
-        String message = jsonObject.toString();
+        // Convert data
+        SendSmsDto dto = new SendSmsDto();
+        dto.setContent(message.getContent());
+        dto.setConversation(message.getConversation().getId());
+        dto.setPhoneNumber(message.getConversation().getContact()
+                .getPhoneNumber().toString());
 
-        User.get().getXmppManager().send(message);
+        // Send DTO to Smartphone
+        String json = new Gson().toJson(dto);
+        User.get().getXmppManager().send(json);
     }
 
     @Override

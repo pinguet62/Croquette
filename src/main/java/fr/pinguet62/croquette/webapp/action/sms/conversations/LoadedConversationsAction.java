@@ -1,26 +1,25 @@
 package fr.pinguet62.croquette.webapp.action.sms.conversations;
 
-import java.text.ParseException;
-import java.util.List;
-
-import javax.json.JsonObject;
-
 import org.primefaces.push.PushContext;
 import org.primefaces.push.PushContextFactory;
 
+import com.google.gson.Gson;
+
+import fr.pinguet62.croquette.commons.dto.ConversationDto;
+import fr.pinguet62.croquette.commons.dto.LoadedConversationsDto;
+import fr.pinguet62.croquette.commons.dto.MessageDto;
 import fr.pinguet62.croquette.webapp.action.Action;
-import fr.pinguet62.croquette.webapp.action.ActionException;
 import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.bean.SmsManagedBean;
 import fr.pinguet62.croquette.webapp.model.Contact;
 import fr.pinguet62.croquette.webapp.model.Conversation;
 import fr.pinguet62.croquette.webapp.model.Message;
+import fr.pinguet62.croquette.webapp.model.Message.State;
 import fr.pinguet62.croquette.webapp.model.PhoneNumber;
 import fr.pinguet62.croquette.webapp.model.User;
-import fr.pinguet62.croquette.webapp.model.Message.State;
 
 /** Old {@link Conversation}s received. */
-@Action(LoadedConversationsAction.ACTION_VALUE)
+@Action(LoadedConversationsDto.KEY)
 public final class LoadedConversationsAction implements IAction {
 
     /** The {@code action} value. */
@@ -54,7 +53,7 @@ public final class LoadedConversationsAction implements IAction {
     public static final String PHONE_NUMBER = "phone number";
 
     /** The JSON message. */
-    private final JsonObject jsonMessage;
+    private final String json;
 
     /**
      * Constructor.
@@ -62,66 +61,62 @@ public final class LoadedConversationsAction implements IAction {
      * @param jsonMessage
      *            The JSON message.
      */
-    public LoadedConversationsAction(JsonObject jsonMessage) {
-        this.jsonMessage = jsonMessage;
+    public LoadedConversationsAction(String json) {
+        this.json = json;
     }
 
     @Override
     public void execute() {
-        try {
-            // Each conversation
-            List<JsonObject> jsonConversations = jsonMessage.getJsonArray(
-                    CONVERSATIONS).getValuesAs(JsonObject.class);
-            for (JsonObject conversationJson : jsonConversations) {
-                // Find conversation
-                int conversationId = conversationJson.getInt(CONVERSATION);
-                Conversation conversation = User.get().getConversations()
-                        .get(conversationId);
+        LoadedConversationsDto dto = new Gson().fromJson(json.toString(),
+                LoadedConversationsDto.class);
 
-                // New conversation
-                if (conversation == null) {
-                    // Find contact
-                    PhoneNumber phoneNumber = new PhoneNumber(
-                            conversationJson.getString(PHONE_NUMBER));
-                    Contact contact = User.get().getContacts().get(phoneNumber);
+        // Each conversation
+        for (ConversationDto conversationDto : dto.getConversations()) {
+            // Find conversation
+            int conversationId = conversationDto.getConversation();
+            Conversation conversation = User.get().getConversations()
+                    .get(conversationId);
 
-                    // New contact
-                    if (contact == null) {
-                        // Build contact
-                        contact = new Contact();
-                        contact.setName(phoneNumber.toString());
-                        contact.setPhoneNumber(phoneNumber);
-                        User.get().getContacts().add(contact);
-                    }
+            // New conversation
+            if (conversation == null) {
+                // Find contact
+                PhoneNumber phoneNumber = new PhoneNumber(
+                        conversationDto.getPhoneNumber());
+                Contact contact = User.get().getContacts().get(phoneNumber);
 
-                    // Build conversation
-                    conversation = new Conversation();
-                    conversation.setContact(contact);
-                    conversation.setId(conversationId);
-                    User.get().getConversations().add(conversation);
+                // New contact
+                if (contact == null) {
+                    // Build contact
+                    contact = new Contact();
+                    contact.setName(phoneNumber.toString());
+                    contact.setPhoneNumber(phoneNumber);
+                    User.get().getContacts().add(contact);
                 }
 
-                // Build message
-                JsonObject messageJson = conversationJson
-                        .getJsonObject(CONVERSATION_MESSAGE);
-                Message message = new Message();
-                message.setContent(messageJson
-                        .getString(CONVERSATION_MESSAGE_CONTENT));
-                message.setConversation(conversation);
-                message.setDate(FORMATTER.parse(messageJson
-                        .getString(CONVERSATION_MESSAGE_DATE)));
-                message.setId(messageJson.getInt(CONVERSATION_MESSAGE_ID));
-                message.setRead(true);
-                message.setSent(messageJson
-                        .getBoolean(CONVERSATION_MESSAGE_SENT));
-                message.setState(State.OK);
+                // Build conversation
+                conversation = new Conversation();
+                conversation.setContact(contact);
+                conversation.setId(conversationId);
+                User.get().getConversations().add(conversation);
 
-                conversation.add(message);
+                // Each message
+                for (MessageDto messageDto : conversationDto.getMessages()) {
+                    // Build message
+                    Message message = new Message();
+                    message.setContent(messageDto.getContent());
+                    message.setConversation(conversation);
+                    message.setDate(messageDto.getDate());
+                    message.setId(messageDto.getId());
+                    message.setRead(true);
+                    message.setSent(messageDto.getSent());
+                    message.setState(State.OK);
+
+                    conversation.add(message);
+                }
             }
-        } catch (ParseException | NullPointerException exception) {
-            throw new ActionException(exception);
         }
 
+        // Update view
         PushContext pushContext = PushContextFactory.getDefault()
                 .getPushContext();
         pushContext.push(SmsManagedBean.CHANNEL, null);

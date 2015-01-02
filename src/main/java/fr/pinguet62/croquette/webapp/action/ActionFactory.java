@@ -1,17 +1,22 @@
 package fr.pinguet62.croquette.webapp.action;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import javax.json.JsonObject;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AssignableTypeFilter;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+
+import fr.pinguet62.croquette.commons.dto.ReceivedSmsDto;
+import fr.pinguet62.croquette.commons.dto.SendSmsDto;
+import fr.pinguet62.croquette.webapp.action.sms.exchange.ReceivedSMSAction;
 
 /** Factory used to generate the corresponding {@link IAction} to execute. */
 public final class ActionFactory {
@@ -62,33 +67,43 @@ public final class ActionFactory {
      *            The JSON message.
      * @return The {@link Action}.
      */
-    public static IAction getAction(JsonObject jsonMessage) {
-        String actionName;
+    public static IAction getAction(String json) {
+        // Get action key
+        JsonElement root;
         try {
-            actionName = jsonMessage.getString(IAction.ACTION_KEY);
-        } catch (NullPointerException exception) {
-            LOGGER.error("Action key not found: " + IAction.ACTION_KEY);
-            return null;
+            root = new JsonParser().parse(json);
+        } catch (JsonSyntaxException e) {
+            throw new IllegalArgumentException("Bad JSON format", e);
         }
+        JsonElement actionElement = root.getAsJsonObject().get("action");
+        if (actionElement == null)
+            throw new IllegalArgumentException("Missing \"action\" key");
+        String action = actionElement.getAsString();
 
-        Class<?> classe = ActionFactory.ACTION_CLASS.get(actionName);
-        if (classe == null) {
-            LOGGER.error("Action value not found: " + actionName);
+        // Factory
+        if (SendSmsDto.KEY.equals(action))
             return null;
-        }
+        else if (ReceivedSmsDto.KEY.equals(action))
+            return new ReceivedSMSAction(json);
+        // else if (LoadingConversationAction.ACTION_VALUE.equals(action))
+        // return new LoadingConversationAction(json);
+        // else if (LoadedConversationAction.ACTION_VALUE.equals(action))
+        // return null;
+        else
+            throw new UnsupportedOperationException("Unknown action");
 
-        try {
-            Constructor<?> constructor = classe
-                    .getConstructor(JsonObject.class);
-            LOGGER.info("Action class: " + classe.getName());
-            IAction action = (IAction) constructor.newInstance(jsonMessage);
-            return action;
-        } catch (NoSuchMethodException | SecurityException
-                | InstantiationException | IllegalAccessException
-                | IllegalArgumentException | InvocationTargetException exception) {
-            LOGGER.error("Invalid action class: " + classe.getName(), exception);
-            return null;
-        }
+        // try {
+        // Constructor<?> constructor = classe
+        // .getConstructor(JsonObject.class);
+        // LOGGER.info("Action class: " + classe.getName());
+        // IAction action = (IAction) constructor.newInstance(jsonMessage);
+        // return action;
+        // } catch (NoSuchMethodException | SecurityException
+        // | InstantiationException | IllegalAccessException
+        // | IllegalArgumentException | InvocationTargetException exception) {
+        // LOGGER.error("Invalid action class: " + classe.getName(), exception);
+        // return null;
+        // }
     }
 
     /** Private constructor. */

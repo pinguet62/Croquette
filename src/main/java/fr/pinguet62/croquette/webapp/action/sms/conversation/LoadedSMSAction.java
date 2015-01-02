@@ -1,24 +1,23 @@
 package fr.pinguet62.croquette.webapp.action.sms.conversation;
 
-import java.text.ParseException;
-import java.util.List;
-
-import javax.json.JsonObject;
-
 import org.primefaces.push.PushContext;
 import org.primefaces.push.PushContextFactory;
 
+import com.google.gson.Gson;
+
+import fr.pinguet62.croquette.commons.dto.LoadedConversationDto;
+import fr.pinguet62.croquette.commons.dto.LoadingConversationDto;
+import fr.pinguet62.croquette.commons.dto.MessageDto;
 import fr.pinguet62.croquette.webapp.action.Action;
-import fr.pinguet62.croquette.webapp.action.ActionException;
 import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.bean.SmsManagedBean;
 import fr.pinguet62.croquette.webapp.model.Conversation;
 import fr.pinguet62.croquette.webapp.model.Message;
-import fr.pinguet62.croquette.webapp.model.User;
 import fr.pinguet62.croquette.webapp.model.Message.State;
+import fr.pinguet62.croquette.webapp.model.User;
 
 /** Old SMS of a {@link Conversation} received. */
-@Action(LoadedSMSAction.ACTION_VALUE)
+@Action(LoadedConversationDto.KEY)
 public final class LoadedSMSAction implements IAction {
 
     /** The {@code action} value. */
@@ -46,7 +45,7 @@ public final class LoadedSMSAction implements IAction {
     public static final String MESSAGES = "messages";
 
     /** The JSON message. */
-    private final JsonObject jsonMessage;
+    private final String json;
 
     /**
      * Constructor.
@@ -54,8 +53,8 @@ public final class LoadedSMSAction implements IAction {
      * @param jsonMessage
      *            The JSON message.
      */
-    public LoadedSMSAction(JsonObject jsonMessage) {
-        this.jsonMessage = jsonMessage;
+    public LoadedSMSAction(String json) {
+        this.json = json;
     }
 
     /**
@@ -64,34 +63,31 @@ public final class LoadedSMSAction implements IAction {
      */
     @Override
     public void execute() {
-        try {
-            Conversation conversation = User.get().getConversations()
-                    .get(jsonMessage.getInt(CONVERSATION));
+        LoadedConversationDto dto = new Gson().fromJson(json.toString(),
+                LoadedConversationDto.class);
 
-            // Each message
-            List<JsonObject> jsonMessages = jsonMessage.getJsonArray(MESSAGES)
-                    .getValuesAs(JsonObject.class);
-            for (JsonObject messageJson : jsonMessages) {
-                // Build message
-                Message message = new Message();
-                message.setContent(messageJson.getString(MESSAGE_CONTENT));
-                message.setConversation(conversation);
-                message.setDate(FORMATTER.parse(messageJson
-                        .getString(MESSAGE_DATE)));
-                message.setId(messageJson.getInt(MESSAGE_ID));
-                message.setRead(true);
-                message.setSent(messageJson.getBoolean(MESSAGE_SENT));
-                message.setState(State.OK);
-                conversation.add(message);
-            }
+        Conversation conversation = User.get().getConversations()
+                .get(dto.getConversation());
 
-            // Number of message less that default count: not other messages
-            if (jsonMessages.size() < LoadingSMSAction.COUNT_VALUE)
-                conversation.setHasOldMessages(false);
-        } catch (ParseException | NullPointerException exception) {
-            throw new ActionException(exception);
+        // Each message
+        for (MessageDto messageDto : dto.getMessages()) {
+            // Build message
+            Message message = new Message();
+            message.setContent(messageDto.getContent());
+            message.setConversation(conversation);
+            message.setDate(messageDto.getDate());
+            message.setId(messageDto.getId());
+            message.setRead(true);
+            message.setSent(messageDto.getSent());
+            message.setState(State.OK);
+            conversation.add(message);
         }
 
+        // Number of message less that default count: not other messages
+        if (dto.getMessages().size() < LoadingConversationDto.COUNT)
+            conversation.setHasOldMessages(false);
+
+        // Update view
         PushContext pushContext = PushContextFactory.getDefault()
                 .getPushContext();
         pushContext.push(SmsManagedBean.CHANNEL, null);

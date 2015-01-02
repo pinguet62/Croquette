@@ -1,34 +1,30 @@
 package fr.pinguet62.croquette.webapp.action.sms.exchange;
 
-import java.text.ParseException;
-
-import javax.json.JsonObject;
-
 import org.primefaces.push.PushContext;
 import org.primefaces.push.PushContextFactory;
 
+import com.google.gson.Gson;
+
+import fr.pinguet62.croquette.commons.dto.ReceivedSmsDto;
 import fr.pinguet62.croquette.webapp.action.Action;
-import fr.pinguet62.croquette.webapp.action.ActionException;
+import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.bean.SmsManagedBean;
 import fr.pinguet62.croquette.webapp.model.Contact;
 import fr.pinguet62.croquette.webapp.model.Conversation;
 import fr.pinguet62.croquette.webapp.model.Message;
+import fr.pinguet62.croquette.webapp.model.Message.State;
 import fr.pinguet62.croquette.webapp.model.PhoneNumber;
 import fr.pinguet62.croquette.webapp.model.User;
-import fr.pinguet62.croquette.webapp.model.Message.State;
 
 /** SMS received. */
-@Action(ReceivedSMSAction.ACTION_VALUE)
-public final class ReceivedSMSAction extends ExchangeSMSAction {
+@Action(ReceivedSmsDto.KEY)
+public final class ReceivedSMSAction implements IAction {
 
     /** The {@code action} value. */
     public static final String ACTION_VALUE = "SMS_EXCHANGE_RECEPTION";
 
-    /** Key for the id of the {@link Message}. */
-    public static final String ID = "id";
-
     /** The JSON message. */
-    private final JsonObject jsonMessage;
+    private final String json;
 
     /**
      * Constructor.
@@ -36,8 +32,8 @@ public final class ReceivedSMSAction extends ExchangeSMSAction {
      * @param jsonMessage
      *            The JSON message.
      */
-    public ReceivedSMSAction(JsonObject jsonMessage) {
-        this.jsonMessage = jsonMessage;
+    public ReceivedSMSAction(String json) {
+        this.json = json;
     }
 
     /**
@@ -46,50 +42,49 @@ public final class ReceivedSMSAction extends ExchangeSMSAction {
      */
     @Override
     public void execute() {
-        try {
-            // Find conversation
-            int conversationId = jsonMessage.getInt(CONVERSATION);
-            Conversation conversation = User.get().getConversations()
-                    .get(conversationId);
+        ReceivedSmsDto dto = new Gson().fromJson(json.toString(),
+                ReceivedSmsDto.class);
 
-            // New conversation
-            if (conversation == null) {
-                // Find contact
-                PhoneNumber phoneNumber = new PhoneNumber(
-                        jsonMessage.getString(PHONE_NUMBER));
-                Contact contact = User.get().getContacts().get(phoneNumber);
+        // Find conversation
+        int conversationId = dto.getConversation();
+        Conversation conversation = User.get().getConversations()
+                .get(conversationId);
 
-                // New contact
-                if (contact == null) {
-                    // Build contact
-                    contact = new Contact();
-                    contact.setName(phoneNumber.toString());
-                    contact.setPhoneNumber(phoneNumber);
-                    User.get().getContacts().add(contact);
-                }
+        // New conversation
+        if (conversation == null) {
+            // Find contact
+            PhoneNumber phoneNumber = new PhoneNumber(dto.getPhoneNumber());
+            Contact contact = User.get().getContacts().get(phoneNumber);
 
-                // Build conversation
-                conversation = new Conversation();
-                conversation.setContact(contact);
-                conversation.setId(conversationId);
-                User.get().getConversations().add(conversation);
+            // New contact
+            if (contact == null) {
+                // Build contact
+                contact = new Contact();
+                contact.setName(phoneNumber.toString());
+                contact.setPhoneNumber(phoneNumber);
+                User.get().getContacts().add(contact);
             }
 
-            // Build message
-            Message message = new Message();
-            message.setContent(jsonMessage.getString(CONTENT));
-            message.setConversation(conversation);
-            message.setDate(FORMATTER.parse(jsonMessage.getString(DATE)));
-            message.setId(jsonMessage.getInt(ID));
-            message.setRead(false);
-            message.setSent(false);
-            message.setState(State.OK);
-
-            conversation.add(message);
-        } catch (ParseException | NullPointerException exception) {
-            throw new ActionException(exception);
+            // Build conversation
+            conversation = new Conversation();
+            conversation.setContact(contact);
+            conversation.setId(conversationId);
+            User.get().getConversations().add(conversation);
         }
 
+        // Build message
+        Message message = new Message();
+        message.setContent(dto.getContent());
+        message.setConversation(conversation);
+        message.setDate(dto.getDate());
+        message.setId(dto.getId());
+        message.setRead(false);
+        message.setSent(false);
+        message.setState(State.OK);
+
+        conversation.add(message);
+
+        // Update view
         PushContext pushContext = PushContextFactory.getDefault()
                 .getPushContext();
         pushContext.push(SmsManagedBean.CHANNEL, null);

@@ -2,12 +2,11 @@ package fr.pinguet62.croquette.webapp.oauth;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.net.URL;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -21,6 +20,8 @@ import org.apache.log4j.Logger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+
+import com.google.gson.JsonParser;
 
 import fr.pinguet62.croquette.webapp.model.User;
 import fr.pinguet62.croquette.webapp.springsecurity.OAuthAuthenticationToken;
@@ -101,9 +102,9 @@ public final class RedirectOAuthServlet extends HttpServlet {
         HttpsURLConnection connection = (HttpsURLConnection) url
                 .openConnection();
 
-        JsonReader reader = Json.createReader(connection.getInputStream());
-        JsonObject jsonResponse = reader.readObject();
-        String email = jsonResponse.getString("email");
+        Reader reader = new InputStreamReader(connection.getInputStream());
+        String email = new JsonParser().parse(reader).getAsJsonObject()
+                .get("email").getAsString();
         LOGGER.info("OAuth email: " + email);
 
         return email;
@@ -138,9 +139,9 @@ public final class RedirectOAuthServlet extends HttpServlet {
         dataOutputStream.flush();
         dataOutputStream.close();
 
-        JsonReader reader = Json.createReader(connection.getInputStream());
-        JsonObject jsonResponse = reader.readObject();
-        String token = jsonResponse.getString("access_token");
+        Reader reader = new InputStreamReader(connection.getInputStream());
+        String token = new JsonParser().parse(reader).getAsJsonObject()
+                .get("access_token").getAsString();
         LOGGER.info("OAuth token: " + token);
 
         return token;

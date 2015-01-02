@@ -1,29 +1,30 @@
 package fr.pinguet62.croquette.webapp.bean;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
 
 import org.primefaces.push.PushContext;
 import org.primefaces.push.PushContextFactory;
 
+import com.google.gson.Gson;
+
+import fr.pinguet62.croquette.commons.dto.LoadedConversationDto;
+import fr.pinguet62.croquette.commons.dto.MessageDto;
+import fr.pinguet62.croquette.commons.dto.ReceivedSmsDto;
 import fr.pinguet62.croquette.webapp.action.Action;
-import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.action.sms.conversation.LoadedSMSAction;
 import fr.pinguet62.croquette.webapp.action.sms.conversation.LoadingSMSAction;
-import fr.pinguet62.croquette.webapp.action.sms.exchange.ExchangeSMSAction;
 import fr.pinguet62.croquette.webapp.action.sms.exchange.ReceivedSMSAction;
 import fr.pinguet62.croquette.webapp.model.Contact;
 import fr.pinguet62.croquette.webapp.model.Conversation;
 import fr.pinguet62.croquette.webapp.model.Message;
+import fr.pinguet62.croquette.webapp.model.Message.State;
 import fr.pinguet62.croquette.webapp.model.PhoneNumber;
 import fr.pinguet62.croquette.webapp.model.User;
-import fr.pinguet62.croquette.webapp.model.Message.State;
 
 /** Managed bean used to test some background {@link Action}s in application. */
 @ManagedBean(name = "testManagedBean")
@@ -93,31 +94,23 @@ public final class TestManagedBean {
      *            The contact.
      */
     public void loadedSMSAction(final Conversation conversation) {
+        LoadedConversationDto conversationDto = new LoadedConversationDto();
         int conversationId = (int) (Math.random() * 25);
-        JsonArrayBuilder jsonMessages = Json.createArrayBuilder();
+        conversationDto.setConversation(conversationId);
         for (int i = 0; i < LoadingSMSAction.COUNT_VALUE; i++) {
             int messageId = (int) (Math.random() * 100);
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DAY_OF_YEAR, -(int) (Math.random() * 365));
-            System.out.println(calendar.getTime());
-            jsonMessages.add(Json
-                    .createObjectBuilder()
-                    .add(LoadedSMSAction.MESSAGE_ID, messageId)
-                    .add(LoadedSMSAction.MESSAGE_SENT,
-                            (Math.random() < 0.5 ? Boolean.TRUE.toString()
-                                    : Boolean.FALSE.toString()))
-                    .add(LoadedSMSAction.MESSAGE_DATE,
-                            new SimpleDateFormat("YYYY-MM-dd'T'hh:mm:ss")
-                                    .format(new Date()))
-                    .add(LoadedSMSAction.MESSAGE_CONTENT,
-                            String.format("Conversation %d, message %d",
-                                    conversationId, messageId)));
+            MessageDto messageDto = new MessageDto();
+            messageDto.setContent(String.format("Conversation %d, message %d",
+                    conversationId, messageId));
+            messageDto.setDate(new Date());
+            messageDto.setId(messageId);
+            messageDto.setSent(Math.random() < 0.5 ? true : false);
+            conversationDto.getMessages().add(messageDto);
         }
-        String jsonMessage = Json.createObjectBuilder()
-                .add(IAction.ACTION_KEY, IAction.ACTION_KEY)
-                .add(LoadedSMSAction.CONVERSATION, conversationId)
-                .add(LoadedSMSAction.MESSAGES, jsonMessages).build().toString();
-        User.get().getXmppManager().send(jsonMessage);
+        String json = new Gson().toJson(conversationDto);
+        User.get().getXmppManager().send(json);
     }
 
     /** Test for Prime Push messages. */
@@ -134,18 +127,15 @@ public final class TestManagedBean {
     public void receviedSMSAction() {
         int messageId = (int) Math.random() * 100;
         int conversationId = (int) Math.random() * 25;
-        String jsonMessage = Json
-                .createObjectBuilder()
-                .add(IAction.ACTION_KEY, ReceivedSMSAction.ACTION_VALUE)
-                .add(ReceivedSMSAction.ID, messageId)
-                .add(ExchangeSMSAction.CONVERSATION, conversationId)
-                .add(ExchangeSMSAction.DATE,
-                        new SimpleDateFormat("YYYY-MM-dd'T'hh:mm:ss")
-                                .format(new Date()))
-                .add(ExchangeSMSAction.CONTENT,
-                        String.format("Conversation %d, message %d",
-                                conversationId, messageId)).build().toString();
-        User.get().getXmppManager().send(jsonMessage);
+        ReceivedSmsDto receivedSmsDto = new ReceivedSmsDto();
+        receivedSmsDto.setContent(String.format("Conversation %d, message %d",
+                conversationId, messageId));
+        receivedSmsDto.setConversation(conversationId);
+        receivedSmsDto.setDate(new Date());
+        receivedSmsDto.setId(messageId);
+        receivedSmsDto.setPhoneNumber(UUID.randomUUID().toString());
+        String json = new Gson().toJson(receivedSmsDto);
+        User.get().getXmppManager().send(json);
     }
 
     /** Send XMPP message. */

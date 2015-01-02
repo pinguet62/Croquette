@@ -1,9 +1,9 @@
 package fr.pinguet62.croquette.webapp.action.sms.conversation;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
+import fr.pinguet62.croquette.commons.dto.LoadingConversationDto;
 import fr.pinguet62.croquette.webapp.action.Action;
 import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.model.Conversation;
@@ -11,7 +11,7 @@ import fr.pinguet62.croquette.webapp.model.Message;
 import fr.pinguet62.croquette.webapp.model.User;
 
 /** Load old SMS of a {@link Conversation}. */
-@Action(LoadingSMSAction.ACTION_VALUE)
+@Action(LoadingConversationDto.KEY)
 public final class LoadingSMSAction implements IAction {
 
     /** The {@code action} value. */
@@ -54,15 +54,14 @@ public final class LoadingSMSAction implements IAction {
      */
     @Override
     public void execute() {
-        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder()
-                .add(IAction.ACTION_KEY, LoadingSMSAction.ACTION_VALUE)
-                .add(CONVERSATION, conversation.getId())
-                .add(OLDEST, conversation.first().getId())
-                .add(COUNT_KEY, COUNT_VALUE);
-        JsonObject jsonObject = jsonObjectBuilder.build();
-        String message = jsonObject.toString();
+        // Convert data
+        LoadingConversationDto dto = new LoadingConversationDto();
+        dto.setId(conversation.getId());
+        dto.setOldest(conversation.first().getId());
 
-        User.get().getXmppManager().send(message);
+        // Send DTO to Smartphone
+        String json = new Gson().toJson(dto);
+        User.get().getXmppManager().send(json);
     }
 
     @Override
