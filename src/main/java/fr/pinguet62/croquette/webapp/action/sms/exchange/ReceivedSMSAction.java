@@ -5,6 +5,7 @@ import org.primefaces.push.PushContextFactory;
 
 import com.google.gson.Gson;
 
+import fr.pinguet62.croquette.commons.dto.MessageDto;
 import fr.pinguet62.croquette.commons.dto.ReceivedSmsDto;
 import fr.pinguet62.croquette.webapp.action.Action;
 import fr.pinguet62.croquette.webapp.action.IAction;
@@ -16,29 +17,27 @@ import fr.pinguet62.croquette.webapp.model.Message.State;
 import fr.pinguet62.croquette.webapp.model.PhoneNumber;
 import fr.pinguet62.croquette.webapp.model.User;
 
-/** SMS received. */
+/**
+ * Result for {@link SendSMSAction} action.
+ *
+ * @see SendSMSAction
+ * @see ReceivedSmsDto
+ */
 @Action(ReceivedSmsDto.KEY)
 public final class ReceivedSMSAction implements IAction {
 
-    /** The {@code action} value. */
-    public static final String ACTION_VALUE = "SMS_EXCHANGE_RECEPTION";
-
-    /** The JSON message. */
     private final String json;
 
-    /**
-     * Constructor.
-     *
-     * @param jsonMessage
-     *            The JSON message.
-     */
     public ReceivedSMSAction(String json) {
         this.json = json;
     }
 
     /**
-     * Create the {@link Message} from the JSON message. <br />
-     * Add to {@link Conversation} and update the view.
+     * <ul>
+     * <li>Get (or create if no exists) {@link Conversation}</li>
+     * <li>Convert {@link MessageDto} to {@link Message}</li>
+     * <li>Update view</li>
+     * </ul>
      */
     @Override
     public void execute() {

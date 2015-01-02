@@ -1,19 +1,17 @@
 package fr.pinguet62.croquette.webapp.action;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-/** Possible action with smartphone. */
+/**
+ * Action executed to ask data to Smartphone, or for handler for data received
+ * from Smartphone.
+ */
 public interface IAction {
 
-    /** Key for {@link ActionType}. */
-    public static final String ACTION_KEY = "action";
-
-    /** The ISO 8601 formatter. */
-    public static final DateFormat FORMATTER = new SimpleDateFormat(
-            "yyyy-MM-dd'T'HH:mm:ss");
-
-    /** Execute the action. */
+    /**
+     * Execute the action.
+     *
+     * @throws ActionException
+     *             Exception during execution.
+     */
     void execute();
 
     /**

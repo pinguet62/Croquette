@@ -18,53 +18,32 @@ import fr.pinguet62.croquette.webapp.model.Message.State;
 import fr.pinguet62.croquette.webapp.model.PhoneNumber;
 import fr.pinguet62.croquette.webapp.model.User;
 
-/** Old {@link Conversation}s received. */
+/**
+ * Result of {@link LoadingConversationsAction} action.
+ *
+ * @see LoadingConversationsAction
+ * @see LoadedConversationsDto
+ */
 @Action(LoadedConversationsDto.KEY)
 public final class LoadedConversationsAction implements IAction {
 
-    /** The {@code action} value. */
-    public static final String ACTION_VALUE = "SMS_CONVERSATIONS_LOADED";
-
-    /** Key for id of {@link Conversation}. */
-    public static final String CONVERSATION = "conversation";
-
-    /** Key for {@link Message} of {@link Conversation}. */
-    public static final String CONVERSATION_MESSAGE = "message";
-
-    /** Key for content of {@link Message} of {@link Conversation}. */
-    public static final String CONVERSATION_MESSAGE_CONTENT = "content";
-
-    /** Key for date of {@link Message} of {@link Conversation}. */
-    public static final String CONVERSATION_MESSAGE_DATE = "date";
-
-    /** Key for id of {@link Message} of {@link Conversation}. */
-    public static final String CONVERSATION_MESSAGE_ID = "id";
-
-    /**
-     * Key for boolean to define if the {@link Message} of the
-     * {@link Conversation} was sent or not.
-     */
-    public static final String CONVERSATION_MESSAGE_SENT = "sent";
-
-    /** Key for number of {@link Conversation} to load. */
-    public static final String CONVERSATIONS = "conversations";
-
-    /** Key for the {@link PhoneNumber} of {@link Contact}. */
-    public static final String PHONE_NUMBER = "phone number";
-
-    /** The JSON message. */
     private final String json;
 
-    /**
-     * Constructor.
-     *
-     * @param jsonMessage
-     *            The JSON message.
-     */
     public LoadedConversationsAction(String json) {
         this.json = json;
     }
 
+    /**
+     * <ul>
+     * <li>For each {@link ConversationDto}:</li>
+     * <ul>
+     * <li>Get (or create if no exists) {@link Conversation}</li>
+     * <li>For each {@link MessageDto}</li>
+     * <ul>
+     * <li>Convert {@link MessageDto} to {@link Message}</li>
+     * </ul>
+     * </ul><li>Update view</li></ul>
+     */
     @Override
     public void execute() {
         LoadedConversationsDto dto = new Gson().fromJson(json.toString(),

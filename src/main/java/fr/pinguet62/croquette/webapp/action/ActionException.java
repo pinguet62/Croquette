@@ -1,17 +1,10 @@
 package fr.pinguet62.croquette.webapp.action;
 
-/** Exception occurring during actions. */
-public class ActionException extends RuntimeException {
+/** Exception occurring during {@link IAction} execution. */
+public final class ActionException extends RuntimeException {
 
-    /** Serial version UID. */
     private static final long serialVersionUID = 1;
 
-    /**
-     * Constructor with initial Exception.
-     *
-     * @param cause
-     *            The cause.
-     */
     public ActionException(Throwable cause) {
         super(cause);
     }

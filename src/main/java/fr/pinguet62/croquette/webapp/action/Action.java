@@ -4,15 +4,22 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Annotation used to define the value of {@code action} key in the JSON
- * message. <br />
- * The annotated classes are explored by {@link ActionFactory} to determinate
- * the action to perform.
+ * Annotation used to define the unique key of {@link IAction}. These annotated
+ * classes are scanned at program lunch to identify {@link IAction}.
+ * <p>
+ * The implements of {@link IAction} must have a constructor with {@link String}
+ * parameter.
+ * <p>
+ * Only action from Smartphone must be annotated with this annotation! These
+ * {@link IAction} will be executed automatically after reception of JSON
+ * messages.
+ *
+ * @see ActionFactory
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Action {
 
-    /** Value of {@code action} key. */
+    /** The key of {@link IAction}. */
     String value();
 
 }

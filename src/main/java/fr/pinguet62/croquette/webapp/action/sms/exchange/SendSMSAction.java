@@ -8,19 +8,17 @@ import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.model.Message;
 import fr.pinguet62.croquette.webapp.model.User;
 
-/** Send a SMS. */
+/**
+ * Send a SMS.
+ *
+ * @see ReceivedSMSAction
+ * @see SendSmsDto
+ */
 @Action(SendSmsDto.KEY)
 public final class SendSMSAction implements IAction {
 
-    /** The {@link Message} to send. */
-    private Message message = null;
+    private final Message message;
 
-    /**
-     * Constructor with {@link Message}.
-     *
-     * @param message
-     *            The message to send.
-     */
     public SendSMSAction(Message message) {
         this.message = message;
     }
@@ -28,7 +26,7 @@ public final class SendSMSAction implements IAction {
     /**
      * <ul>
      * <li>Convert {@link Message} to {@link SendSmsDto}</li>
-     * <li>Send DTO to Smartphone</li>
+     * <li>Send {@link SendSmsDto DTO} to Smartphone</li>
      * </ul>
      */
     @Override

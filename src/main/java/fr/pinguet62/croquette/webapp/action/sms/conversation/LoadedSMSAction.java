@@ -16,50 +16,27 @@ import fr.pinguet62.croquette.webapp.model.Message;
 import fr.pinguet62.croquette.webapp.model.Message.State;
 import fr.pinguet62.croquette.webapp.model.User;
 
-/** Old SMS of a {@link Conversation} received. */
+/**
+ * Result of {@link LoadingSMSAction} action.
+ *
+ * @see LoadingSMSAction
+ * @see LoadedConversationDto
+ */
 @Action(LoadedConversationDto.KEY)
 public final class LoadedSMSAction implements IAction {
 
-    /** The {@code action} value. */
-    public static final String ACTION_VALUE = "SMS_CONVERSATION_LOADED";
-
-    /** Key for the id of {@link Conversation}. */
-    public static final String CONVERSATION = "conversation";
-
-    /** Key for the content of the {@link Message} of the {@link Conversation}. */
-    public static final String MESSAGE_CONTENT = "content";
-
-    /** Key for the date of {@link Message} of the {@link Conversation}. */
-    public static final String MESSAGE_DATE = "date";
-
-    /** Key for the id of the {@link Message} of the {@link Conversation}. */
-    public static final String MESSAGE_ID = "id";
-
-    /**
-     * Key for boolean to define if the {@link Message} of the
-     * {@link Conversation} was sent or not.
-     */
-    public static final String MESSAGE_SENT = "sent";
-
-    /** Key for number of {@link Message} to load. */
-    public static final String MESSAGES = "messages";
-
-    /** The JSON message. */
     private final String json;
 
-    /**
-     * Constructor.
-     *
-     * @param jsonMessage
-     *            The JSON message.
-     */
     public LoadedSMSAction(String json) {
         this.json = json;
     }
 
     /**
-     * Extract the {@link Message}s from the JSON message.<br />
-     * Add to {@link Conversation}.
+     * <ul>
+     * <li>Get (or create if no exists) {@link Conversation}</li>
+     * <li>Convert {@link MessageDto} to {@link Message}</li>
+     * <li>Update view</li>
+     * </ul>
      */
     @Override
     public void execute() {

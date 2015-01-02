@@ -8,36 +8,27 @@ import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.model.Conversation;
 import fr.pinguet62.croquette.webapp.model.User;
 
-/** Load old {@link Conversation}s. */
+/**
+ * Load old {@link Conversation}s.
+ *
+ * @see LoadedConversationsAction
+ * @see LoadingConversationsDto
+ */
 @Action(LoadingConversationsDto.KEY)
 public final class LoadingConversationsAction implements IAction {
 
-    /** The {@code action} value. */
-    public static final String ACTION_VALUE = "SMS_CONVERSATIONS_LOADING";
-
-    /** Key for number of {@link Conversation}s to load. */
-    public static final String COUNT_KEY = "count";
-
-    /** Value for number of {@link Conversation}s to load. */
-    public static final int COUNT_VALUE = 5;
-
-    /** Key for the id of the oldest {@link Conversation}. */
-    public static final String OLDEST = "oldest";
-
-    /** Value for the id of the oldest {@link Conversation}. */
-    private final Integer oldest;
+    /** The id of the oldest {@link Conversation}. */
+    private final int oldest;
 
     /**
-     * Constructor.
-     *
      * @param oldest
-     *            The id of the oldest {@link Conversation}. {@code null} if no
-     *            {@link Conversation} known.
+     *            The id of the oldest {@link Conversation}.
      */
-    public LoadingConversationsAction(Integer oldest) {
+    public LoadingConversationsAction(int oldest) {
         this.oldest = oldest;
     }
 
+    /** Send {@link LoadingConversationsDto DTO} to Smartphone. */
     @Override
     public void execute() {
         // Convert data
