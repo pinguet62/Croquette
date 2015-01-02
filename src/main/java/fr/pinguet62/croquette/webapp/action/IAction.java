@@ -14,13 +14,4 @@ public interface IAction {
      */
     void execute();
 
-    /**
-     * Test if it's an action from the smartphone.<br />
-     * Used to not execute action sent to the smartphone and immediately
-     * received because of the broadcast.
-     *
-     * @return Result.
-     */
-    boolean fromSmartphone();
-
 }

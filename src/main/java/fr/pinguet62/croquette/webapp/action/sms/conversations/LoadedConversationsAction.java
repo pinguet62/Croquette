@@ -101,9 +101,4 @@ public final class LoadedConversationsAction implements IAction {
         pushContext.push(SmsManagedBean.CHANNEL, null);
     }
 
-    @Override
-    public boolean fromSmartphone() {
-        return true;
-    }
-
 }

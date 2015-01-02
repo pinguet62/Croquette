@@ -3,7 +3,6 @@ package fr.pinguet62.croquette.webapp.action.sms.conversations;
 import com.google.gson.Gson;
 
 import fr.pinguet62.croquette.commons.dto.LoadingConversationsDto;
-import fr.pinguet62.croquette.webapp.action.Action;
 import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.model.Conversation;
 import fr.pinguet62.croquette.webapp.model.User;
@@ -14,7 +13,6 @@ import fr.pinguet62.croquette.webapp.model.User;
  * @see LoadedConversationsAction
  * @see LoadingConversationsDto
  */
-@Action(LoadingConversationsDto.KEY)
 public final class LoadingConversationsAction implements IAction {
 
     /** The id of the oldest {@link Conversation}. */
@@ -38,11 +36,6 @@ public final class LoadingConversationsAction implements IAction {
         // Send DTO to Smartphone
         String json = new Gson().toJson(dto);
         User.get().getXmppManager().send(json);
-    }
-
-    @Override
-    public boolean fromSmartphone() {
-        return false;
     }
 
 }

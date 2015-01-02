@@ -3,7 +3,6 @@ package fr.pinguet62.croquette.webapp.action.sms.exchange;
 import com.google.gson.Gson;
 
 import fr.pinguet62.croquette.commons.dto.SendSmsDto;
-import fr.pinguet62.croquette.webapp.action.Action;
 import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.model.Message;
 import fr.pinguet62.croquette.webapp.model.User;
@@ -14,7 +13,6 @@ import fr.pinguet62.croquette.webapp.model.User;
  * @see ReceivedSMSAction
  * @see SendSmsDto
  */
-@Action(SendSmsDto.KEY)
 public final class SendSMSAction implements IAction {
 
     private final Message message;
@@ -41,11 +39,6 @@ public final class SendSMSAction implements IAction {
         // Send DTO to Smartphone
         String json = new Gson().toJson(dto);
         User.get().getXmppManager().send(json);
-    }
-
-    @Override
-    public boolean fromSmartphone() {
-        return false;
     }
 
 }
