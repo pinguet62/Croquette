@@ -54,10 +54,14 @@ public final class ActionFactory {
             } catch (ClassNotFoundException e) {
                 continue;
             }
+            LOGGER.info("IAction: " + findedClass.getName());
+
             // Annotation
             Action annotation = findedClass.getAnnotation(Action.class);
             if (annotation == null)
                 continue;
+            LOGGER.info("Handler for key: " + annotation.value());
+
             // Save
             ActionFactory.CLASSES.put(annotation.value(), findedClass);
         }
@@ -93,6 +97,7 @@ public final class ActionFactory {
         if (actionElement == null)
             throw new IllegalArgumentException("Missing \"action\" key");
         String key = actionElement.getAsString();
+        LOGGER.debug("Action key: " + key);
 
         Class<? extends IAction> classe = CLASSES.get(key);
         if (classe == null)
@@ -100,7 +105,7 @@ public final class ActionFactory {
 
         try {
             Constructor<?> constructor = classe.getConstructor(String.class);
-            LOGGER.info("Action class: " + classe.getName());
+            LOGGER.debug("Action class: " + classe.getName());
             IAction action = (IAction) constructor.newInstance(json);
             return action;
         } catch (NoSuchMethodException | SecurityException
