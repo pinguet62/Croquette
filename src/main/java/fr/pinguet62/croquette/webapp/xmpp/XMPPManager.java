@@ -1,4 +1,4 @@
-package fr.pinguet62.croquette.webapp.wmpp;
+package fr.pinguet62.croquette.webapp.xmpp;
 
 import org.apache.log4j.Logger;
 import org.jivesoftware.smack.Chat;

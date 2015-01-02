@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import fr.pinguet62.croquette.webapp.springsecurity.OAuthAuthenticationToken;
-import fr.pinguet62.croquette.webapp.wmpp.XMPPManager;
+import fr.pinguet62.croquette.webapp.xmpp.XMPPManager;
 
 /** Informations about user. */
 public final class User implements Serializable {
