@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import fr.pinguet62.croquette.commons.dto.LoadedConversationDto;
 import fr.pinguet62.croquette.commons.dto.LoadingConversationDto;
 import fr.pinguet62.croquette.commons.dto.MessageDto;
-import fr.pinguet62.croquette.webapp.action.Action;
+import fr.pinguet62.croquette.webapp.action.SmartphoneHandler;
 import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.bean.SmsManagedBean;
 import fr.pinguet62.croquette.webapp.model.Conversation;
@@ -22,7 +22,7 @@ import fr.pinguet62.croquette.webapp.model.User;
  * @see LoadingSMSAction
  * @see LoadedConversationDto
  */
-@Action(LoadedConversationDto.KEY)
+@SmartphoneHandler(LoadedConversationDto.KEY)
 public final class LoadedSMSAction implements IAction {
 
     private final String json;

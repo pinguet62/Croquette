@@ -16,7 +16,7 @@ import fr.pinguet62.croquette.commons.dto.LoadedConversationDto;
 import fr.pinguet62.croquette.commons.dto.LoadingConversationDto;
 import fr.pinguet62.croquette.commons.dto.MessageDto;
 import fr.pinguet62.croquette.commons.dto.ReceivedSmsDto;
-import fr.pinguet62.croquette.webapp.action.Action;
+import fr.pinguet62.croquette.webapp.action.SmartphoneHandler;
 import fr.pinguet62.croquette.webapp.action.sms.conversation.LoadedSMSAction;
 import fr.pinguet62.croquette.webapp.action.sms.exchange.ReceivedSMSAction;
 import fr.pinguet62.croquette.webapp.model.Contact;
@@ -26,7 +26,7 @@ import fr.pinguet62.croquette.webapp.model.Message.State;
 import fr.pinguet62.croquette.webapp.model.PhoneNumber;
 import fr.pinguet62.croquette.webapp.model.User;
 
-/** Managed bean used to test some background {@link Action}s in application. */
+/** Managed bean used to test some background {@link SmartphoneHandler}s in application. */
 @ManagedBean(name = "testManagedBean")
 @SessionScoped
 public final class TestManagedBean {

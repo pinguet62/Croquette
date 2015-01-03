@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 
 import fr.pinguet62.croquette.commons.dto.MessageDto;
 import fr.pinguet62.croquette.commons.dto.ReceivedSmsDto;
-import fr.pinguet62.croquette.webapp.action.Action;
+import fr.pinguet62.croquette.webapp.action.SmartphoneHandler;
 import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.bean.SmsManagedBean;
 import fr.pinguet62.croquette.webapp.model.Contact;
@@ -23,7 +23,7 @@ import fr.pinguet62.croquette.webapp.model.User;
  * @see SendSMSAction
  * @see ReceivedSmsDto
  */
-@Action(ReceivedSmsDto.KEY)
+@SmartphoneHandler(ReceivedSmsDto.KEY)
 public final class ReceivedSMSAction implements IAction {
 
     private final String json;

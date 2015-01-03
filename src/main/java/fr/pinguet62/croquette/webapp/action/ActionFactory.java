@@ -22,7 +22,7 @@ import com.google.gson.JsonSyntaxException;
  * Get the value of root attribute {@code "action"} to determinate the
  * corresponding implementation of {@link IAction}.
  *
- * @see Action
+ * @see SmartphoneHandler
  * @see IAction
  */
 @SuppressWarnings("unchecked")
@@ -57,7 +57,7 @@ public final class ActionFactory {
             LOGGER.info("IAction: " + findedClass.getName());
 
             // Annotation
-            Action annotation = findedClass.getAnnotation(Action.class);
+            SmartphoneHandler annotation = findedClass.getAnnotation(SmartphoneHandler.class);
             if (annotation == null)
                 continue;
             LOGGER.info("Handler for key: " + annotation.value());
@@ -73,7 +73,7 @@ public final class ActionFactory {
      * To be found, the action class must:
      * <ul>
      * <li>implements {@link IAction};
-     * <li>have {@link Action} annotation;
+     * <li>have {@link SmartphoneHandler} annotation;
      * <li>have a constructor with {@link String} parameter.
      * </ul>
      *
