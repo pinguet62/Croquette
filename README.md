@@ -1,7 +1,5 @@
 ﻿# Croquette-Android
 
-*Fork* of initial [**Croquette**](https://github.com/matsumonkie/Croquette) project.
-
 ## Install
 
 Read `INSTALL.md` file.
