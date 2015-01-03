@@ -1,8 +1,12 @@
-# How create the project
+# INSTALL
 
 ## Java
 
 This project use Java 8.
+
+## Dependencies
+
+The common project [**Croquette-Common**](https://github.com/pinguet62/Croquette-Common) is necessary for compilation.
 
 ## Tomcat
 

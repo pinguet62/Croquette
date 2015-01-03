@@ -1,11 +1,12 @@
-Croquette
-=========
+# Croquette-Webapp
 
-Reprise du projet Croquette de projet avec Iori
+*Fork* of initial [**Croquette**](https://github.com/matsumonkie/Croquette) project.
 
 ## Install
-Read the `INSTALL.md` file into root directory.
+
+Read `INSTALL.md` file.
 
 ## License
-Read the `LICENSE` file into root directory.
+
+Read `LICENSE` file.
 
