@@ -1,14 +1,17 @@
 package fr.pinguet62.croquette.webapp.bean.theme;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /** Used to store informations about a theme. */
-public final class Theme {
+public final class Theme implements Serializable {
 
     /** The list of available {@link Theme}s. */
     public static final Iterable<Theme> AVAILABLES;
+
+    private static final long serialVersionUID = 1;
     static {
         List<Theme> tmpThemes = new ArrayList<Theme>();
         tmpThemes.add(new Theme("afterdark", "Afterdark", "afterdark.png"));
@@ -27,7 +30,7 @@ public final class Theme {
         tmpThemes.add(new Theme("dot-luv", "Dot-Luv", "dot-luv.png"));
         tmpThemes.add(new Theme("eggplant", "Eggplant", "eggplant.png"));
         tmpThemes
-        .add(new Theme("excite-bike", "Excite-Bike", "excite-bike.png"));
+                .add(new Theme("excite-bike", "Excite-Bike", "excite-bike.png"));
         tmpThemes.add(new Theme("flick", "Flick", "flick.png"));
         tmpThemes.add(new Theme("glass-x", "Glass-X", "glass-x.png"));
         tmpThemes.add(new Theme("home", "Home", "home.png"));
@@ -51,7 +54,7 @@ public final class Theme {
                 "swanky-purse.png"));
         tmpThemes.add(new Theme("trontastic", "Trontastic", "trontastic.png"));
         tmpThemes
-        .add(new Theme("ui-darkness", "UI-Darkness", "ui-darkness.png"));
+                .add(new Theme("ui-darkness", "UI-Darkness", "ui-darkness.png"));
         tmpThemes.add(new Theme("ui-lightness", "UI-Lightness",
                 "ui-lightness.png"));
         tmpThemes.add(new Theme("vader", "Vader", "vader.png"));

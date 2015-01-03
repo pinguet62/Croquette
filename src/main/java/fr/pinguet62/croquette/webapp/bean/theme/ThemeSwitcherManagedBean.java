@@ -1,12 +1,16 @@
 package fr.pinguet62.croquette.webapp.bean.theme;
 
+import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-/** Used to switch of PrimeFaces theme. */
+/** Used to switch of PrimeFaces {@link Theme}. */
 @ManagedBean(name = "themeSwitcherManagedBean")
 @SessionScoped
-public final class ThemeSwitcherManagedBean {
+public final class ThemeSwitcherManagedBean implements Serializable {
+
+    private static final long serialVersionUID = 1;
 
     /** The current {@link Theme}. */
     private Theme theme = Theme.fromKey("dark-hive");
@@ -21,9 +25,9 @@ public final class ThemeSwitcherManagedBean {
     }
 
     /**
-     * Gets the list of {@link Theme}s.
+     * Gets the list of available {@link Theme}s.
      *
-     * @return The list of {@link Theme}s.
+     * @return The {@link Theme}s.
      */
     public Iterable<Theme> getThemes() {
         return Theme.AVAILABLES;
