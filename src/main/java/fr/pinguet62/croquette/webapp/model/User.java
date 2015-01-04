@@ -11,7 +11,6 @@ import fr.pinguet62.croquette.webapp.xmpp.XMPPManager;
 /** Informations about user. */
 public final class User implements Serializable {
 
-    /** Serial version UID. */
     private static final long serialVersionUID = 1;
 
     /**

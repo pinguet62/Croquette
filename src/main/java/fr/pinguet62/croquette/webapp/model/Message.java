@@ -6,7 +6,7 @@ import java.util.Date;
 
 /** Message exchanged with a {@link Contact}. */
 // TODO Remove default constructor & setters + set final keyword attributes
-public final class Message implements Comparable<Message>, Serializable {
+public final class Message implements Serializable, Comparable<Message> {
 
     /** States of a {@link Message}. */
     public enum State {
@@ -16,7 +16,6 @@ public final class Message implements Comparable<Message>, Serializable {
         OK;
     }
 
-    /** Serial version UID. */
     private static final long serialVersionUID = 1;
 
     /** The content. */

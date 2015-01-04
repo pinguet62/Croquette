@@ -1,5 +1,6 @@
 package fr.pinguet62.croquette.webapp.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -23,10 +24,12 @@ import fr.pinguet62.croquette.webapp.model.User;
 /** Managed bean used to control the SMS view. */
 @ManagedBean(name = "smsManagedBean")
 @SessionScoped
-public final class SmsManagedBean {
+public final class SmsManagedBean implements Serializable {
 
     /** The channel name of the connection with the view. */
     public static final String CHANNEL = "/channel";
+
+    private static final long serialVersionUID = 1;
 
     /** The selected {@link Conversation}. */
     private Conversation selectedConversation = null;

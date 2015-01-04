@@ -19,13 +19,11 @@ import fr.pinguet62.croquette.webapp.model.User;
  */
 public final class XMPPManager implements MessageListener {
 
-    /** The logger. */
     private static final Logger LOGGER = Logger.getLogger(XMPPManager.class);
 
-    /** The XMPP chat. */
+    /** The {@link Chat} with oneself. */
     private Chat chat = null;
 
-    /** The XMPP connection. */
     private XMPPConnection connection = null;
 
     /** Connect to GTalk. */
@@ -45,8 +43,9 @@ public final class XMPPManager implements MessageListener {
         try {
             connection.connect();
             connection.login(User.get().getEmail(), User.get().getToken());
+            // TODO test User.get().getEmail()
             chat = connection.getChatManager().createChat(
-                    User.get().getEmail(), this);
+                    "pinguet62test@gmail.com", this);
         } catch (XMPPException exception) {
             LOGGER.error("Error during XMPP connection.", exception);
         }
@@ -54,7 +53,7 @@ public final class XMPPManager implements MessageListener {
 
     /** Disconnect to GTalk. */
     public void disconnect() {
-        if (connection == null)
+        if ((connection == null) || connection.isConnected())
             return;
 
         connection.disconnect();

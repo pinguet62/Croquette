@@ -1,5 +1,6 @@
 package fr.pinguet62.croquette.webapp.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.TreeSet;
 
@@ -9,9 +10,8 @@ import java.util.TreeSet;
  */
 // TODO Remove default constructor & setters + set final keyword attributes
 public final class Conversation extends TreeSet<Message> implements
-Comparable<Conversation> {
+        Serializable, Comparable<Conversation> {
 
-    /** Serial version UID. */
     private static final long serialVersionUID = 1;
 
     /** The sender or addressee {@link Contact}. */

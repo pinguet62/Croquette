@@ -5,7 +5,6 @@ import java.io.Serializable;
 /** Contains informations about a contact. */
 public final class Contact implements Comparable<Contact>, Serializable {
 
-    /** Serial version UID. */
     private static final long serialVersionUID = 1;
 
     /** The {@link Conversation}. */
