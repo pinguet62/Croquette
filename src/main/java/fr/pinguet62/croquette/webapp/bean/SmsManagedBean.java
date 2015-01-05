@@ -26,9 +26,6 @@ import fr.pinguet62.croquette.webapp.model.User;
 @SessionScoped
 public final class SmsManagedBean implements Serializable {
 
-    /** The channel name of the connection with the view. */
-    public static final String CHANNEL = "/channel";
-
     private static final long serialVersionUID = 1;
 
     /** The selected {@link Conversation}. */
@@ -58,7 +55,7 @@ public final class SmsManagedBean implements Serializable {
      * @return The channel.
      */
     public String getChannel() {
-        return SmsManagedBean.CHANNEL;
+        return PushResource.CHANNEL;
     }
 
     /**

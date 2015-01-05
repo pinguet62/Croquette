@@ -137,36 +137,37 @@
 		style="position: absolute; left: 50%;" value="Tests" />
 	<p:dialog header="Tests" position="top" resizable="false"
 		visible="true" widgetVar="testsDialog">
-		<p:commandButton actionListener="#{testManagedBean.primePush}"
-			value="Prime Push" />
-		<br />
-		<p:commandButton onclick="scrollConversationBottom()"
-			value="Scroll conversation to bottom" />
-		<br />
-		<p:commandButton
-			actionListener="#{testManagedBean.downloadGoogleContacts}"
-			value="Download Google contacts" />
-		<br />
-		<p:commandButton actionListener="#{testManagedBean.initTestData}"
-			value="Init data test" />
-		<br />
-		<p:commandButton actionListener="#{testManagedBean.receviedSMSAction}"
-			value="ReceveidSMSAction" />
-		<br />
-		<p:commandButton
-			actionListener="#{testManagedBean.loadedSMSAction(smsManagedBean.selectedConversation)}"
-			value="LoadedSMSAction" />
-		<br />
-		<div>
-			<h:form>
+		<h:form>
+			<p:commandButton actionListener="#{testManagedBean.primePush}"
+				value="Prime Push" />
+			<br />
+			<p:commandButton onclick="scrollConversationBottom()"
+				value="Scroll conversation to bottom" />
+			<br />
+			<p:commandButton
+				actionListener="#{testManagedBean.downloadGoogleContacts}"
+				value="Download Google contacts" />
+			<br />
+			<p:commandButton actionListener="#{testManagedBean.initTestData}"
+				value="Init data test" />
+			<br />
+			<p:commandButton
+				actionListener="#{testManagedBean.receivedSMSAction}"
+				value="ReceveidSMSAction" />
+			<br />
+			<p:commandButton
+				actionListener="#{testManagedBean.loadedSMSAction(smsManagedBean.selectedConversation)}"
+				value="LoadedSMSAction" />
+			<br />
+			<div>
 				<p:commandButton actionListener="#{testManagedBean.sendXmppMessage}"
 					value="Send XMPP message" />
 				<p:inputTextarea rows="5" style="vertical-align: middle"
 					value="#{testManagedBean.xmppMessage}">
 					<f:ajax event="change" />
 				</p:inputTextarea>
-			</h:form>
-		</div>
+			</div>
+		</h:form>
 	</p:dialog>
 </h:body>
 </html>

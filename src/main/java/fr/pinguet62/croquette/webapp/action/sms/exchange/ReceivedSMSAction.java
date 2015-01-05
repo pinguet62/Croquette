@@ -1,15 +1,15 @@
 package fr.pinguet62.croquette.webapp.action.sms.exchange;
 
-import org.primefaces.push.PushContext;
-import org.primefaces.push.PushContextFactory;
+import org.primefaces.push.EventBus;
+import org.primefaces.push.EventBusFactory;
 
 import com.google.gson.Gson;
 
 import fr.pinguet62.croquette.commons.dto.MessageDto;
 import fr.pinguet62.croquette.commons.dto.ReceivedSmsDto;
-import fr.pinguet62.croquette.webapp.action.SmartphoneHandler;
 import fr.pinguet62.croquette.webapp.action.IAction;
-import fr.pinguet62.croquette.webapp.bean.SmsManagedBean;
+import fr.pinguet62.croquette.webapp.action.SmartphoneHandler;
+import fr.pinguet62.croquette.webapp.bean.PushResource;
 import fr.pinguet62.croquette.webapp.model.Contact;
 import fr.pinguet62.croquette.webapp.model.Conversation;
 import fr.pinguet62.croquette.webapp.model.Message;
@@ -84,9 +84,8 @@ public final class ReceivedSMSAction implements IAction {
         conversation.add(message);
 
         // Update view
-        PushContext pushContext = PushContextFactory.getDefault()
-                .getPushContext();
-        pushContext.push(SmsManagedBean.CHANNEL, null);
+        EventBus eventBus = EventBusFactory.getDefault().eventBus();
+        eventBus.publish(PushResource.CHANNEL, null);
     }
 
 }
