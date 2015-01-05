@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AssignableTypeFilter;
@@ -33,7 +34,8 @@ public final class ActionFactory {
      */
     private static final Map<String, Class<? extends IAction>> CLASSES = new HashMap<>();
 
-    private static final Logger LOGGER = Logger.getLogger(ActionFactory.class);
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(ActionFactory.class);
 
     /** Initialize this factory at launch. */
     static {
@@ -57,7 +59,8 @@ public final class ActionFactory {
             LOGGER.info("IAction: " + findedClass.getName());
 
             // Annotation
-            SmartphoneHandler annotation = findedClass.getAnnotation(SmartphoneHandler.class);
+            SmartphoneHandler annotation = findedClass
+                    .getAnnotation(SmartphoneHandler.class);
             if (annotation == null)
                 continue;
             LOGGER.info("Handler for key: " + annotation.value());

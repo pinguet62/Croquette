@@ -1,6 +1,5 @@
 package fr.pinguet62.croquette.webapp.xmpp;
 
-import org.apache.log4j.Logger;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.MessageListener;
@@ -8,6 +7,8 @@ import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fr.pinguet62.croquette.webapp.action.ActionFactory;
 import fr.pinguet62.croquette.webapp.action.IAction;
@@ -19,7 +20,8 @@ import fr.pinguet62.croquette.webapp.model.User;
  */
 public final class XMPPManager implements MessageListener {
 
-    private static final Logger LOGGER = Logger.getLogger(XMPPManager.class);
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(XMPPManager.class);
 
     /** The {@link Chat} with oneself. */
     private Chat chat = null;
