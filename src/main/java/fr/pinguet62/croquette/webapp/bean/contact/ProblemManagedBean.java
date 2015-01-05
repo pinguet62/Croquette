@@ -7,7 +7,6 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public final class ProblemManagedBean extends ContactManagedBean {
 
-    /** Serial version UID. */
     private static final long serialVersionUID = 1;
 
     @Override

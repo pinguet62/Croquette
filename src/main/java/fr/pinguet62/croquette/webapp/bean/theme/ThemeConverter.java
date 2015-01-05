@@ -6,45 +6,26 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 /**
- * The {@link Theme} converter.<br />
- * Uses the {@code key} as an identifier.
+ * {@link Converter} for {@link Theme}.
+ * <p>
+ * Uses the {@link Theme#key} as an unique identifier.
  */
 @FacesConverter("themeConverter")
 public final class ThemeConverter implements Converter {
 
-    /**
-     * Convert {@link String} to {@link Theme}.
-     *
-     * @param context
-     *            The context.
-     * @param component
-     *            The component.
-     * @param value
-     *            The string value.
-     * @return The theme value, {@code null} if not find.
-     */
+    /** @see Theme#fromKey(String) */
     @Override
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) {
         return Theme.fromKey(value);
     }
 
-    /**
-     * Convert {@link Theme} to {@link String}.
-     *
-     * @param context
-     *            The context.
-     * @param component
-     *            The component.
-     * @param value
-     *            The object value.
-     * @return The string value.
-     */
+    /** @return The {@link Theme#toString()} result. */
     @Override
     public String getAsString(FacesContext context, UIComponent component,
             Object value) {
         Theme theme = (Theme) value;
-        return theme.getKey();
+        return theme.toString();
     }
 
 }

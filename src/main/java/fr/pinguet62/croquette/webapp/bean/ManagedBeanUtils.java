@@ -5,35 +5,36 @@ import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 
 /** {@link javax.faces.bean.ManagedBean} utils. */
-public final class ManagedBean {
+public final class ManagedBeanUtils {
 
     /**
-     * Gets bean from its name.
+     * Get bean from its name.
      *
-     * @param beanName
-     *            The name of bean (without <code>#{</code> <code>}</code>).
-     * @return The bean, {@code null} if not found.
+     * @param name
+     *            The name of bean (without <code>#{</code> <code>}</code> of
+     *            EL).
+     * @return The bean.
+     * @throws FacesException
+     *             Bean not found.
      */
-    public static Object getManagedBean(String beanName) {
+    public static Object getManagedBean(String name) {
         Object bean;
         try {
             ELContext elContext = FacesContext.getCurrentInstance()
                     .getELContext();
-            bean = elContext.getELResolver()
-                    .getValue(elContext, null, beanName);
+            bean = elContext.getELResolver().getValue(elContext, null, name);
         } catch (RuntimeException e) {
             throw new FacesException(e.getMessage(), e);
         }
         if (bean == null)
             throw new FacesException(
                     "Managed bean with name '"
-                            + beanName
+                            + name
                             + "' was not found. Check your faces-config.xml or @ManagedBean annotation.");
         return bean;
     }
 
-    /** Constructor. */
-    private ManagedBean() {
+    private ManagedBeanUtils() {
     }
 
 }

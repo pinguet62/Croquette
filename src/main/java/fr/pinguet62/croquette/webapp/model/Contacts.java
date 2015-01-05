@@ -2,20 +2,20 @@ package fr.pinguet62.croquette.webapp.model;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.TreeSet;
 
 import com.google.gdata.client.contacts.ContactsService;
 import com.google.gdata.data.contacts.ContactEntry;
 import com.google.gdata.data.contacts.ContactFeed;
 
-/** {@link Contacts} of {@link User}. */
+/** {@link User}'s {@link Contact}s. */
 public final class Contacts extends TreeSet<Contact> {
 
-    /** Serial version UID. */
     private static final long serialVersionUID = 1;
 
     /**
-     * Download {@link ContactEntry} from Google account with the OAuth token. <br />
+     * Download {@link ContactEntry} from Google account, using the OAuth token.<br>
      * Pop list of {@link Contact}s of the {@link User}.
      */
     public void downloadGoogle() {
@@ -51,18 +51,22 @@ public final class Contacts extends TreeSet<Contact> {
     }
 
     /**
-     * Gets {@link Contact} by {@link PhoneNumber}.
+     * Get {@link Contact} by {@link PhoneNumber}.
      *
      * @param phoneNumber
      *            The {@link PhoneNumber}
-     * @return The {@link Contact}, {@code null} if not find.
+     * @return The {@link Contact}.<br>
+     *         {@code null} if not found.
+     * @throws NullPointerException
+     *             Parameter is {@code null}.
      */
     public Contact get(PhoneNumber phoneNumber) {
-        if (phoneNumber == null)
-            return null;
+        Objects.requireNonNull(phoneNumber);
+
         for (Contact contact : this)
             if (phoneNumber.equals(contact.getPhoneNumber()))
                 return contact;
+
         return null;
     }
 

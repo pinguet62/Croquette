@@ -11,6 +11,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.jivesoftware.smack.XMPPConnection;
+
 import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.action.sms.conversation.LoadingSMSAction;
 import fr.pinguet62.croquette.webapp.action.sms.conversations.LoadingConversationsAction;
@@ -31,18 +33,12 @@ public final class SmsManagedBean implements Serializable {
     /** The selected {@link Conversation}. */
     private Conversation selectedConversation = null;
 
-    /**
-     * Default constructor. <br />
-     * Connect user to {@code GTalk}.
-     */
+    /** Connect {@link User} to {@code GTalk}. */
     public SmsManagedBean() {
         User.get().getXmppManager().connect();
     }
 
-    /**
-     * Destructor.<br />
-     * Disconnect user of {@code GTalk}.
-     */
+    /** Disconnect user of {@link XMPPConnection}. */
     @Override
     public void finalize() throws Throwable {
         // TODO Implement
@@ -50,18 +46,18 @@ public final class SmsManagedBean implements Serializable {
     }
 
     /**
-     * Gets the channel name of the connection with the view.
+     * Get the channel name for view updates.
      *
-     * @return The channel.
+     * @return {@link PushResource#CHANNEL}
      */
     public String getChannel() {
         return PushResource.CHANNEL;
     }
 
     /**
-     * Gets the list of {@link Conversation}s of {@link User}.
+     * Get {@link User}'s {@link Conversation}s.
      *
-     * @return The list of {@link Contact}s.
+     * @return The {@link Conversation}s.
      */
     public Iterable<Conversation> getConversations() {
         List<Conversation> conversations = new ArrayList<Conversation>(User
@@ -71,20 +67,23 @@ public final class SmsManagedBean implements Serializable {
     }
 
     /**
-     * Gets the input of selected {@link Conversation}.
+     * Get the input of current {@link Conversation}.
      *
-     * @return The input.
+     * @return The input.<br>
+     *         {@code null} if no {@link Conversation}.
      */
     public String getInput() {
-        if (selectedConversation == null)
-            return null;
-        return selectedConversation.getInput();
+        return selectedConversation == null ? null : selectedConversation
+                .getInput();
     }
 
     /**
-     * Gets the selected {@link Conversation}.
+     * Get the selected {@link Conversation}.
+     * <p>
+     * Set all {@link Message} as read, because {@link User} viewed the content.
      *
      * @return The selected {@link Conversation}.
+     * @see Conversation#allRead()
      */
     public Conversation getSelectedConversation() {
         if (selectedConversation != null)
@@ -92,7 +91,11 @@ public final class SmsManagedBean implements Serializable {
         return selectedConversation;
     }
 
-    /** Load old {@link Conversation}s. */
+    /**
+     * Load old {@link Conversation}s.
+     *
+     * @see LoadingConversationsAction
+     */
     public void loadOldConversations() {
         Conversations conversations = User.get().getConversations();
         IAction action = new LoadingConversationsAction(
@@ -100,26 +103,32 @@ public final class SmsManagedBean implements Serializable {
         action.execute();
     }
 
-    /** Load old {@link Message}s of the selected {@link Conversation}. */
+    /**
+     * Load old {@link Message}s of the selected {@link Conversation}.
+     *
+     * @see LoadingSMSAction
+     */
     public void loadOldMessages() {
-        new LoadingSMSAction(selectedConversation).execute();
+        IAction action = new LoadingSMSAction(selectedConversation);
+        action.execute();
     }
 
     /**
-     * Called when {@link User} want send the SMS to her {@link Contact}.<br />
-     * Generate and execute the {@link SendSMSAction}.
+     * Called when {@link User} want send the SMS to her {@link Contact}.
+     *
+     * @see SendSMSAction
      */
     public void send() {
         if (selectedConversation == null)
             return;
-        if ((getInput() == null) || getInput().isEmpty())
+        if (getInput() == null || getInput().isEmpty())
             return;
 
         Message message = new Message();
-        message.setContent(selectedConversation.getInput());
         message.setConversation(selectedConversation);
         message.setDate(new Date());
         message.setSent(true);
+        message.setContent(selectedConversation.getInput());
 
         SendSMSAction action = new SendSMSAction(message);
         action.execute();
@@ -133,25 +142,14 @@ public final class SmsManagedBean implements Serializable {
                         "SMS send success", message.getContent()));
     }
 
-    /**
-     * Sets the input.
-     *
-     * @param input
-     *            The input to set.
-     */
-    public void setInput(final String input) {
+    /** @see Conversation#setInput(String) */
+    public void setInput(String input) {
         if (selectedConversation == null)
             return;
         selectedConversation.setInput(input);
     }
 
-    /**
-     * Sets the selected {@link Conversation}.
-     *
-     * @param selectedConversation
-     *            The selected {@link Conversation} to set.
-     */
-    public void setSelectedConversation(final Conversation selectedConversation) {
+    public void setSelectedConversation(Conversation selectedConversation) {
         this.selectedConversation = selectedConversation;
     }
 

@@ -4,43 +4,24 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.TreeSet;
 
-/**
- * Contains list of {@link Message}s.<br />
- * There are ordered by reverse chronological order.
- */
-// TODO Remove default constructor & setters + set final keyword attributes
+/** There are ordered by reverse chronological order. */
 public final class Conversation extends TreeSet<Message> implements
-        Serializable, Comparable<Conversation> {
+Serializable, Comparable<Conversation> {
 
     private static final long serialVersionUID = 1;
 
-    /** The sender or addressee {@link Contact}. */
     private Contact contact;
 
-    /** If has old {@link Message}s. */
     private boolean hasOldMessages = true;
 
-    /** The id. */
-    private Integer id; // TODO int
+    private Integer id;
 
-    /**
-     * The input text of the new {@link Message} into this {@link Conversation}.
-     */
+    /** The input text of next {@link Message} into this {@link Conversation}. */
     private String input;
 
-    /** Default constructor. */
-    // TODO Remove default and set final keyword attributes
     public Conversation() {
     }
 
-    /**
-     * Constructor.
-     *
-     * @param id
-     *            The id.
-     * @param contact
-     *            The {@link Contact}.
-     */
     public Conversation(int id, Contact contact) {
         this.id = id;
         this.contact = contact;
@@ -80,22 +61,17 @@ public final class Conversation extends TreeSet<Message> implements
         return allInserted;
     }
 
-    /** Change {@link Message#read} flag of all {@link Message}s. */
+    /**
+     * Change {@link Message#read} flag of all {@link Message}s.
+     *
+     * @see Message#read
+     */
     public void allRead() {
         for (Message message : this)
             message.setRead(true);
     }
 
-    /**
-     * Method used to compare the current {@link Conversation} to an other.
-     *
-     * @param other
-     *            The other {@link Conversation}.
-     * @return A negative integer if the latest {@link Message} of the current
-     *         {@link Conversation} is latest than the latest {@link Message} of
-     *         the other, zero if there are equal, a positive integer otherwise.
-     */
-    // TODO bad
+    // TODO better implementation
     @Override
     public int compareTo(Conversation other) {
         if (isEmpty() && other.isEmpty())
@@ -107,44 +83,24 @@ public final class Conversation extends TreeSet<Message> implements
         return other.last().getDate().compareTo(last().getDate());
     }
 
-    /**
-     * Gets the sender or addressee {@link Contact}.
-     *
-     * @return The {@link Contact}.
-     */
     public Contact getContact() {
         return contact;
     }
 
-    /**
-     * Gets if has old {@link Message}s.
-     *
-     * @return Result.
-     */
     public boolean getHasOldMessages() {
         return hasOldMessages;
     }
 
-    /**
-     * Gets the id.
-     *
-     * @return The id.
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * Gets the input.
-     *
-     * @return The input.
-     */
     public String getInput() {
         return input;
     }
 
     /**
-     * Gets count of unread {@link Message}s.
+     * Get count of unread {@link Message}s.
      *
      * @return The count.
      */
@@ -156,49 +112,25 @@ public final class Conversation extends TreeSet<Message> implements
         return count;
     }
 
-    /**
-     * Sets the sender or addressee {@link Contact}.
-     *
-     * @param contact
-     *            The {@link Contact}.
-     */
     public void setContact(Contact contact) {
         this.contact = contact;
     }
 
-    /**
-     * Sets if has old {@link Message}s.
-     *
-     * @param hasOldMessages
-     *            If has old {@link Message}s.
-     */
     public void setHasOldMessages(boolean hasOldMessages) {
         this.hasOldMessages = hasOldMessages;
     }
 
-    /**
-     * Sets the id.
-     *
-     * @param id
-     *            The id.
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * Sets the input.
-     *
-     * @param input
-     *            The input to set.
-     */
     public void setInput(String input) {
         this.input = input;
     }
 
     @Override
     public String toString() {
-        return "Conv " + id + ":" + super.toString();
+        return "Conv " + id + ": " + super.toString();
     }
 
 }

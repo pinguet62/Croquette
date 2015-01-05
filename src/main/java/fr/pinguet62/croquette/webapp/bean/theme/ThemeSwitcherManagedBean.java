@@ -1,6 +1,7 @@
 package fr.pinguet62.croquette.webapp.bean.theme;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -15,33 +16,24 @@ public final class ThemeSwitcherManagedBean implements Serializable {
     /** The current {@link Theme}. */
     private Theme theme = Theme.fromKey("dark-hive");
 
-    /**
-     * Gets the current {@link Theme}.
-     *
-     * @return The current {@link Theme}.
-     */
+    /** Get the current {@link Theme}. */
     public Theme getTheme() {
         return theme;
     }
 
-    /**
-     * Gets the list of available {@link Theme}s.
-     *
-     * @return The {@link Theme}s.
-     */
+    /** @return {@link Theme#AVAILABLES} */
     public Iterable<Theme> getThemes() {
         return Theme.AVAILABLES;
     }
 
     /**
-     * Sets the new {@link Theme}.
+     * Set the new current {@link Theme}.
      *
-     * @param theme
-     *            The new {@link Theme}.
+     * @throws NullPointerException
+     *             If the parameter is {@code null}.
      */
     public void setTheme(Theme theme) {
-        if (theme == null)
-            return;
+        Objects.requireNonNull(theme);
         this.theme = theme;
     }
 

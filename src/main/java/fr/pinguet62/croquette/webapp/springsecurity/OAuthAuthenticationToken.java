@@ -9,21 +9,21 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import fr.pinguet62.croquette.webapp.model.User;
 
 /**
- * Used to authenticate the user with OAuth. <br />
- * Simple extension of {@link AbstractAuthenticationToken}, where
+ * Used to authenticate the user with OAuth.
+ * <p>
+ * Implementation of {@link AbstractAuthenticationToken}, where
  * {@link AbstractAuthenticationToken#getDetails()} contains the {@link User}
- * object, and {@link GrantedAuthority} is {@code ROLE_USER}.
+ * object.
+ * <p>
+ * The default {@link GrantedAuthority} is {@code "ROLE_USER"}.
  */
 public final class OAuthAuthenticationToken extends AbstractAuthenticationToken {
 
-    /** Serial version UID. */
     private static final long serialVersionUID = 1;
 
     /**
-     * Constructor.
-     *
      * @param token
-     *            The user token.
+     *            The user's token.
      */
     public OAuthAuthenticationToken(String token) {
         super(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
@@ -35,22 +35,16 @@ public final class OAuthAuthenticationToken extends AbstractAuthenticationToken 
         setDetails(user);
     }
 
-    /**
-     * Not used.
-     *
-     * @return {@link null}.
-     */
+    /** @return {@link null} */
     @Override
+    @Deprecated
     public Object getCredentials() {
         return null;
     }
 
-    /**
-     * Not used.
-     *
-     * @return {@link null}.
-     */
+    /** @return {@link null} */
     @Override
+    @Deprecated
     public Object getPrincipal() {
         return null;
     }

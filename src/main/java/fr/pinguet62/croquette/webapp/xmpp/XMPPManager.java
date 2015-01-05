@@ -14,14 +14,17 @@ import fr.pinguet62.croquette.webapp.action.ActionFactory;
 import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.model.User;
 
-/**
- * Manage XMPP client: <li>Connection & Disconnection; <li>Send & Receive
- * messages.
- */
+/** Manager for XMPP client. */
 public final class XMPPManager implements MessageListener {
 
     private static final Logger LOGGER = LoggerFactory
             .getLogger(XMPPManager.class);
+
+    static {
+        SASLAuthentication.registerSASLMechanism(GTalkOAuth2SASLMechanism.NAME,
+                GTalkOAuth2SASLMechanism.class);
+        SASLAuthentication.supportSASLMechanism(GTalkOAuth2SASLMechanism.NAME);
+    }
 
     /** The {@link Chat} with oneself. */
     private Chat chat = null;
@@ -30,32 +33,44 @@ public final class XMPPManager implements MessageListener {
 
     /** Connect to GTalk. */
     public void connect() {
-        if (connection != null)
+        if (connection != null || connection.isConnected())
             return;
 
-        SASLAuthentication.registerSASLMechanism(GTalkSASLMechanism.NAME,
-                GTalkSASLMechanism.class);
-        SASLAuthentication.supportSASLMechanism(GTalkSASLMechanism.NAME);
-
+        // Configuration
         ConnectionConfiguration configuration = new ConnectionConfiguration(
                 "talk.google.com", 5222, "gmail.com");
         configuration.setSASLAuthenticationEnabled(true);
 
+        // Connection
         connection = new XMPPConnection(configuration);
         try {
+            LOGGER.debug("Connection...");
             connection.connect();
-            connection.login(User.get().getEmail(), User.get().getToken());
-            // TODO test User.get().getEmail()
-            chat = connection.getChatManager().createChat(
-                    "pinguet62test@gmail.com", this);
+            LOGGER.info("Connected");
         } catch (XMPPException exception) {
-            LOGGER.error("Error during XMPP connection.", exception);
+            LOGGER.error("Connection error", exception);
+            throw new RuntimeException(exception); // TODO exception
         }
+
+        // Authentication
+        try {
+            LOGGER.debug("Authentication...");
+            connection.login(User.get().getEmail(), User.get().getToken());
+            LOGGER.info("Authenticated");
+        } catch (XMPPException exception) {
+            LOGGER.error("Authentication error", exception);
+            throw new RuntimeException(exception); // TODO exception
+        }
+
+        // Chat
+        // TODO test User.get().getEmail()
+        chat = connection.getChatManager().createChat(
+                "pinguet62test@gmail.com", this);
     }
 
-    /** Disconnect to GTalk. */
+    /** Disconnect from GTalk. */
     public void disconnect() {
-        if ((connection == null) || connection.isConnected())
+        if (connection == null || connection.isConnected())
             return;
 
         connection.disconnect();

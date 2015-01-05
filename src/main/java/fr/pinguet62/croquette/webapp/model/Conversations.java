@@ -5,28 +5,23 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 /**
- * Contains list of {@link Conversation}s. <br />
+ * Contains list of {@link Conversation}s. <br>
  * There are ordered by descending date of the latest {@link Message}.
  */
 public final class Conversations extends TreeSet<Conversation> {
 
-    /** Serial version UID. */
     private static final long serialVersionUID = 1;
 
-    /** If has old {@link Conversation}s. */
     private boolean hasOldConversations = true;
 
     /**
-     * Add new {@link Conversation} to the list.<br />
+     * {@inheritDoc}
+     * <p>
      * The {@link Conversation} requires at less one {@link Message}.
-     *
-     * @param conversation
-     *            The {@link Conversation}.
-     * @return {@code true} if the {@link Conversation} has been insert,
-     *         {@code false} otherwise.
      */
     @Override
     public boolean add(Conversation conversation) {
+        // TODO
         // if (conversation.isEmpty())
         // return false;
         // User.get().getContacts().add(conversation.getContact());
@@ -34,13 +29,9 @@ public final class Conversations extends TreeSet<Conversation> {
     }
 
     /**
-     * Add all {@link Conversation}s to the list.<br />
-     * The {@link Conversation}s requires at less one {@link Message}.
-     *
-     * @param conversations
-     *            The {@link Conversation}s.
-     * @return {@code true} if all {@link Conversation}s have been insert,
-     *         {@code false} otherwise.
+     * {@inheritDoc}
+     * <p>
+     * Each {@link Conversation} requires at less one {@link Message}.
      */
     @Override
     public boolean addAll(Collection<? extends Conversation> conversations) {
@@ -54,43 +45,29 @@ public final class Conversations extends TreeSet<Conversation> {
     }
 
     /**
-     * Find {@link Conversation} into list by id.
+     * Get {@link Conversation} by id.
      *
-     * @param id
-     *            The {@link Conversation} id.
-     * @return The corresponding {@link Conversation}, {@code null} if not
-     *         found.
+     * @return The corresponding {@link Conversation}<br>
+     *         {@code null} if not found.
      */
-    public Conversation get(Integer id) {
-        if (id == null)
-            return null;
+    public Conversation get(int id) {
         for (Conversation conversation : this)
             if (conversation.getId().equals(id))
                 return conversation;
+
         return null;
     }
 
-    /**
-     * Gets if has old {@link Conversation}s.
-     *
-     * @return Result.
-     */
     public boolean getHasOldMessages() {
         return hasOldConversations;
     }
 
-    /**
-     * Sets if has old {@link Conversation}s.
-     *
-     * @param hasOldConversations
-     *            If has old {@link Conversation}s.
-     */
     public void setHasOldMessages(boolean hasOldConversations) {
         this.hasOldConversations = hasOldConversations;
     }
 
     /**
-     * Sort {@link Conversation}s after adding {@link Message} or creating of [
+     * Sort {@link Conversation}s after adding {@link Message} or creating a
      * {@link Conversation}.
      */
     public void sort() {

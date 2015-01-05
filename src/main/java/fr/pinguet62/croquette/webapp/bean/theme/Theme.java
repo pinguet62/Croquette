@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// TODO enum
 /** Used to store informations about a theme. */
 public final class Theme implements Serializable {
 
@@ -12,6 +13,7 @@ public final class Theme implements Serializable {
     public static final Iterable<Theme> AVAILABLES;
 
     private static final long serialVersionUID = 1;
+
     static {
         List<Theme> tmpThemes = new ArrayList<Theme>();
         tmpThemes.add(new Theme("afterdark", "Afterdark", "afterdark.png"));
@@ -30,7 +32,7 @@ public final class Theme implements Serializable {
         tmpThemes.add(new Theme("dot-luv", "Dot-Luv", "dot-luv.png"));
         tmpThemes.add(new Theme("eggplant", "Eggplant", "eggplant.png"));
         tmpThemes
-                .add(new Theme("excite-bike", "Excite-Bike", "excite-bike.png"));
+        .add(new Theme("excite-bike", "Excite-Bike", "excite-bike.png"));
         tmpThemes.add(new Theme("flick", "Flick", "flick.png"));
         tmpThemes.add(new Theme("glass-x", "Glass-X", "glass-x.png"));
         tmpThemes.add(new Theme("home", "Home", "home.png"));
@@ -54,7 +56,7 @@ public final class Theme implements Serializable {
                 "swanky-purse.png"));
         tmpThemes.add(new Theme("trontastic", "Trontastic", "trontastic.png"));
         tmpThemes
-                .add(new Theme("ui-darkness", "UI-Darkness", "ui-darkness.png"));
+        .add(new Theme("ui-darkness", "UI-Darkness", "ui-darkness.png"));
         tmpThemes.add(new Theme("ui-lightness", "UI-Lightness",
                 "ui-lightness.png"));
         tmpThemes.add(new Theme("vader", "Vader", "vader.png"));
@@ -66,7 +68,10 @@ public final class Theme implements Serializable {
      *
      * @param key
      *            The key.
-     * @return The {@link Theme}.
+     * @return The {@link Theme}.<br>
+     *         {@code null} if parameter is {@code null}.
+     * @throws IllegalArgumentException
+     *             {@link #key} unknown.
      */
     public static Theme fromKey(String key) {
         if (key == null)
@@ -74,89 +79,38 @@ public final class Theme implements Serializable {
         for (Theme theme : Theme.AVAILABLES)
             if (key.equals(theme.getKey()))
                 return theme;
-        return null;
+        throw new IllegalArgumentException("Unknown key: " + key);
     }
 
     /** The path of image. */
-    private String image;
+    private final String image;
 
-    /** The key used by PrimeFaces. */
-    private String key;
+    /** The unique key used by PrimeFaces. */
+    private final String key;
 
-    /** The name. */
-    private String name;
+    private final String name;
 
-    /**
-     * Constructor.
-     *
-     * @param key
-     *            The key.
-     * @param name
-     *            The value.
-     * @param image
-     *            The image.
-     */
     public Theme(String key, String name, String image) {
         this.key = key;
         this.name = name;
         this.image = image;
     }
 
-    /**
-     * Gets the image.
-     *
-     * @return The image.
-     */
     public String getImage() {
         return image;
     }
 
-    /**
-     * Gets the key.
-     *
-     * @return The key.
-     */
     public String getKey() {
         return key;
     }
 
-    /**
-     * Gets the name.
-     *
-     * @return The name.
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Sets the image.
-     *
-     * @param image
-     *            The image to set.
-     */
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    /**
-     * Sets key.
-     *
-     * @param key
-     *            The key to set.
-     */
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    /**
-     * Sets the name.
-     *
-     * @param name
-     *            The name to set.
-     */
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public String toString() {
+        return key;
     }
 
 }

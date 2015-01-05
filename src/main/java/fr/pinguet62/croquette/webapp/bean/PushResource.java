@@ -8,7 +8,7 @@ import org.primefaces.push.annotation.Singleton;
 @PushEndpoint(PushResource.CHANNEL)
 public final class PushResource {
 
-    /** The channel ID. */
+    /** The channel key. */
     public static final String CHANNEL = "/channel";
 
     @OnMessage()
