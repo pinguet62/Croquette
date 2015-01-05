@@ -39,13 +39,17 @@ public final class ActionFactory {
 
     /** Initialize this factory at launch. */
     static {
+        LOGGER.info("Initialization of " + IAction.class);
+
+        String scannedPackage = "fr.pinguet62.croquette";
+        LOGGER.info("Scanning package " + scannedPackage + " ...");
+
         // Find classes who inherit from IAction
         ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(
                 true);
         provider.addIncludeFilter(new AssignableTypeFilter(IAction.class));
         Set<BeanDefinition> components = provider
-                .findCandidateComponents("fr.pinguet62.croquette".replace(".",
-                        "/"));
+                .findCandidateComponents(scannedPackage.replace(".", "/"));
 
         for (BeanDefinition component : components) {
             // Class
@@ -93,8 +97,8 @@ public final class ActionFactory {
         JsonElement root;
         try {
             root = new JsonParser().parse(json);
-        } catch (JsonSyntaxException e) {
-            throw new IllegalArgumentException("Bad JSON format", e);
+        } catch (JsonSyntaxException exception) {
+            throw new IllegalArgumentException("Bad JSON format", exception);
         }
         JsonElement actionElement = root.getAsJsonObject().get("action");
         if (actionElement == null)
@@ -104,19 +108,19 @@ public final class ActionFactory {
 
         Class<? extends IAction> classe = CLASSES.get(key);
         if (classe == null)
-            throw new IllegalArgumentException("Unknown action");
+            throw new IllegalArgumentException("Unknown action: " + key);
+        LOGGER.debug("Action class: " + classe);
 
         try {
             Constructor<?> constructor = classe.getConstructor(String.class);
-            LOGGER.debug("Action class: " + classe.getName());
             IAction action = (IAction) constructor.newInstance(json);
             return action;
         } catch (NoSuchMethodException | SecurityException
                 | InstantiationException | IllegalAccessException
-                | IllegalArgumentException | InvocationTargetException e) {
-            LOGGER.error("Invalid action class: " + classe.getName(), e);
+                | IllegalArgumentException | InvocationTargetException exception) {
+            LOGGER.error("Invalid action class: " + classe.getName(), exception);
             throw new UnsupportedOperationException("Invalid action class: "
-                    + classe.getName(), e);
+                    + classe.getName(), exception);
         }
     }
 

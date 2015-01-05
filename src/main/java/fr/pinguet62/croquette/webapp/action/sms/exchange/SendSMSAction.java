@@ -1,5 +1,8 @@
 package fr.pinguet62.croquette.webapp.action.sms.exchange;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.Gson;
 
 import fr.pinguet62.croquette.commons.dto.SendSmsDto;
@@ -15,6 +18,9 @@ import fr.pinguet62.croquette.webapp.model.User;
  */
 public final class SendSMSAction implements IAction {
 
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(SendSMSAction.class);
+
     private final Message message;
 
     public SendSMSAction(Message message) {
@@ -29,6 +35,8 @@ public final class SendSMSAction implements IAction {
      */
     @Override
     public void execute() {
+        LOGGER.info("Action: " + SendSmsDto.KEY);
+
         // Convert data
         SendSmsDto dto = new SendSmsDto();
         dto.setContent(message.getContent());

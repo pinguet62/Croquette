@@ -1,5 +1,8 @@
 package fr.pinguet62.croquette.webapp.action.sms.conversation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.Gson;
 
 import fr.pinguet62.croquette.commons.dto.LoadingConversationDto;
@@ -16,6 +19,9 @@ import fr.pinguet62.croquette.webapp.model.User;
  */
 public final class LoadingSMSAction implements IAction {
 
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(LoadingSMSAction.class);
+
     private final Conversation conversation;
 
     public LoadingSMSAction(Conversation conversation) {
@@ -25,6 +31,8 @@ public final class LoadingSMSAction implements IAction {
     /** Send {@link LoadingConversationDto DTO} to Smartphone. */
     @Override
     public void execute() {
+        LOGGER.info("Action: " + LoadingConversationDto.KEY);
+
         // Convert data
         LoadingConversationDto dto = new LoadingConversationDto();
         dto.setId(conversation.getId());

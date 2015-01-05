@@ -2,6 +2,8 @@ package fr.pinguet62.croquette.webapp.action.sms.exchange;
 
 import org.primefaces.push.EventBus;
 import org.primefaces.push.EventBusFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
@@ -26,6 +28,9 @@ import fr.pinguet62.croquette.webapp.model.User;
 @SmartphoneHandler(ReceivedSmsDto.KEY)
 public final class ReceivedSMSAction implements IAction {
 
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(ReceivedSMSAction.class);
+
     private final String json;
 
     public ReceivedSMSAction(String json) {
@@ -41,6 +46,8 @@ public final class ReceivedSMSAction implements IAction {
      */
     @Override
     public void execute() {
+        LOGGER.info("Action: " + ReceivedSmsDto.KEY);
+
         ReceivedSmsDto dto = new Gson().fromJson(json.toString(),
                 ReceivedSmsDto.class);
 
