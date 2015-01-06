@@ -22,13 +22,13 @@ public final class LoadingConversationsAction implements IAction {
             .getLogger(LoadingConversationsAction.class);
 
     /** The id of the oldest {@link Conversation}. */
-    private final int oldest;
+    private final Integer oldest;
 
     /**
      * @param oldest
      *            The id of the oldest {@link Conversation}.
      */
-    public LoadingConversationsAction(int oldest) {
+    public LoadingConversationsAction(Integer oldest) {
         this.oldest = oldest;
     }
 
