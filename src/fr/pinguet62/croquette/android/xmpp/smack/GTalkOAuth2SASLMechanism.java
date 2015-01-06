@@ -86,8 +86,8 @@ public class GTalkOAuth2SASLMechanism extends SASLMechanism {
      * @throws UnsupportedOperationException
      *             Not supported.
      */
-    @Deprecated
     @Override
+    @Deprecated
     public void authenticate(String username, String pass, String host)
             throws IOException, XMPPException {
         throw new UnsupportedOperationException(

@@ -22,9 +22,7 @@ public final class XMPPManager {
     static {
         SASLAuthentication.registerSASLMechanism(GTalkOAuth2SASLMechanism.NAME,
                 GTalkOAuth2SASLMechanism.class);
-        // 0 means google sasl mechanism is the prefered one
-        SASLAuthentication.supportSASLMechanism(GTalkOAuth2SASLMechanism.NAME,
-                0);
+        SASLAuthentication.supportSASLMechanism(GTalkOAuth2SASLMechanism.NAME);
     }
 
     public static XMPPManager getInstance() {
@@ -41,6 +39,7 @@ public final class XMPPManager {
         INSTANCE = new XMPPManager(login, token);
     }
 
+    /** The {@link Chat} with oneself. */
     private final Chat chat;
 
     private final XMPPConnection connection;
@@ -55,18 +54,24 @@ public final class XMPPManager {
      * </ul>
      */
     private XMPPManager(String login, String token) {
-        // Connection
+        Log.i(LOG, "GTalk initialization...");
+
+        // Configuration
         ConnectionConfiguration config = new ConnectionConfiguration(
                 "talk.google.com", 5222, "gmail.com");
+        // TODO check options
         config.setSASLAuthenticationEnabled(true);
         config.setSecurityMode(SecurityMode.enabled);
+
+        // Connection
         connection = new XMPPConnection(config);
         try {
             Log.d(LOG, "Connection...");
             connection.connect();
             Log.i(LOG, "Connected");
-        } catch (XMPPException e) {
-            throw new RuntimeException(e);
+        } catch (XMPPException exception) {
+            Log.e(LOG, "Connection error", exception);
+            throw new RuntimeException(exception); // TODO exception
         }
 
         // Authentication
@@ -75,9 +80,10 @@ public final class XMPPManager {
         try {
             Log.d(LOG, "Authentication...");
             authentication.authenticate(login, token, callbackHandler);
-            Log.i(LOG, "Authentified");
-        } catch (XMPPException e) {
-            throw new RuntimeException(e);
+            Log.i(LOG, "Authenticated");
+        } catch (XMPPException exception) {
+            Log.e(LOG, "Authentication error", exception);
+            throw new RuntimeException(exception); // TODO exception
         }
 
         // Presence
