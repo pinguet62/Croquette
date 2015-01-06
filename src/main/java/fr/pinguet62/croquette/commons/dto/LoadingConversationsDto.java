@@ -10,6 +10,10 @@ public final class LoadingConversationsDto {
 
     private final int count = COUNT;
 
+    /**
+     * The ID of oldest conversation loaded.<br>
+     * {@code null} if no conversation has been already loaded.
+     */
     private Integer oldest;
 
     public String getAction() {

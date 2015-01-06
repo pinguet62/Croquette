@@ -10,8 +10,12 @@ public final class LoadingConversationDto {
 
     private final int count = COUNT;
 
-    private Integer id;
+    private int id;
 
+    /**
+     * The ID of oldest message loaded.<br>
+     * {@code null} if no message has been already loaded.
+     */
     private Integer oldest;
 
     public String getAction() {
@@ -22,7 +26,7 @@ public final class LoadingConversationDto {
         return count;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -30,7 +34,7 @@ public final class LoadingConversationDto {
         return oldest;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
