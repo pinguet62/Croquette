@@ -33,7 +33,7 @@ public final class XMPPManager implements MessageListener {
 
     /** Connect to GTalk. */
     public void connect() {
-        if (connection != null || connection.isConnected())
+        if (connection != null && connection.isConnected())
             return;
 
         // Configuration

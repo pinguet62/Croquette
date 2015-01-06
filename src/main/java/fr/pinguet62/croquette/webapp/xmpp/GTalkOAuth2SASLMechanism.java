@@ -29,12 +29,12 @@ public final class GTalkOAuth2SASLMechanism extends SASLMechanism {
                 Base64.DONT_BREAK_LINES);
 
         String stanza = new StringBuilder("<auth ")
-                .append("xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\"")
-                .append("mechanism=\"X-OAUTH2\"")
-                .append("auth:service=\"oauth2\"")
-                .append("xmlns:auth= \"http://www.google.com/talk/protocol/auth\"")
-                .append(">").append(authenticationText).append("</auth>")
-                .toString();
+        .append("xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\"")
+        .append("mechanism=\"X-OAUTH2\"")
+        .append("auth:service=\"oauth2\"")
+        .append("xmlns:auth= \"http://www.google.com/talk/protocol/auth\"")
+        .append(">").append(authenticationText).append("</auth>")
+        .toString();
 
         Packet packet = new Packet() {
             @Override
@@ -43,18 +43,6 @@ public final class GTalkOAuth2SASLMechanism extends SASLMechanism {
             }
         };
         getSASLAuthentication().send(packet);
-    }
-
-    /**
-     * @throws UnsupportedOperationException
-     *             Not supported.
-     */
-    @Override
-    @Deprecated
-    public void authenticate(String username, String host, String password)
-            throws IOException, XMPPException {
-        throw new UnsupportedOperationException(
-                "Google doesn't support password authentication in OAuth2.");
     }
 
     /** @return {@link #NAME} */
