@@ -5,8 +5,11 @@
 			<PatternLayout pattern="%d [%-5p] (%F:%M:%L) %m%n" />
 		</Console>
 	</Appenders>
+
+	<Loggers name="org.atmosphere" level="info" />
+
 	<Loggers>
-		<Root level="trace">
+		<Root level="debug">
 			<AppenderRef ref="Console" />
 		</Root>
 	</Loggers>
