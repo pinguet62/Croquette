@@ -5,13 +5,15 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 /**
- * Contains list of {@link Conversation}s. <br>
+ * Contains list of {@link Conversation}s.
+ * <p>
  * There are ordered by descending date of the latest {@link Message}.
  */
 public final class Conversations extends TreeSet<Conversation> {
 
     private static final long serialVersionUID = 1;
 
+    /** By default {@link Conversation}s are not all loaded. */
     private boolean hasOldConversations = true;
 
     /**

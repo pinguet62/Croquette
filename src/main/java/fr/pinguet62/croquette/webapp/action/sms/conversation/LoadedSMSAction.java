@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
+import fr.pinguet62.croquette.commons.action.IAction;
 import fr.pinguet62.croquette.commons.dto.LoadedConversationDto;
 import fr.pinguet62.croquette.commons.dto.LoadingConversationDto;
 import fr.pinguet62.croquette.commons.dto.MessageDto;
-import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.action.SmartphoneHandler;
 import fr.pinguet62.croquette.webapp.bean.PushResource;
 import fr.pinguet62.croquette.webapp.model.Conversation;
@@ -68,7 +68,7 @@ public final class LoadedSMSAction implements IAction {
             conversation.add(message);
         }
 
-        // Number of message less that default count: not other messages
+        // No more messages
         if (dto.getMessages().size() < LoadingConversationDto.COUNT)
             conversation.setHasOldMessages(false);
 

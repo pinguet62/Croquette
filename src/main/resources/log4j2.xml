@@ -6,9 +6,9 @@
 		</Console>
 	</Appenders>
 
-	<Loggers name="org.atmosphere" level="info" />
-
 	<Loggers>
+		<Logger name="org.atmosphere" level="info" />
+
 		<Root level="debug">
 			<AppenderRef ref="Console" />
 		</Root>

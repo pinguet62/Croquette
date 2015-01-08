@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
+import fr.pinguet62.croquette.commons.action.IAction;
 import fr.pinguet62.croquette.commons.dto.LoadingConversationDto;
-import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.model.Conversation;
 import fr.pinguet62.croquette.webapp.model.Message;
 import fr.pinguet62.croquette.webapp.model.User;

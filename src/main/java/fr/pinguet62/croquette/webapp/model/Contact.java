@@ -49,4 +49,9 @@ public final class Contact implements Comparable<Contact>, Serializable {
         this.phoneNumber = phoneNumber;
     }
 
+    @Override
+    public String toString() {
+        return name + " (" + phoneNumber + ")";
+    }
+
 }

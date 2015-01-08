@@ -6,17 +6,18 @@ import java.util.TreeSet;
 
 /** There are ordered by reverse chronological order. */
 public final class Conversation extends TreeSet<Message> implements
-Serializable, Comparable<Conversation> {
+        Serializable, Comparable<Conversation> {
 
     private static final long serialVersionUID = 1;
 
     private Contact contact;
 
+    /** By default {@link Message}s are not all loaded. */
     private boolean hasOldMessages = true;
 
     private Integer id;
 
-    /** The input text of next {@link Message} into this {@link Conversation}. */
+    /** The input text of next {@link Message}. */
     private String input;
 
     public Conversation() {

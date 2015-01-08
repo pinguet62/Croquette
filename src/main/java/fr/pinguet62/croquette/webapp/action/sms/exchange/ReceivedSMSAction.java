@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
+import fr.pinguet62.croquette.commons.action.IAction;
 import fr.pinguet62.croquette.commons.dto.MessageDto;
 import fr.pinguet62.croquette.commons.dto.ReceivedSmsDto;
-import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.action.SmartphoneHandler;
 import fr.pinguet62.croquette.webapp.bean.PushResource;
 import fr.pinguet62.croquette.webapp.model.Contact;

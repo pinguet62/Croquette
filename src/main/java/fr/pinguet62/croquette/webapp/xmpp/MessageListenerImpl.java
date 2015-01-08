@@ -6,8 +6,9 @@ import org.jivesoftware.smack.packet.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fr.pinguet62.croquette.commons.action.BroadcastException;
+import fr.pinguet62.croquette.commons.action.IAction;
 import fr.pinguet62.croquette.webapp.action.ActionFactory;
-import fr.pinguet62.croquette.webapp.action.IAction;
 import fr.pinguet62.croquette.webapp.action.SmartphoneHandler;
 
 /**
@@ -30,6 +31,11 @@ public final class MessageListenerImpl implements MessageListener {
         String content = message.getBody();
         LOGGER.info("XMPP message received: " + content);
 
+        if (content == null) {
+            LOGGER.info("Unknown null message: ignored");
+            return;
+        }
+
         // Factory
         IAction action;
         try {
@@ -37,10 +43,7 @@ public final class MessageListenerImpl implements MessageListener {
         } catch (IllegalArgumentException exception) {
             LOGGER.info("Invalid XMPP message", exception);
             return;
-        }
-
-        // Broadcast
-        if (action == null) {
+        } catch (BroadcastException exception) {
             LOGGER.debug("Brodcast message: ignored");
             return;
         }

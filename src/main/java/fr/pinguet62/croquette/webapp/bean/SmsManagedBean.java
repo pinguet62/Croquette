@@ -13,7 +13,7 @@ import javax.faces.context.FacesContext;
 
 import org.jivesoftware.smack.XMPPConnection;
 
-import fr.pinguet62.croquette.webapp.action.IAction;
+import fr.pinguet62.croquette.commons.action.IAction;
 import fr.pinguet62.croquette.webapp.action.sms.conversation.LoadingSMSAction;
 import fr.pinguet62.croquette.webapp.action.sms.conversations.LoadingConversationsAction;
 import fr.pinguet62.croquette.webapp.action.sms.exchange.SendSMSAction;
@@ -31,7 +31,7 @@ public final class SmsManagedBean implements Serializable {
     private static final long serialVersionUID = 1;
 
     /** The selected {@link Conversation}. */
-    private Conversation selectedConversation = null;
+    private Conversation selectedConversation;
 
     /** Connect {@link User} to {@code GTalk}. */
     public SmsManagedBean() {
