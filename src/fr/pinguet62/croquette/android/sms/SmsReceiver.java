@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
-import fr.pinguet62.croquette.android.action.IAction;
 import fr.pinguet62.croquette.android.action.sms.exchange.ReceivedSMSAction;
+import fr.pinguet62.croquette.commons.action.IAction;
 
 /**
  * Handler for SMS receptions.

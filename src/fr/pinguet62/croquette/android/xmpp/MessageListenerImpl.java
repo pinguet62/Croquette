@@ -6,7 +6,8 @@ import org.jivesoftware.smack.packet.Message;
 
 import android.util.Log;
 import fr.pinguet62.croquette.android.action.Actionfactory;
-import fr.pinguet62.croquette.android.action.IAction;
+import fr.pinguet62.croquette.commons.action.BroadcastException;
+import fr.pinguet62.croquette.commons.action.IAction;
 
 /**
  * Handler for XMPP messages.
@@ -26,6 +27,11 @@ public final class MessageListenerImpl implements MessageListener {
         String content = message.getBody();
         Log.i(LOG, "XMPP message received: " + content);
 
+        if (content == null) {
+            Log.i(LOG, "Unknown null message: ignored");
+            return;
+        }
+
         // Factory
         IAction action;
         try {
@@ -33,10 +39,7 @@ public final class MessageListenerImpl implements MessageListener {
         } catch (IllegalArgumentException exception) {
             Log.i(LOG, "Invalid XMPP message", exception);
             return;
-        }
-
-        // Broadcast
-        if (action == null) {
+        } catch (BroadcastException exception) {
             Log.d(LOG, "Brodcast message: ignored");
             return;
         }

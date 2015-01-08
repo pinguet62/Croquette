@@ -11,9 +11,10 @@ import fr.pinguet62.croquette.android.MainActivity;
 /** Used to select data from database. */
 public final class SmsService {
 
-    private static final Uri DB_SMS = Uri.parse("content://sms/");
+    private static final Uri DB_SMS = Uri.parse("content://sms/all");
 
-    private static final Uri DB_THREADS = Uri.parse("content://threads/");
+    private static final Uri DB_THREADS = Uri
+            .parse("content://sms/conversations");
 
     /** @return The {@link Sms}, {@code null} if not found. */
     public static Sms getByAddressAndBody(String address, String body) {
@@ -37,12 +38,14 @@ public final class SmsService {
      */
     public static List<Sms> getByThread(int threadId, Integer limit,
             Integer offset) {
+        if (offset == null)
+            offset = 0;
+
         Cursor cursor = getContentResolver().query(DB_SMS, null, "thread_id=?",
                 new String[] { Integer.toString(threadId) }, "_id desc");
         // Paginate
         List<Sms> smss = new ArrayList<Sms>(limit);
-        for (int i = offset; i < (offset + limit); i++) {
-            cursor.moveToPosition(i);
+        for (int i = offset; i < offset + limit && cursor.moveToPosition(i); i++) {
             Sms sms = new Sms(cursor);
             smss.add(sms);
         }
@@ -54,12 +57,14 @@ public final class SmsService {
     }
 
     public static List<Thread> getThreads(Integer limit, Integer offset) {
+        if (offset == null)
+            offset = 0;
+
         Cursor cursor = getContentResolver().query(DB_THREADS, null, null,
                 null, "_id desc");
         // Paginate
         List<Thread> threads = new ArrayList<Thread>(limit);
-        for (int i = offset; i < (offset + limit); i++) {
-            cursor.moveToPosition(i);
+        for (int i = offset; i < offset + limit && cursor.moveToPosition(i); i++) {
             Thread thread = new Thread(cursor);
             threads.add(thread);
             // Load SMSs

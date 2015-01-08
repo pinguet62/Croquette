@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.common.AccountPicker;
 
@@ -36,7 +37,7 @@ public class MainActivity extends Activity {
         String login = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
         Log.i(LOG_TAG, "Account name: " + login);
 
-        if ((requestCode == REQUEST_OAUTH) && (resultCode == RESULT_OK))
+        if (requestCode == REQUEST_OAUTH && resultCode == RESULT_OK)
             requestToken(login);
         else if (resultCode == REQUEST_OAUTH_AUTHORIZATION)
             requestToken(login);
@@ -46,6 +47,8 @@ public class MainActivity extends Activity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        test(null); // TODO test
     }
 
     private void requestToken(String login) {
@@ -65,7 +68,7 @@ public class MainActivity extends Activity {
     }
 
     // TODO test
-    public void test() {
+    public void test(View view) {
         selectAccountToUse();
     }
 

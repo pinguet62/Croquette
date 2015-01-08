@@ -100,8 +100,9 @@ public final class XMPPManager {
     public void send(String message) {
         try {
             chat.sendMessage(message);
-        } catch (XMPPException e) {
-            throw new RuntimeException(e);
+            Log.i(LOG, "XMPP message sent: " + message);
+        } catch (XMPPException exception) {
+            Log.e(LOG, "Error during sending XMPP message", exception);
         }
     }
 

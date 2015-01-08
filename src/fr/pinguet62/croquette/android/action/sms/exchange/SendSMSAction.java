@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import fr.pinguet62.croquette.android.action.IAction;
 import fr.pinguet62.croquette.android.sms.SmsSender;
+import fr.pinguet62.croquette.commons.action.IAction;
 import fr.pinguet62.croquette.commons.dto.SendSmsDto;
 
 /**
@@ -28,7 +28,7 @@ public final class SendSMSAction implements IAction {
     public void execute() {
         Log.d(LOG, "Action: " + ACTION_VALUE);
 
-        SendSmsDto dto = new Gson().fromJson(json.toString(), SendSmsDto.class);
+        SendSmsDto dto = new Gson().fromJson(json, SendSmsDto.class);
 
         // Send SMS
         SmsSender.send(dto.getPhoneNumber(), dto.getContent());

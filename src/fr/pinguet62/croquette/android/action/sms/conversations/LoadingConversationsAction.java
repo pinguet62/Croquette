@@ -8,10 +8,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import fr.pinguet62.croquette.android.action.IAction;
 import fr.pinguet62.croquette.android.sms.database.Sms;
 import fr.pinguet62.croquette.android.sms.database.SmsService;
 import fr.pinguet62.croquette.android.sms.database.Thread;
+import fr.pinguet62.croquette.commons.action.IAction;
 import fr.pinguet62.croquette.commons.dto.ConversationDto;
 import fr.pinguet62.croquette.commons.dto.LoadedConversationsDto;
 import fr.pinguet62.croquette.commons.dto.LoadingConversationsDto;
@@ -35,7 +35,7 @@ public final class LoadingConversationsAction implements IAction {
         Log.d(LOG, "Action: " + ACTION_VALUE);
 
         // Read Threads
-        LoadingConversationsDto inDto = new Gson().fromJson(json.toString(),
+        LoadingConversationsDto inDto = new Gson().fromJson(json,
                 LoadingConversationsDto.class);
         List<Thread> threads = SmsService.getThreads(inDto.getCount(),
                 inDto.getOldest());
