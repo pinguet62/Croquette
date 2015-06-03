@@ -5,6 +5,7 @@ import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.packet.Presence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +54,9 @@ public final class XMPPManager {
         // Authentication
         try {
             LOGGER.debug("Authentication...");
+            // connection.getSASLAuthentication().authenticate(
+            // User.get().getEmail(), User.get().getToken(),
+            // new TokenCallbackHandler(User.get().getToken()));
             connection.login(User.get().getEmail(), User.get().getToken());
             LOGGER.info("Authenticated");
         } catch (XMPPException exception) {
@@ -60,10 +64,15 @@ public final class XMPPManager {
             throw new RuntimeException(exception); // TODO exception
         }
 
+        // Presence
+        Presence presence = new Presence(Presence.Type.available);
+        connection.sendPacket(presence);
+
         // Chat
-        // TODO test User.get().getEmail()
-        chat = connection.getChatManager().createChat(
-                "pinguet62test@gmail.com", new MessageListenerImpl());
+        // TODO login
+        chat = connection.getChatManager().createChat("pinguet62@gmail.com",
+                new MessageListenerImpl());
+        LOGGER.info("Connected to: " + "pinguet62@gmail.com");
     }
 
     /** Disconnect from GTalk. */

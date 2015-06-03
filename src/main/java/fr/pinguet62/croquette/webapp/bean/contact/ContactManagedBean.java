@@ -23,7 +23,7 @@ public abstract class ContactManagedBean implements Serializable {
     protected String subject;
 
     /**
-     * Confirm the sending of the message with message.<br/>
+     * Confirm the sending of the message with message.<br>
      * Reset input.
      */
     protected void confirmSending() {

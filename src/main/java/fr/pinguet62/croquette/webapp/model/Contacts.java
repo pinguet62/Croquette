@@ -20,7 +20,8 @@ public final class Contacts extends TreeSet<Contact> {
      */
     public void downloadGoogle() {
         try {
-            ContactsService contactsService = new ContactsService("Croquette");
+            ContactsService contactsService = new ContactsService(
+                    "Croquette-Webapp");
             contactsService.setHeader("Authorization", "Bearer "
                     + User.get().getToken());
             URL feedUrl = new URL(
@@ -37,7 +38,7 @@ public final class Contacts extends TreeSet<Contact> {
                         continue;
                     else if (!contactEntry.getName().hasFullName())
                         continue;
-
+                    System.out.println(contactEntry.getId());
                     Contact contact = new Contact();
                     contact.setName(contactEntry.getName().getFullName()
                             .getValue());

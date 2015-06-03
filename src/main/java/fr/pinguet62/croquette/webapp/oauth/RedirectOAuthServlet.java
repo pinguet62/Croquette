@@ -86,7 +86,7 @@ public final class RedirectOAuthServlet extends HttpServlet {
         Authentication authentication = new OAuthAuthenticationToken(token);
         // - for multi-threading
         SecurityContextHolder
-                .setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+        .setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         // - store security context into session
         HttpSession session = request.getSession(true);
@@ -150,9 +150,8 @@ public final class RedirectOAuthServlet extends HttpServlet {
         String parameters = "code=" + code
                 + "&client_id=79632324639.apps.googleusercontent.com"
                 + "&client_secret=tGxcnt4qjzJ7c39pL87UG_Ek"
-                + "&grant_type=authorization_code"
-                + "&redirect_uri=http://localhost:8081/Croquette"
-                + RedirectOAuthServlet.URL;
+                + "&grant_type=authorization_code" + "&redirect_uri="
+                + Config.CONTEXT + RedirectOAuthServlet.URL;
         LOGGER.debug("HTTP request for getting token: Parameters=" + parameters);
         dataOutputStream.writeBytes(parameters);
         dataOutputStream.flush();
