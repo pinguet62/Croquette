@@ -11,6 +11,7 @@ import android.view.View;
 import com.google.android.gms.common.AccountPicker;
 
 import fr.pinguet62.croquette.android.oauth.GoogleAuthToken;
+import fr.pinguet62.croquette.android.xmpp.XMPPManager;
 
 /** The main {@link Activity} */
 public class MainActivity extends Activity {
@@ -65,6 +66,10 @@ public class MainActivity extends Activity {
         Intent intent = AccountPicker.newChooseAccountIntent(null, null,
                 new String[] { "com.google" }, false, null, null, null, null);
         startActivityForResult(intent, REQUEST_OAUTH);
+    }
+
+    public void sendXmppMessage(View view) {
+        XMPPManager.getInstance().send("toto");
     }
 
     // TODO test

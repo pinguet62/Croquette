@@ -11,6 +11,8 @@ import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.sasl.SASLMechanism;
 import org.jivesoftware.smack.util.Base64;
 
+import android.util.Log;
+
 /**
  * Implementation of {@link SASLMechanism} for OAuth 2.0 authentication on
  * GTalk.
@@ -23,6 +25,7 @@ public class GTalkOAuth2SASLMechanism extends SASLMechanism {
     private static final String LOG = GTalkOAuth2SASLMechanism.class
             .getSimpleName();
 
+    /** The name of this SASL mechanism. */
     public static final String NAME = "X-OAUTH2";
 
     /** The OAuth token used for authentication. */
@@ -35,19 +38,23 @@ public class GTalkOAuth2SASLMechanism extends SASLMechanism {
     /** Send {@link Packet} to Google who contains the OAuth XML value. */
     @Override
     protected void authenticate() throws IOException, XMPPException {
-        String raw = "\0" + authenticationId + "\0" + token;
-        final String authenticationText = Base64.encodeBytes(
-                raw.getBytes("UTF-8"), Base64.DONT_BREAK_LINES);
+        String composedResponse = "\0" + authenticationId + "\0" + token;
+        byte[] response = composedResponse.getBytes("UTF-8");
+        String authenticationText = Base64.encodeBytes(response,
+                Base64.DONT_BREAK_LINES);
+
+        final String stanza = "<auth mechanism=\"" + NAME + "\""
+                + " auth:service=\"oauth2\""
+                + " xmlns:auth=\"http://www.google.com/talk/protocol/auth\""
+                + " xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\">"
+                + authenticationText + "</auth>";
+        Log.d(LOG, stanza);
 
         // Authentication
         Packet packet = new Packet() {
             @Override
             public String toXML() {
-                return "<auth mechanism=\"X-OAUTH2\""
-                        + " auth:service=\"oauth2\""
-                        + " xmlns:auth=\"http://www.google.com/talk/protocol/auth\""
-                        + " xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\">"
-                        + authenticationText + "</auth>";
+                return stanza;
             }
         };
         // Send to the server

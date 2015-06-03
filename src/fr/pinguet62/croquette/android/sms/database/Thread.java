@@ -15,7 +15,6 @@ public final class Thread {
     private final String recipient_ids;
     private final List<Sms> smss = new LinkedList<Sms>();
     private final int snippet_cs;
-
     private final int type;
 
     public Thread(Cursor cursor) {
@@ -28,6 +27,18 @@ public final class Thread {
         type = cursor.getInt(cursor.getColumnIndex("type"));
         error = cursor.getInt(cursor.getColumnIndex("error"));
         has_attachment = cursor.getInt(cursor.getColumnIndex("has_attachment"));
+    }
+
+    public Thread(Sms sms) {
+        _id = sms.getThreadId();
+        date = sms.getDate();
+        recipient_ids = null;
+        snippet_cs = 0;
+        read = sms.getRead();
+        type = 0;
+        error = 0;
+        has_attachment = 0;
+        smss.add(sms);
     }
 
     public int getDate() {

@@ -36,13 +36,13 @@ public final class Sms {
         status = cursor.getInt(cursor.getColumnIndex("status"));
         type = cursor.getInt(cursor.getColumnIndex("type"));
         reply_path_present = cursor.getInt(cursor
-                .getColumnIndex("replyPathPresent"));
+                .getColumnIndex("reply_path_present"));
         subject = cursor.getString(cursor.getColumnIndex("subject"));
         body = cursor.getString(cursor.getColumnIndex("body"));
         service_center = cursor.getString(cursor
-                .getColumnIndex("serviceCenter"));
+                .getColumnIndex("service_center"));
         locked = cursor.getInt(cursor.getColumnIndex("locked"));
-        error_code = cursor.getInt(cursor.getColumnIndex("errorCode"));
+        error_code = cursor.getInt(cursor.getColumnIndex("error_code"));
         seen = cursor.getInt(cursor.getColumnIndex("seen"));
     }
 

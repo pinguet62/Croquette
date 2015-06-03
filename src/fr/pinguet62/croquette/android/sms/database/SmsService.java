@@ -1,17 +1,21 @@
 package fr.pinguet62.croquette.android.sms.database;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import fr.pinguet62.croquette.android.MainActivity;
 
 /** Used to select data from database. */
 public final class SmsService {
 
-    private static final Uri DB_SMS = Uri.parse("content://sms/all");
+    private static final Uri DB_SMS = Uri.parse("content://sms");
 
     private static final Uri DB_THREADS = Uri
             .parse("content://sms/conversations");
@@ -56,25 +60,62 @@ public final class SmsService {
         return MainActivity.CONTEXT.getContentResolver();
     }
 
+    // TODO use "threads" table
     public static List<Thread> getThreads(Integer limit, Integer offset) {
         if (offset == null)
             offset = 0;
 
-        Cursor cursor = getContentResolver().query(DB_THREADS, null, null,
-                null, "_id desc");
-        // Paginate
-        List<Thread> threads = new ArrayList<Thread>(limit);
-        for (int i = offset; i < offset + limit && cursor.moveToPosition(i); i++) {
-            Thread thread = new Thread(cursor);
-            threads.add(thread);
-            // Load SMSs
-            Cursor cursor2 = getContentResolver().query(DB_SMS, null,
-                    "thread_id=?",
-                    new String[] { Integer.toString(thread.getId()) }, null);
-            Sms sms = new Sms(cursor2);
-            thread.getSmss().add(sms);
+        Cursor c = getContentResolver().query(
+                ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        for (c.moveToFirst(); !c.isLast(); c.moveToNext()) {
+            for (String column : c.getColumnNames())
+                System.out.println(column + ": "
+                        + c.getString(c.getColumnIndex(column)));
+            System.out.println("----------");
         }
-        return threads;
+
+        Cursor cursor = getContentResolver().query(DB_SMS, null, null, null,
+                "date DESC");
+        // List first SMS of each Thread
+        Map<Integer, Thread> firstSmss = new LinkedHashMap<Integer, Thread>();
+        for (cursor.moveToFirst(); firstSmss.size() < offset + limit
+                && !cursor.isLast(); cursor.moveToNext()) {
+            Sms sms = new Sms(cursor);
+
+            // Only first
+            if (firstSmss.containsKey(sms.getThreadId()))
+                continue;
+
+            // Convert to Thread
+            Thread thread = new Thread(sms);
+
+            firstSmss.put(sms.getThreadId(), thread);
+        }
+
+        // Extract paginated list
+        Collection<Thread> values = firstSmss.values();
+        List<Thread> smss = new ArrayList<Thread>(values);
+        if (smss.size() > limit)
+            smss = smss.subList(values.size() - limit, values.size());
+
+        return smss;
+
+        // Cursor cursor = getContentResolver().query(DB_THREADS, null, null,
+        // null, null);
+        // // Paginate
+        // List<Thread> threads = new ArrayList<Thread>(limit);
+        // for (int i = offset; i < offset + limit && cursor.moveToPosition(i);
+        // i++) {
+        // Thread thread = new Thread(cursor);
+        // threads.add(thread);
+        // // Load SMSs
+        // Cursor cursor2 = getContentResolver().query(DB_SMS, null,
+        // "thread_id=?",
+        // new String[] { Integer.toString(thread.getId()) }, null);
+        // Sms sms = new Sms(cursor2);
+        // thread.getSmss().add(sms);
+        // }
+        // return threads;
     }
 
 }
