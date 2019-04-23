@@ -1,0 +1,30 @@
+#footer a {
+	text-decoration: inherit;
+	/* masquer le soulignement des liens hypertextes */
+}
+
+.icon {
+	vertical-align: middle; /* aligner verticalement avec le texte */
+	width: 30px; /* taille */
+}
+
+#footer {
+	height: 290px; /* TODO: size auto */
+}
+
+#footer .box-section {
+	margin: 0px auto; /* centrage */
+	width: 1000px; /* largeur utilisée pour le centrage */
+}
+
+.box-section .box {
+	float: left; /* listes côtes à côtes */
+	width: 250px;
+	/* espacer les listes /!\  pas trop large pour éviter le retour à la ligne */
+}
+
+/* Overrides PrimeFaces */
+#footer .ui-datalist-data {
+	list-style: none; /* puces */
+	padding-left: 0px; /* décalage à gauche */
+}

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div id="footer" class="ui-widget ui-widget-header ui-corner-all">
+		<div class="box-section">
+			<h:form>
+				<div class="box">
+					<h3>
+						<h:outputText value="Contact" />
+					</h3>
+					<ul class="ui-datalist-data">
+						<li class="ui-datalist-item"><h:commandLink
+								action="contact-suggestion">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Idea.png" />
+								<h:outputText value="Suggestion" />
+							</h:commandLink></li>
+						<li class="ui-datalist-item"><h:commandLink
+								action="contact-problem">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/ExclamationPoint.png" />
+								<h:outputText value="Problème" />
+							</h:commandLink></li>
+						<li class="ui-datalist-item"><h:commandLink action="faq">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/InterrogationPoint.png" />
+								<h:outputText value="FAQ" />
+							</h:commandLink></li>
+					</ul>
+				</div>
+				<div class="box">
+					<h3>
+						<h:outputText value="Partager" />
+					</h3>
+					<ul class="ui-datalist-data">
+						<li class="ui-datalist-item"><h:outputLink
+								value="https://www.facebook.com">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Facebook.png" />
+								<h:outputText value="Facebook" />
+							</h:outputLink></li>
+						<li class="ui-datalist-item"><h:outputLink
+								value="https://twitter.com">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Twitter.png" />
+								<h:outputText value="Twitter" />
+							</h:outputLink></li>
+					</ul>
+				</div>
+				<div class="box">
+					<h3>
+						<h:outputText value="Application" />
+					</h3>
+					<ul class="ui-datalist-data">
+						<li class="ui-datalist-item"><h:commandLink action="license">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/CreativeCommons.png" />
+								<h:outputText value="Licence" />
+							</h:commandLink></li>
+						<li class="ui-datalist-item"><h:outputLink
+								value="https://github.com/pinguet62/Croquette">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/GitHub.png" />
+								<h:outputText value="Sources" />
+							</h:outputLink></li>
+					</ul>
+				</div>
+				<div class="box">
+					<h3>
+						<h:outputText value="Développeur" />
+					</h3>
+					<ul class="ui-datalist-data">
+						<li class="ui-datalist-item"><h:outputLink
+								value="mailto:pinguet62@gmail.com">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Email.png" />
+								<h:outputText value="Email" />
+							</h:outputLink></li>
+						<li class="ui-datalist-item"><h:outputLink
+								value="https://www.facebook.com/pinguet62">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Facebook.png" />
+								<h:outputText value="Facebook" />
+							</h:outputLink></li>
+						<li class="ui-datalist-item"><h:outputLink
+								value="https://github.com/pinguet62">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/GitHub.png" />
+								<h:outputText value="GitHub" />
+							</h:outputLink></li>
+						<li class="ui-datalist-item"><h:outputLink
+								value="http://www.linkedin.com/in/pinguet62">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/LinkedIn.png" />
+								<h:outputText value="LinkedIn" />
+							</h:outputLink></li>
+						<li class="ui-datalist-item"><h:outputLink
+								value="https://twitter.com/pinguet62">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Twitter.png" />
+								<h:outputText value="Twitter" />
+							</h:outputLink></li>
+						<li class="ui-datalist-item"><h:outputLink
+								value="http://www.viadeo.com/fr/profile/pinguet62">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Viadeo.png" />
+								<h:outputText value="Viadeo" />
+							</h:outputLink></li>
+						<li class="ui-datalist-item"><h:outputLink
+								value="https://plus.google.com/105083747971564697504">
+								<p:graphicImage alt="ERROR" styleClass="icon" library="img"
+									name="icon/Google+.png" />
+								<h:outputText value="Google+" />
+							</h:outputLink></li>
+					</ul>
+				</div>
+			</h:form>
+		</div>
+	</div>
+</ui:composition>

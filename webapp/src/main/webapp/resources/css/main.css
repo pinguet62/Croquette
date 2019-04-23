@@ -1,0 +1,28 @@
+/*
+Main CSS for Croquette
+*/
+
+body {
+	margin: 0px;
+}
+
+/* Hide the column header of a dataTable */
+.no-header table thead tr {
+	display: none;
+}
+
+/* Bootstrap */
+.badge {
+	display: inline-block;
+	min-width: 10px;
+	padding: 3px 7px;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 1;
+	color: #ffffff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	background-color: #999999;
+	border-radius: 10px;
+}

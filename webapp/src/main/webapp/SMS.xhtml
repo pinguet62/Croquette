@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<h:outputStylesheet library="css" name="main.css" />
+	<h:outputStylesheet library="css" name="chat.css" />
+	<f:loadBundle basename="fr.pinguet62.croquette.messages" var="msg" />
+	<title>TODO title</title>
+	<script type="text/javascript">
+		function scrollConversationBottom() {
+			window.location.hash = "bottom"
+		}
+	</script>
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" size="106" style="padding: 10px;">
+			<h:form>
+				<h:outputLink value="index.xhtml">
+					<p:graphicImage height="50" library="img" name="logo.png" />
+				</h:outputLink>
+				<p:themeSwitcher converter="themeConverter"
+					style="width: 200px; position: absolute; right: 0; top: 0; margin-left: auto; margin-right: 0;"
+					value="#{themeSwitcherManagedBean.theme}" var="t">
+					<f:selectItems itemLabel="#{theme.name}" itemValue="#{theme}"
+						value="#{themeSwitcherManagedBean.themes}" var="theme" />
+					<p:ajax event="change" />
+					<p:column>
+						<p:graphicImage height="50px"
+							value="/resources/img/theme/#{t.image}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="#{t.name}" />
+					</p:column>
+				</p:themeSwitcher>
+				<p:menuButton value="pinguet62@gmail.com"
+					style="position: absolute; right: 0; top: 40px; margin-left: auto; margin-right: 0;">
+					<p:menuitem actionListener="#{userManagedBean.logout}"
+						icon="ui-icon-close" value="#{msg['login.logout']}" />
+				</p:menuButton>
+			</h:form>
+		</p:layoutUnit>
+		<p:layoutUnit collapsible="true"
+			header="#{msg['sms.conversations.title']}" position="west"
+			resizable="true" size="200">
+			<h:form id="conversationsForm" prependId="false">
+				<p:commandButton icon="ui-icon-plusthick"
+					label="#{msg['sms.conversations.new']}" />
+				<p:dataTable emptyMessage="#{msg['sms.conversations.empty']}"
+					id="conversations" rowKey="#{conversation.id}"
+					selection="#{smsManagedBean.selectedConversation}"
+					selectionMode="single" styleClass="no-header"
+					value="#{smsManagedBean.conversations}" var="conversation">
+					<p:ajax event="rowSelect" oncomplete="scrollConversationBottom()"
+						update="@this, :selectedConversation, :input" />
+					<p:ajax event="rowUnselect" update=":selectedConversation, :input" />
+					<p:column>
+						<h:outputText rendered="#{conversation.unreadCount != 0}"
+							value="#{conversation.unreadCount}" style="float: right;"
+							styleClass="badge" />
+						<h:outputText value="#{conversation.contact.name}" />
+					</p:column>
+				</p:dataTable>
+				<p:commandLink action="#{smsManagedBean.loadOldConversations}"
+					value="#{msg['sms.conversations.loadOld']}" />
+			</h:form>
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+			<p:layout>
+				<p:layoutUnit position="center" style="display: block;">
+					<h:form id="selectedConversation" prependId="false">
+						<p:outputPanel id="messages" style="text-align: center;">
+							<c:if
+								test="#{smsManagedBean.selectedConversation.hasOldMessages}">
+								<p:commandLink action="#{smsManagedBean.loadOldMessages}"
+									update="selectedConversation" value="#{msg['sms.loadOld']}" />
+								<br />
+								<br />
+							</c:if>
+							<c:forEach items="#{smsManagedBean.selectedConversation}"
+								var="message">
+								<div class="#{message.sent ? 'bubble-sent' : 'bubble-received'}">
+									<h:outputText style="font-size: small;" value="#{message.date}">
+										<f:convertDateTime pattern="#{msg['datetime.pattern']}" />
+									</h:outputText>
+									<br />
+									<h:outputText value="#{message.content}" />
+								</div>
+								<br />
+							</c:forEach>
+							<div id="bottom" />
+						</p:outputPanel>
+					</h:form>
+				</p:layoutUnit>
+				<p:layoutUnit position="south" resizable="true">
+					<h:form id="input">
+						<p:growl autoUpdate="true" showDetail="true" />
+						<p:panelGrid style="width: 100%">
+							<p:row>
+								<p:column style="width: 100%">
+									<p:inputTextarea autoResize="false"
+										value="#{smsManagedBean.input}" style="width: 100%">
+										<f:ajax event="change" />
+									</p:inputTextarea>
+								</p:column>
+								<p:column>
+									<p:commandButton actionListener="#{smsManagedBean.send}"
+										update=":selectedConversation, :input"
+										value="#{msg['sms.action.send']}" />
+								</p:column>
+								<p:column>
+									<p:commandButton type="reset"
+										value="#{msg['sms.action.reset']}" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</h:form>
+				</p:layoutUnit>
+			</p:layout>
+		</p:layoutUnit>
+		<!-- <p:layoutUnit position="south" size="125">
+			<ui:include src="footer.xhtml" />
+		</p:layoutUnit> -->
+	</p:layout>
+	<p:socket channel="#{smsManagedBean.channel}">
+		<p:ajax event="message"
+			update="conversationsForm:conversations, :selectedConversation" />
+	</p:socket>
+	<!-- TODO Delete this -->
+	<p:commandButton onclick="PF('testsDialog').show();"
+		style="position: absolute; left: 50%;" value="Tests" />
+	<p:dialog header="Tests" position="top" resizable="false"
+		visible="true" widgetVar="testsDialog">
+		<h:form>
+			<p:commandButton actionListener="#{testManagedBean.primePush}"
+				value="Prime Push" />
+			<br />
+			<p:commandButton onclick="scrollConversationBottom()"
+				value="Scroll conversation to bottom" />
+			<br />
+			<p:commandButton
+				actionListener="#{testManagedBean.downloadGoogleContacts}"
+				value="Download Google contacts" />
+			<br />
+			<p:commandButton actionListener="#{testManagedBean.initTestData}"
+				value="Init data test" />
+			<br />
+			<p:commandButton
+				actionListener="#{testManagedBean.receivedSMSAction}"
+				value="ReceveidSMSAction" />
+			<br />
+			<p:commandButton
+				actionListener="#{testManagedBean.loadedSMSAction(smsManagedBean.selectedConversation)}"
+				value="LoadedSMSAction" />
+			<br />
+			<div>
+				<p:commandButton actionListener="#{testManagedBean.sendXmppMessage}"
+					value="Send XMPP message" />
+				<p:inputTextarea rows="5" style="vertical-align: middle"
+					value="#{testManagedBean.xmppMessage}">
+					<f:ajax event="change" />
+				</p:inputTextarea>
+			</div>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

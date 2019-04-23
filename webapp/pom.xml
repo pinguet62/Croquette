@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>fr.pinguet62.croquette</groupId>
+	<artifactId>Croquette-Webapp</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<dependencies>
+		<!-- ===== Common ===== -->
+		<dependency>
+			<groupId>fr.pinguet62.croquette</groupId>
+			<artifactId>Croquette-Common</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<!-- ===== Others ===== -->
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+		<!-- JSON -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
+		<!-- ===== Application ===== -->
+		<!-- Google contacts -->
+		<dependency>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>core</artifactId>
+			<version>1.47.1</version>
+		</dependency>
+		<!-- XMPP -->
+		<dependency>
+			<groupId>org.igniterealtime.smack</groupId>
+			<artifactId>smack</artifactId>
+			<version>${smak.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.igniterealtime.smack</groupId>
+			<artifactId>smackx</artifactId>
+			<version>${smak.version}</version>
+		</dependency>
+
+		<!-- ===== Test ===== -->
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12-beta-2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- ===== Webapp ===== -->
+		<!-- JSP -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- JSF -->
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>${jsf-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>${jsf-version}</version>
+		</dependency>
+		<!-- Bean validation -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.1.0.Final</version>
+		</dependency>
+		<!-- PrimeFaces -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>all-themes</artifactId>
+			<version>1.0.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.atmosphere</groupId>
+			<artifactId>atmosphere-runtime</artifactId>
+			<version>2.2.4</version><!-- 2.3.0-RC1 -->
+		</dependency>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+
+		<!-- ===== Spring ===== -->
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+	</dependencies>
+	<properties>
+		<java-version>1.8</java-version>
+		<log4j2.version>2.1</log4j2.version>
+		<jsf-version>2.2.8-02</jsf-version>
+		<smak.version>3.2.1</smak.version>
+		<spring.version>3.1.4.RELEASE</spring.version>
+	</properties>
+
+	<build>
+		<finalName>Croquette-Webapp</finalName>
+		<testResources>
+			<testResource>
+				<directory>${project.basedir}/src/test/resources</directory>
+			</testResource>
+		</testResources>
+
+		<!-- Plugins -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<name>Croquette-Webapp</name>
+	<description>
+		Web application used to communicate with a Smartphone
+	</description>
+	<url>http://localhost:8081/Croquette</url>
+	<licenses>
+		<license>
+			<name>
+				Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+				International
+				Public License
+			</name>
+			<url>http://creativecommons.org/licenses/by-nc-sa/4.0/</url>
+			<comments>CC BY-NC-SA 4.0</comments>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>pinguet62</id>
+			<name>PINGUET Julien</name>
+			<email>pinguet62@gmail.com</email>
+			<url>https://github.com/pinguet62</url>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
+	<repositories>
+		<repository>
+			<!-- PrimeFaces -->
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+
+</project>
